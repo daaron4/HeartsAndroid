@@ -22,6 +22,19 @@ public class MainActivity extends AppCompatActivity {
     private TextView computer2Name;
     private TextView computer3Name;
     private TextView testView;
+    private ImageButton b1;
+    private ImageButton b2;
+    private ImageButton b3;
+    private ImageButton b4;
+    private ImageButton b5;
+    private ImageButton b6;
+    private ImageButton b7;
+    private ImageButton b8;
+    private ImageButton b9;
+    private ImageButton b10;
+    private ImageButton b11;
+    private ImageButton b12;
+    private ImageButton b13;
 
     private HeartsModel game;
     private int turns;
@@ -45,6 +58,34 @@ public class MainActivity extends AppCompatActivity {
         computer1Name = (TextView) findViewById(R.id.computer1_name);
         computer2Name = (TextView) findViewById(R.id.computer2_name);
         computer3Name = (TextView) findViewById(R.id.computer3_name);
+
+        b1 = (ImageButton) findViewById(R.id.card_1);
+        b2 = (ImageButton) findViewById(R.id.card_2);
+        b3 = (ImageButton) findViewById(R.id.card_3);
+        b4 = (ImageButton) findViewById(R.id.card_4);
+        b5 = (ImageButton) findViewById(R.id.card_5);
+        b6 = (ImageButton) findViewById(R.id.card_6);
+        b7 = (ImageButton) findViewById(R.id.card_7);
+        b8 = (ImageButton) findViewById(R.id.card_8);
+        b9 = (ImageButton) findViewById(R.id.card_9);
+        b10 = (ImageButton) findViewById(R.id.card_10);
+        b11 = (ImageButton) findViewById(R.id.card_11);
+        b12 = (ImageButton) findViewById(R.id.card_12);
+        b13 = (ImageButton) findViewById(R.id.card_13);
+
+        b1.setOnClickListener(onCardClick);
+        b2.setOnClickListener(onCardClick);
+        b3.setOnClickListener(onCardClick);
+        b4.setOnClickListener(onCardClick);
+        b5.setOnClickListener(onCardClick);
+        b6.setOnClickListener(onCardClick);
+        b7.setOnClickListener(onCardClick);
+        b8.setOnClickListener(onCardClick);
+        b9.setOnClickListener(onCardClick);
+        b10.setOnClickListener(onCardClick);
+        b11.setOnClickListener(onCardClick);
+        b12.setOnClickListener(onCardClick);
+        b13.setOnClickListener(onCardClick);
 
         testView = (TextView) findViewById(R.id.test_view);
 
@@ -180,20 +221,6 @@ public class MainActivity extends AppCompatActivity {
         Card c12 = game.getPlayer1().getHand().get(11);
         Card c13 = game.getPlayer1().getHand().get(12);
 
-        ImageButton b1 = (ImageButton) findViewById(R.id.card_1);
-        ImageButton b2 = (ImageButton) findViewById(R.id.card_2);
-        ImageButton b3 = (ImageButton) findViewById(R.id.card_3);
-        ImageButton b4 = (ImageButton) findViewById(R.id.card_4);
-        ImageButton b5 = (ImageButton) findViewById(R.id.card_5);
-        ImageButton b6 = (ImageButton) findViewById(R.id.card_6);
-        ImageButton b7 = (ImageButton) findViewById(R.id.card_7);
-        ImageButton b8 = (ImageButton) findViewById(R.id.card_8);
-        ImageButton b9 = (ImageButton) findViewById(R.id.card_9);
-        ImageButton b10 = (ImageButton) findViewById(R.id.card_10);
-        ImageButton b11 = (ImageButton) findViewById(R.id.card_11);
-        ImageButton b12 = (ImageButton) findViewById(R.id.card_12);
-        ImageButton b13 = (ImageButton) findViewById(R.id.card_13);
-
         b1.setImageBitmap(c1.getCardImage());
         b2.setImageBitmap(c2.getCardImage());
         b3.setImageBitmap(c3.getCardImage());
@@ -209,73 +236,60 @@ public class MainActivity extends AppCompatActivity {
         b13.setImageBitmap(c13.getCardImage());
     }
 
-
-    // ToDo: Write All these methods:
-    public void clickedCard1(View view) {
-        Card c = game.getPlayer1().getHand().get(0);
-        testView.setText(c.toString());
-        // ToDo: some kind of play method here:
-        //play();
-    }
-
-    public void clickedCard2(View view) {
-        Card c = game.getPlayer1().getHand().get(1);
+    // ToDo: actually write this method:
+    public void clickedCard(int cardNumber) {
+        Card c = game.getPlayer1().getHand().get(cardNumber);
         testView.setText(c.toString());
     }
 
-    public void clickedCard3(View view) {
-        Card c = game.getPlayer1().getHand().get(2);
-        testView.setText(c.toString());
-    }
-
-    public void clickedCard4(View view) {
-        Card c = game.getPlayer1().getHand().get(3);
-        testView.setText(c.toString());
-    }
-
-    public void clickedCard5(View view) {
-        Card c = game.getPlayer1().getHand().get(4);
-        testView.setText(c.toString());
-    }
-
-    public void clickedCard6(View view) {
-        Card c = game.getPlayer1().getHand().get(5);
-        testView.setText(c.toString());
-    }
-
-    public void clickedCard7(View view) {
-        Card c = game.getPlayer1().getHand().get(6);
-        testView.setText(c.toString());
-    }
-
-    public void clickedCard8(View view) {
-        Card c = game.getPlayer1().getHand().get(7);
-        testView.setText(c.toString());
-    }
-
-    public void clickedCard9(View view) {
-        Card c = game.getPlayer1().getHand().get(8);
-        testView.setText(c.toString());
-    }
-
-    public void clickedCard10(View view) {
-        Card c = game.getPlayer1().getHand().get(9);
-        testView.setText(c.toString());
-    }
-
-    public void clickedCard11(View view) {
-        Card c = game.getPlayer1().getHand().get(10);
-        testView.setText(c.toString());
-    }
-
-    public void clickedCard12(View view) {
-        Card c = game.getPlayer1().getHand().get(11);
-        testView.setText(c.toString());
-    }
-
-    public void clickedCard13(View view) {
-        Card c = game.getPlayer1().getHand().get(12);
-        testView.setText(c.toString());
-    }
+    ImageButton.OnClickListener onCardClick = new ImageButton.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            int id = view.getId();
+            switch(id) {
+                case R.id.card_1:
+                    clickedCard(0);
+                    break;
+                case R.id.card_2:
+                    clickedCard(1);
+                    break;
+                case R.id.card_3:
+                    clickedCard(2);
+                    break;
+                case R.id.card_4:
+                    clickedCard(3);
+                    break;
+                case R.id.card_5:
+                    clickedCard(4);
+                    break;
+                case R.id.card_6:
+                    clickedCard(5);
+                    break;
+                case R.id.card_7:
+                    clickedCard(6);
+                    break;
+                case R.id.card_8:
+                    clickedCard(7);
+                    break;
+                case R.id.card_9:
+                    clickedCard(8);
+                    break;
+                case R.id.card_10:
+                    clickedCard(9);
+                    break;
+                case R.id.card_11:
+                    clickedCard(10);
+                    break;
+                case R.id.card_12:
+                    clickedCard(11);
+                    break;
+                case R.id.card_13:
+                    clickedCard(12);
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
 }
