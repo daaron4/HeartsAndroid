@@ -2,6 +2,7 @@ package com.companyname.hearts.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
@@ -97,8 +98,6 @@ public class MainActivity extends AppCompatActivity {
         computer3Name.setText(playerNames[3]);
 
         game = new HeartsModel(playerNames[0], playerNames[1], playerNames[2], playerNames[3], getApplicationContext());
-        game.getDeck().shuffle();
-        game.getDeck().deal(game.getPlayer1(), game.getPlayer2(), game.getPlayer3(), game.getPlayer4());
 
         turns = 1;
         rand = new Random();
@@ -199,11 +198,133 @@ public class MainActivity extends AppCompatActivity {
             // display the game:
             displayImages();
             timeToShuffleAndDeal = false;
+            if (turns == 1) {
+                game.setLeadingPlayer(game.playerWithTheTwoOfClubs());
+            }
+
+            if (game.getLeadingPlayer() == game.getPlayer2()) {
+                System.out.println("comp1 goes");
+                // comp1 plays a card:
+                Card comp1Card;
+                comp1Card = game.computerPlaysACard(1, turns);
+                // add card to board:
+                game.getBoard().add(0, comp1Card);
+
+                // comp2 plays a card:
+                Card comp2Card;
+                comp2Card = game.computerPlaysACard(2, turns);
+                // add card to board:
+                game.getBoard().add(1, comp2Card);
+
+                // comp3 plays a card:
+                Card comp3Card;
+                comp3Card = game.computerPlaysACard(3, turns);
+                // add card to board:
+                game.getBoard().add(2, comp3Card);
+
+            }
+
+            // /////////////////////////////////////////
+            // Now dealing with lead is comp2:
+
+            else if (game.getLeadingPlayer() == game.getPlayer3()) {
+                System.out.println("comp2 goes");
+                // comp2 plays a card:
+                Card comp2Card;
+                comp2Card = game.computerPlaysACard(2, turns);
+                // add card to board:
+                game.getBoard().add(0, comp2Card);
+
+                // comp3 plays a card:
+                Card comp3Card;
+                comp3Card = game.computerPlaysACard(3, turns);
+                // add card to board:
+                game.getBoard().add(1, comp3Card);
+
+
+            }
+            // /////////////////////////////////////////
+            // Now dealing with lead is comp3:
+
+            else if (game.getLeadingPlayer() == game.getPlayer4()) {
+                System.out.println("comp3 goes");
+                // comp3 plays a card:
+                Card comp3Card;
+                comp3Card = game.computerPlaysACard(3, turns);
+                // add card to board:
+                game.getBoard().add(0, comp3Card);
+
+            }
+
+            displayBoard();
+
         }
 
         // Pass Cards:
         // ToDo: deal with passing later
 
+    }
+
+    public void displayBoard() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < game.getBoard().size(); i++) {
+            stringBuilder.append(game.getBoard().get(i).toString()).append("\n");
+        }
+        testView.setText(stringBuilder.toString());
+    }
+
+
+    public void test() {
+        for (int turns = 1; turns <= 13; turns++) {
+            System.out.println();
+            // see who goes first:
+            if (turns == 1) {
+                game.setLeadingPlayer(game.playerWithTheTwoOfClubs());
+            }
+
+            if (game.getLeadingPlayer() == game.getPlayer1()) {
+
+                // human plays a card:
+                Card userCard;
+                userCard = game.humanPlaysACard(turns, "");
+                // add card to board:
+                game.getBoard().add(0, userCard);
+
+                // comp1 plays a card:
+                Card comp1Card;
+                comp1Card = game.computerPlaysACard(1, turns);
+                // add card to board:
+                game.getBoard().add(1, comp1Card);
+
+                // comp2 plays a card:
+                Card comp2Card;
+                comp2Card = game.computerPlaysACard(2, turns);
+                // add card to board:
+                game.getBoard().add(2, comp2Card);
+
+                // comp3 plays a card:
+                Card comp3Card;
+                comp3Card = game.computerPlaysACard(3, turns);
+                game.getBoard().add(3, comp3Card);
+
+
+                // display board:
+                for (int i = 0; i < game.getBoard().size(); i++)
+                    System.out.println("Board is "
+                            + game.getBoard().get(i).toString());
+
+                // see who won the trick:
+                game.determineWinner(1);
+
+                // display cards in old hands:
+                game.displayOldCards();
+
+                // /////////////////////////////////////////
+                // Now dealing with lead is comp1:
+
+            }
+
+        }
     }
 
     public void displayImages() {
@@ -236,10 +357,18 @@ public class MainActivity extends AppCompatActivity {
         b13.setImageBitmap(c13.getCardImage());
     }
 
-    // ToDo: actually write this method:
     public void clickedCard(int cardNumber) {
-        Card c = game.getPlayer1().getHand().get(cardNumber);
-        testView.setText(c.toString());
+        Card userSelection = game.getPlayer1().getHand().get(cardNumber);
+        if (!game.canPlayCard(userSelection, game.getPlayer1().getHand(), game.getLeadingPlayer(), game.getPlayer1(), turns)) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setMessage("Can't play that");
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        }
+        // ToDo: here! this is big!
+        else {
+            testView.setText(testView.getText() + userSelection.toString() + "\n");
+        }
     }
 
     ImageButton.OnClickListener onCardClick = new ImageButton.OnClickListener() {
