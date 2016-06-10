@@ -1041,7 +1041,7 @@ public class HeartsModel {
 			if (handToBeSorted.get(i).getSuit() == Suit.Hearts) {
 				// Put this card at front of hand1:
 				Card temp = new Card(handToBeSorted.get(i).getRank(),
-						handToBeSorted.get(i).getSuit(),handToBeSorted.get(i).getCardImage());
+						handToBeSorted.get(i).getSuit(),handToBeSorted.get(i).getResId());
 
 				handToBeSorted.remove(i);
 				handToBeSorted.add(0, temp);
@@ -1052,7 +1052,7 @@ public class HeartsModel {
 			if (handToBeSorted.get(i).getSuit() == Suit.Spades) {
 				// Put this card at front of hand1:
 				Card temp = new Card(handToBeSorted.get(i).getRank(),
-						handToBeSorted.get(i).getSuit(),handToBeSorted.get(i).getCardImage());
+						handToBeSorted.get(i).getSuit(),handToBeSorted.get(i).getResId());
 
 				handToBeSorted.remove(i);
 				handToBeSorted.add(spot, temp);
@@ -1063,7 +1063,7 @@ public class HeartsModel {
 			if (handToBeSorted.get(i).getSuit() == Suit.Diamonds) {
 				// Put this card at front of hand1:
 				Card temp = new Card(handToBeSorted.get(i).getRank(),
-						handToBeSorted.get(i).getSuit(),handToBeSorted.get(i).getCardImage());
+						handToBeSorted.get(i).getSuit(),handToBeSorted.get(i).getResId());
 
 				handToBeSorted.remove(i);
 				handToBeSorted.add(spot, temp);

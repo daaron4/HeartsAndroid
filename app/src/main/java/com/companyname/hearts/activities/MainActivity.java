@@ -2,7 +2,6 @@ package com.companyname.hearts.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
@@ -23,19 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView computer2Name;
     private TextView computer3Name;
     private TextView testView;
-    private ImageButton b1;
-    private ImageButton b2;
-    private ImageButton b3;
-    private ImageButton b4;
-    private ImageButton b5;
-    private ImageButton b6;
-    private ImageButton b7;
-    private ImageButton b8;
-    private ImageButton b9;
-    private ImageButton b10;
-    private ImageButton b11;
-    private ImageButton b12;
-    private ImageButton b13;
+    private ImageButton b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13;
 
     private HeartsModel game;
     private int turns;
@@ -97,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         computer2Name.setText(playerNames[2]);
         computer3Name.setText(playerNames[3]);
 
-        game = new HeartsModel(playerNames[0], playerNames[1], playerNames[2], playerNames[3], getApplicationContext());
+        game = new HeartsModel(playerNames[0], playerNames[1], playerNames[2], playerNames[3]);
 
         turns = 1;
         rand = new Random();
@@ -111,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
         scoreBoard = -9001;
 
         start();
-
     }
 
     public void displayOldCards() {
@@ -146,28 +132,7 @@ public class MainActivity extends AppCompatActivity {
             game.updatePlayingGUI();
             // Game is over, display winner, ask to play again:
             if (game.getPlaying() == false) {
-                // ToDo: rewrite this block:
-//                int reply = JOptionPane.showConfirmDialog(null,
-//                        game.displayWinnerStringVersion() + '\n'
-//                                + "Play Again?", "Game Over",
-//                        JOptionPane.YES_NO_OPTION);
-//                if (reply == JOptionPane.YES_OPTION) {
-//                    roundsPlayed = 0;
-//                    scoreBoard.setText(null);
-//                    scoreBoard = new JTextArea(game.getPlayer1().getName()
-//                            + '\t' + game.getPlayer2().getName() + '\t'
-//                            + game.getPlayer3().getName() + '\t'
-//                            + game.getPlayer4().getName());
-//                    game.setPlaying(true);
-//                    game.getPlayer1().setPoints(0);
-//                    game.getPlayer2().setPoints(0);
-//                    game.getPlayer3().setPoints(0);
-//                    game.getPlayer4().setPoints(0);
-//
-//                } else {
-//                    JOptionPane.showMessageDialog(null, "Peace");
-//                    System.exit(0);
-//                }
+
             }
             // Get ready for the next hand:
             // ToDo: rewrite this as well:
@@ -273,60 +238,6 @@ public class MainActivity extends AppCompatActivity {
         testView.setText(stringBuilder.toString());
     }
 
-
-    public void test() {
-        for (int turns = 1; turns <= 13; turns++) {
-            System.out.println();
-            // see who goes first:
-            if (turns == 1) {
-                game.setLeadingPlayer(game.playerWithTheTwoOfClubs());
-            }
-
-            if (game.getLeadingPlayer() == game.getPlayer1()) {
-
-                // human plays a card:
-                Card userCard;
-                userCard = game.humanPlaysACard(turns, "");
-                // add card to board:
-                game.getBoard().add(0, userCard);
-
-                // comp1 plays a card:
-                Card comp1Card;
-                comp1Card = game.computerPlaysACard(1, turns);
-                // add card to board:
-                game.getBoard().add(1, comp1Card);
-
-                // comp2 plays a card:
-                Card comp2Card;
-                comp2Card = game.computerPlaysACard(2, turns);
-                // add card to board:
-                game.getBoard().add(2, comp2Card);
-
-                // comp3 plays a card:
-                Card comp3Card;
-                comp3Card = game.computerPlaysACard(3, turns);
-                game.getBoard().add(3, comp3Card);
-
-
-                // display board:
-                for (int i = 0; i < game.getBoard().size(); i++)
-                    System.out.println("Board is "
-                            + game.getBoard().get(i).toString());
-
-                // see who won the trick:
-                game.determineWinner(1);
-
-                // display cards in old hands:
-                game.displayOldCards();
-
-                // /////////////////////////////////////////
-                // Now dealing with lead is comp1:
-
-            }
-
-        }
-    }
-
     public void displayImages() {
         Card c1 = game.getPlayer1().getHand().get(0);
         Card c2 = game.getPlayer1().getHand().get(1);
@@ -342,313 +253,23 @@ public class MainActivity extends AppCompatActivity {
         Card c12 = game.getPlayer1().getHand().get(11);
         Card c13 = game.getPlayer1().getHand().get(12);
 
-        b1.setImageBitmap(c1.getCardImage());
-        b2.setImageBitmap(c2.getCardImage());
-        b3.setImageBitmap(c3.getCardImage());
-        b4.setImageBitmap(c4.getCardImage());
-        b5.setImageBitmap(c5.getCardImage());
-        b6.setImageBitmap(c6.getCardImage());
-        b7.setImageBitmap(c7.getCardImage());
-        b8.setImageBitmap(c8.getCardImage());
-        b9.setImageBitmap(c9.getCardImage());
-        b10.setImageBitmap(c10.getCardImage());
-        b11.setImageBitmap(c11.getCardImage());
-        b12.setImageBitmap(c12.getCardImage());
-        b13.setImageBitmap(c13.getCardImage());
+        b1.setImageResource(c1.getResId());
+        b2.setImageResource(c2.getResId());
+        b3.setImageResource(c3.getResId());
+        b4.setImageResource(c4.getResId());
+        b5.setImageResource(c5.getResId());
+        b6.setImageResource(c6.getResId());
+        b7.setImageResource(c7.getResId());
+        b8.setImageResource(c8.getResId());
+        b9.setImageResource(c9.getResId());
+        b10.setImageResource(c10.getResId());
+        b11.setImageResource(c11.getResId());
+        b12.setImageResource(c12.getResId());
+        b13.setImageResource(c13.getResId());
     }
 
-    public void clickedCard(int cardNumber) {
-        Card userCard = game.getPlayer1().getHand().get(cardNumber);
-        if (!game.canPlayCard(userCard, game.getPlayer1().getHand(), game.getLeadingPlayer(), game.getPlayer1(), turns)) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setMessage("Can't play that");
-            AlertDialog alertDialog = builder.create();
-            alertDialog.show();
-        }
-        // ToDo: here! this is big!
-        else {
-            if (game.getLeadingPlayer() == game.getPlayer1()) {
-                game.getBoard().add(0, userCard);
-                game.getPlayer1().getHand().get(i)
-                        .getCardImageLabel()
-                        .setBounds(425, 375, 100, 160);
-
-                // comp1 plays a card:
-                Card comp1Card = game.computerPlaysACard(1, turns);
-                // add card to board:
-                game.getBoard().add(1, comp1Card);
-                // ToDo: display card:
-                testView.setText(testView.getText() + comp1Card.toString());
-
-                // comp2 plays a card:
-                Card comp2Card = game.computerPlaysACard(2, turns);
-                // add card to board:
-                game.getBoard().add(2, comp2Card);
-                // remove a card:
-                randNum = rand.nextInt(fakeHand2.size());
-                remove(fakeHand2.get(randNum).getLabel());
-                fakeHand2.remove(randNum);
-                // display the card:
-                comp2Card.getCardImageLabel().setBounds(425,
-                        225, 100, 160);
-                comp2Card.getCardImageLabel().setVisible(true);
-                add(comp2Card.getCardImageLabel());
-                validate();
-                updateUI();
-
-                // comp3 plays a card:
-                comp3Card = game.computerPlaysACard(3, turns);
-                // add card to board:
-                game.getBoard().add(3, comp3Card);
-                // remove a card:
-                randNum = rand.nextInt(fakeHand3.size());
-                remove(fakeHand3.get(randNum).getLabel());
-                fakeHand3.remove(randNum);
-                // display the card:
-                comp3Card.getCardImageLabel().setBounds(500,
-                        300, 100, 160);
-                comp3Card.getCardImageLabel().setVisible(true);
-                add(comp3Card.getCardImageLabel());
-                validate();
-                updateUI();
-                String display = game
-                        .determineWinnerStringVersion(1);
-                if (display.equals(game.getPlayer1().getName()))
-                    userName.setBackground(Color.BLUE);
-                if (display.equals(game.getPlayer2().getName()))
-                    comp1Name.setBackground(Color.BLUE);
-                if (display.equals(game.getPlayer3().getName()))
-                    comp2Name.setBackground(Color.BLUE);
-                if (display.equals(game.getPlayer4().getName()))
-                    comp3Name.setBackground(Color.BLUE);
-
-                JOptionPane.showMessageDialog(null, display
-                        + " wins the trick");
-
-                if (display.equals(game.getPlayer1().getName()))
-                    userName.setBackground(Color.WHITE);
-                if (display.equals(game.getPlayer2().getName()))
-                    comp1Name.setBackground(Color.WHITE);
-                if (display.equals(game.getPlayer3().getName()))
-                    comp2Name.setBackground(Color.WHITE);
-                if (display.equals(game.getPlayer4().getName()))
-                    comp3Name.setBackground(Color.WHITE);
-
-                // remove all cards:
-                remove(game.getPlayer1().getHand().get(i)
-                        .getCardImageLabel());
-                remove(comp1Card.getCardImageLabel());
-                remove(comp2Card.getCardImageLabel());
-                remove(comp3Card.getCardImageLabel());
-                validate();
-                updateUI();
-
-                // Remove card from user's hand
-                game.getPlayer1().getHand().remove(userCard);
-
-                // play next hand:
-                turns++;
-                if (turns == 14)
-                    start();
-                else
-                    play();
-
-            }
-
-            else if (game.getLeadingPlayer() == game
-                    .getPlayer2()) {
-                game.getBoard().add(3, userCard);
-                game.getPlayer1().getHand().get(i)
-                        .getCardImageLabel()
-                        .setBounds(425, 375, 100, 160);
-
-                String display = game
-                        .determineWinnerStringVersion(2);
-                if (display.equals(game.getPlayer1().getName()))
-                    userName.setBackground(Color.BLUE);
-                if (display.equals(game.getPlayer2().getName()))
-                    comp1Name.setBackground(Color.BLUE);
-                if (display.equals(game.getPlayer3().getName()))
-                    comp2Name.setBackground(Color.BLUE);
-                if (display.equals(game.getPlayer4().getName()))
-                    comp3Name.setBackground(Color.BLUE);
-
-                JOptionPane.showMessageDialog(null, display
-                        + " wins the trick");
-
-                if (display.equals(game.getPlayer1().getName()))
-                    userName.setBackground(Color.WHITE);
-                if (display.equals(game.getPlayer2().getName()))
-                    comp1Name.setBackground(Color.WHITE);
-                if (display.equals(game.getPlayer3().getName()))
-                    comp2Name.setBackground(Color.WHITE);
-                if (display.equals(game.getPlayer4().getName()))
-                    comp3Name.setBackground(Color.WHITE);
-
-                // remove all cards:
-                remove(game.getPlayer1().getHand().get(i)
-                        .getCardImageLabel());
-                remove(comp1Card.getCardImageLabel());
-                remove(comp2Card.getCardImageLabel());
-                remove(comp3Card.getCardImageLabel());
-                validate();
-                updateUI();
-
-                // Remove card from user's hand
-                game.getPlayer1().getHand().remove(userCard);
-
-                // play next hand:
-                turns++;
-                if (turns == 14)
-                    start();
-                else
-                    play();
-            } else if (game.getLeadingPlayer() == game
-                    .getPlayer3()) {
-                game.getBoard().add(2, userCard);
-                game.getPlayer1().getHand().get(i)
-                        .getCardImageLabel()
-                        .setBounds(425, 375, 100, 160);
-
-                // comp1 plays a card:
-                comp1Card = game.computerPlaysACard(1, turns);
-                // add card to board:
-                game.getBoard().add(3, comp1Card);
-                // remove a card:
-                randNum = rand.nextInt(fakeHand1.size());
-                remove(fakeHand1.get(randNum).getLabel());
-                fakeHand1.remove(randNum);
-                // display the card:
-                comp1Card.getCardImageLabel().setBounds(350,
-                        300, 100, 160);
-                comp1Card.getCardImageLabel().setVisible(true);
-                add(comp1Card.getCardImageLabel());
-                validate();
-                updateUI();
-
-                String display = game
-                        .determineWinnerStringVersion(3);
-                if (display.equals(game.getPlayer1().getName()))
-                    userName.setBackground(Color.BLUE);
-                if (display.equals(game.getPlayer2().getName()))
-                    comp1Name.setBackground(Color.BLUE);
-                if (display.equals(game.getPlayer3().getName()))
-                    comp2Name.setBackground(Color.BLUE);
-                if (display.equals(game.getPlayer4().getName()))
-                    comp3Name.setBackground(Color.BLUE);
-
-                JOptionPane.showMessageDialog(null, display
-                        + " wins the trick");
-
-                if (display.equals(game.getPlayer1().getName()))
-                    userName.setBackground(Color.WHITE);
-                if (display.equals(game.getPlayer2().getName()))
-                    comp1Name.setBackground(Color.WHITE);
-                if (display.equals(game.getPlayer3().getName()))
-                    comp2Name.setBackground(Color.WHITE);
-                if (display.equals(game.getPlayer4().getName()))
-                    comp3Name.setBackground(Color.WHITE);
-
-                // remove all cards:
-                remove(game.getPlayer1().getHand().get(i)
-                        .getCardImageLabel());
-                remove(comp1Card.getCardImageLabel());
-                remove(comp2Card.getCardImageLabel());
-                remove(comp3Card.getCardImageLabel());
-                validate();
-                updateUI();
-
-                // Remove card from user's hand
-                game.getPlayer1().getHand().remove(userCard);
-
-                // play next hand:
-                turns++;
-                if (turns == 14)
-                    start();
-                else
-                    play();
-            } else if (game.getLeadingPlayer() == game
-                    .getPlayer4()) {
-                game.getBoard().add(1, userCard);
-                game.getPlayer1().getHand().get(i)
-                        .getCardImageLabel()
-                        .setBounds(425, 375, 100, 160);
-
-                // comp1 plays a card:
-                comp1Card = game.computerPlaysACard(1, turns);
-                // add card to board:
-                game.getBoard().add(2, comp1Card);
-                // remove a card:
-                randNum = rand.nextInt(fakeHand1.size());
-                remove(fakeHand1.get(randNum).getLabel());
-                fakeHand1.remove(randNum);
-                // display the card:
-                comp1Card.getCardImageLabel().setBounds(350,
-                        300, 100, 160);
-                comp1Card.getCardImageLabel().setVisible(true);
-                add(comp1Card.getCardImageLabel());
-                validate();
-                updateUI();
-
-                // comp2 plays a card:
-                comp2Card = game.computerPlaysACard(2, turns);
-                // add card to board:
-                game.getBoard().add(3, comp2Card);
-                // remove a card:
-                randNum = rand.nextInt(fakeHand2.size());
-                remove(fakeHand2.get(randNum).getLabel());
-                fakeHand2.remove(randNum);
-                // display the card:
-                comp2Card.getCardImageLabel().setBounds(425,
-                        225, 100, 160);
-                comp2Card.getCardImageLabel().setVisible(true);
-                add(comp2Card.getCardImageLabel());
-                validate();
-                updateUI();
-                String display = game
-                        .determineWinnerStringVersion(4);
-                if (display.equals(game.getPlayer1().getName()))
-                    userName.setBackground(Color.BLUE);
-                if (display.equals(game.getPlayer2().getName()))
-                    comp1Name.setBackground(Color.BLUE);
-                if (display.equals(game.getPlayer3().getName()))
-                    comp2Name.setBackground(Color.BLUE);
-                if (display.equals(game.getPlayer4().getName()))
-                    comp3Name.setBackground(Color.BLUE);
-
-                JOptionPane.showMessageDialog(null, display
-                        + " wins the trick");
-
-                if (display.equals(game.getPlayer1().getName()))
-                    userName.setBackground(Color.WHITE);
-                if (display.equals(game.getPlayer2().getName()))
-                    comp1Name.setBackground(Color.WHITE);
-                if (display.equals(game.getPlayer3().getName()))
-                    comp2Name.setBackground(Color.WHITE);
-                if (display.equals(game.getPlayer4().getName()))
-                    comp3Name.setBackground(Color.WHITE);
-
-                // remove all cards:
-                remove(game.getPlayer1().getHand().get(i)
-                        .getCardImageLabel());
-                remove(comp1Card.getCardImageLabel());
-                remove(comp2Card.getCardImageLabel());
-                remove(comp3Card.getCardImageLabel());
-                validate();
-                updateUI();
-
-                // Remove card from user's hand
-                game.getPlayer1().getHand().remove(userCard);
-
-                // play next hand:
-                turns++;
-                if (turns == 14)
-                    start();
-                else
-                    play();
-            }
-
-        }
+    public void clickedCard(int i) {
+        testView.setText(game.getPlayer1().getHand().get(i).toString());
     }
 
     ImageButton.OnClickListener onCardClick = new ImageButton.OnClickListener() {

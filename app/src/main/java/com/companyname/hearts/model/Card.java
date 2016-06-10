@@ -46,7 +46,17 @@ public class Card implements Comparable<Card> {
 		this.selected = selected;
 	}
 
-	@Override
+    @Override
+    public String toString() {
+        return "Card{" +
+                "rank=" + rank +
+                ", suit=" + suit +
+                ", resId=" + resId +
+                ", selected=" + selected +
+                '}';
+    }
+
+    @Override
 	public int compareTo(Card arg0) {
 		if (suit.getStrength() - arg0.getSuit().getStrength() == 0) {
 			return rank.getValue() - arg0.getRank().getValue();
@@ -54,7 +64,6 @@ public class Card implements Comparable<Card> {
 		else {
 			return 0;
 		}
-		
-
 	}
+
 }
