@@ -358,8 +358,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clickedCard(int cardNumber) {
-        Card userSelection = game.getPlayer1().getHand().get(cardNumber);
-        if (!game.canPlayCard(userSelection, game.getPlayer1().getHand(), game.getLeadingPlayer(), game.getPlayer1(), turns)) {
+        Card userCard = game.getPlayer1().getHand().get(cardNumber);
+        if (!game.canPlayCard(userCard, game.getPlayer1().getHand(), game.getLeadingPlayer(), game.getPlayer1(), turns)) {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setMessage("Can't play that");
             AlertDialog alertDialog = builder.create();
@@ -367,7 +367,287 @@ public class MainActivity extends AppCompatActivity {
         }
         // ToDo: here! this is big!
         else {
-            testView.setText(testView.getText() + userSelection.toString() + "\n");
+            if (game.getLeadingPlayer() == game.getPlayer1()) {
+                game.getBoard().add(0, userCard);
+                game.getPlayer1().getHand().get(i)
+                        .getCardImageLabel()
+                        .setBounds(425, 375, 100, 160);
+
+                // comp1 plays a card:
+                Card comp1Card = game.computerPlaysACard(1, turns);
+                // add card to board:
+                game.getBoard().add(1, comp1Card);
+                // ToDo: display card:
+                testView.setText(testView.getText() + comp1Card.toString());
+
+                // comp2 plays a card:
+                Card comp2Card = game.computerPlaysACard(2, turns);
+                // add card to board:
+                game.getBoard().add(2, comp2Card);
+                // remove a card:
+                randNum = rand.nextInt(fakeHand2.size());
+                remove(fakeHand2.get(randNum).getLabel());
+                fakeHand2.remove(randNum);
+                // display the card:
+                comp2Card.getCardImageLabel().setBounds(425,
+                        225, 100, 160);
+                comp2Card.getCardImageLabel().setVisible(true);
+                add(comp2Card.getCardImageLabel());
+                validate();
+                updateUI();
+
+                // comp3 plays a card:
+                comp3Card = game.computerPlaysACard(3, turns);
+                // add card to board:
+                game.getBoard().add(3, comp3Card);
+                // remove a card:
+                randNum = rand.nextInt(fakeHand3.size());
+                remove(fakeHand3.get(randNum).getLabel());
+                fakeHand3.remove(randNum);
+                // display the card:
+                comp3Card.getCardImageLabel().setBounds(500,
+                        300, 100, 160);
+                comp3Card.getCardImageLabel().setVisible(true);
+                add(comp3Card.getCardImageLabel());
+                validate();
+                updateUI();
+                String display = game
+                        .determineWinnerStringVersion(1);
+                if (display.equals(game.getPlayer1().getName()))
+                    userName.setBackground(Color.BLUE);
+                if (display.equals(game.getPlayer2().getName()))
+                    comp1Name.setBackground(Color.BLUE);
+                if (display.equals(game.getPlayer3().getName()))
+                    comp2Name.setBackground(Color.BLUE);
+                if (display.equals(game.getPlayer4().getName()))
+                    comp3Name.setBackground(Color.BLUE);
+
+                JOptionPane.showMessageDialog(null, display
+                        + " wins the trick");
+
+                if (display.equals(game.getPlayer1().getName()))
+                    userName.setBackground(Color.WHITE);
+                if (display.equals(game.getPlayer2().getName()))
+                    comp1Name.setBackground(Color.WHITE);
+                if (display.equals(game.getPlayer3().getName()))
+                    comp2Name.setBackground(Color.WHITE);
+                if (display.equals(game.getPlayer4().getName()))
+                    comp3Name.setBackground(Color.WHITE);
+
+                // remove all cards:
+                remove(game.getPlayer1().getHand().get(i)
+                        .getCardImageLabel());
+                remove(comp1Card.getCardImageLabel());
+                remove(comp2Card.getCardImageLabel());
+                remove(comp3Card.getCardImageLabel());
+                validate();
+                updateUI();
+
+                // Remove card from user's hand
+                game.getPlayer1().getHand().remove(userCard);
+
+                // play next hand:
+                turns++;
+                if (turns == 14)
+                    start();
+                else
+                    play();
+
+            }
+
+            else if (game.getLeadingPlayer() == game
+                    .getPlayer2()) {
+                game.getBoard().add(3, userCard);
+                game.getPlayer1().getHand().get(i)
+                        .getCardImageLabel()
+                        .setBounds(425, 375, 100, 160);
+
+                String display = game
+                        .determineWinnerStringVersion(2);
+                if (display.equals(game.getPlayer1().getName()))
+                    userName.setBackground(Color.BLUE);
+                if (display.equals(game.getPlayer2().getName()))
+                    comp1Name.setBackground(Color.BLUE);
+                if (display.equals(game.getPlayer3().getName()))
+                    comp2Name.setBackground(Color.BLUE);
+                if (display.equals(game.getPlayer4().getName()))
+                    comp3Name.setBackground(Color.BLUE);
+
+                JOptionPane.showMessageDialog(null, display
+                        + " wins the trick");
+
+                if (display.equals(game.getPlayer1().getName()))
+                    userName.setBackground(Color.WHITE);
+                if (display.equals(game.getPlayer2().getName()))
+                    comp1Name.setBackground(Color.WHITE);
+                if (display.equals(game.getPlayer3().getName()))
+                    comp2Name.setBackground(Color.WHITE);
+                if (display.equals(game.getPlayer4().getName()))
+                    comp3Name.setBackground(Color.WHITE);
+
+                // remove all cards:
+                remove(game.getPlayer1().getHand().get(i)
+                        .getCardImageLabel());
+                remove(comp1Card.getCardImageLabel());
+                remove(comp2Card.getCardImageLabel());
+                remove(comp3Card.getCardImageLabel());
+                validate();
+                updateUI();
+
+                // Remove card from user's hand
+                game.getPlayer1().getHand().remove(userCard);
+
+                // play next hand:
+                turns++;
+                if (turns == 14)
+                    start();
+                else
+                    play();
+            } else if (game.getLeadingPlayer() == game
+                    .getPlayer3()) {
+                game.getBoard().add(2, userCard);
+                game.getPlayer1().getHand().get(i)
+                        .getCardImageLabel()
+                        .setBounds(425, 375, 100, 160);
+
+                // comp1 plays a card:
+                comp1Card = game.computerPlaysACard(1, turns);
+                // add card to board:
+                game.getBoard().add(3, comp1Card);
+                // remove a card:
+                randNum = rand.nextInt(fakeHand1.size());
+                remove(fakeHand1.get(randNum).getLabel());
+                fakeHand1.remove(randNum);
+                // display the card:
+                comp1Card.getCardImageLabel().setBounds(350,
+                        300, 100, 160);
+                comp1Card.getCardImageLabel().setVisible(true);
+                add(comp1Card.getCardImageLabel());
+                validate();
+                updateUI();
+
+                String display = game
+                        .determineWinnerStringVersion(3);
+                if (display.equals(game.getPlayer1().getName()))
+                    userName.setBackground(Color.BLUE);
+                if (display.equals(game.getPlayer2().getName()))
+                    comp1Name.setBackground(Color.BLUE);
+                if (display.equals(game.getPlayer3().getName()))
+                    comp2Name.setBackground(Color.BLUE);
+                if (display.equals(game.getPlayer4().getName()))
+                    comp3Name.setBackground(Color.BLUE);
+
+                JOptionPane.showMessageDialog(null, display
+                        + " wins the trick");
+
+                if (display.equals(game.getPlayer1().getName()))
+                    userName.setBackground(Color.WHITE);
+                if (display.equals(game.getPlayer2().getName()))
+                    comp1Name.setBackground(Color.WHITE);
+                if (display.equals(game.getPlayer3().getName()))
+                    comp2Name.setBackground(Color.WHITE);
+                if (display.equals(game.getPlayer4().getName()))
+                    comp3Name.setBackground(Color.WHITE);
+
+                // remove all cards:
+                remove(game.getPlayer1().getHand().get(i)
+                        .getCardImageLabel());
+                remove(comp1Card.getCardImageLabel());
+                remove(comp2Card.getCardImageLabel());
+                remove(comp3Card.getCardImageLabel());
+                validate();
+                updateUI();
+
+                // Remove card from user's hand
+                game.getPlayer1().getHand().remove(userCard);
+
+                // play next hand:
+                turns++;
+                if (turns == 14)
+                    start();
+                else
+                    play();
+            } else if (game.getLeadingPlayer() == game
+                    .getPlayer4()) {
+                game.getBoard().add(1, userCard);
+                game.getPlayer1().getHand().get(i)
+                        .getCardImageLabel()
+                        .setBounds(425, 375, 100, 160);
+
+                // comp1 plays a card:
+                comp1Card = game.computerPlaysACard(1, turns);
+                // add card to board:
+                game.getBoard().add(2, comp1Card);
+                // remove a card:
+                randNum = rand.nextInt(fakeHand1.size());
+                remove(fakeHand1.get(randNum).getLabel());
+                fakeHand1.remove(randNum);
+                // display the card:
+                comp1Card.getCardImageLabel().setBounds(350,
+                        300, 100, 160);
+                comp1Card.getCardImageLabel().setVisible(true);
+                add(comp1Card.getCardImageLabel());
+                validate();
+                updateUI();
+
+                // comp2 plays a card:
+                comp2Card = game.computerPlaysACard(2, turns);
+                // add card to board:
+                game.getBoard().add(3, comp2Card);
+                // remove a card:
+                randNum = rand.nextInt(fakeHand2.size());
+                remove(fakeHand2.get(randNum).getLabel());
+                fakeHand2.remove(randNum);
+                // display the card:
+                comp2Card.getCardImageLabel().setBounds(425,
+                        225, 100, 160);
+                comp2Card.getCardImageLabel().setVisible(true);
+                add(comp2Card.getCardImageLabel());
+                validate();
+                updateUI();
+                String display = game
+                        .determineWinnerStringVersion(4);
+                if (display.equals(game.getPlayer1().getName()))
+                    userName.setBackground(Color.BLUE);
+                if (display.equals(game.getPlayer2().getName()))
+                    comp1Name.setBackground(Color.BLUE);
+                if (display.equals(game.getPlayer3().getName()))
+                    comp2Name.setBackground(Color.BLUE);
+                if (display.equals(game.getPlayer4().getName()))
+                    comp3Name.setBackground(Color.BLUE);
+
+                JOptionPane.showMessageDialog(null, display
+                        + " wins the trick");
+
+                if (display.equals(game.getPlayer1().getName()))
+                    userName.setBackground(Color.WHITE);
+                if (display.equals(game.getPlayer2().getName()))
+                    comp1Name.setBackground(Color.WHITE);
+                if (display.equals(game.getPlayer3().getName()))
+                    comp2Name.setBackground(Color.WHITE);
+                if (display.equals(game.getPlayer4().getName()))
+                    comp3Name.setBackground(Color.WHITE);
+
+                // remove all cards:
+                remove(game.getPlayer1().getHand().get(i)
+                        .getCardImageLabel());
+                remove(comp1Card.getCardImageLabel());
+                remove(comp2Card.getCardImageLabel());
+                remove(comp3Card.getCardImageLabel());
+                validate();
+                updateUI();
+
+                // Remove card from user's hand
+                game.getPlayer1().getHand().remove(userCard);
+
+                // play next hand:
+                turns++;
+                if (turns == 14)
+                    start();
+                else
+                    play();
+            }
+
         }
     }
 

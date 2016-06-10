@@ -1,41 +1,41 @@
 package com.companyname.hearts.model;
 
-import android.graphics.Bitmap;
-
 public class Card implements Comparable<Card> {
 
 	private Rank rank;
 	private Suit suit;
-	private Bitmap cardImage;
+	private int resId;
 	private boolean selected;
 	
-	public Card(Rank rank, Suit suit, Bitmap cardImage) {
+	public Card(Rank rank, Suit suit, int resId) {
 		this.rank = rank;
 		this.suit = suit;
-		this.cardImage = cardImage;
+		this.resId = resId;
 		selected = false;
-		
 	}
-
 
 	public Rank getRank() {
 		return rank;
+	}
+
+	public void setRank(Rank rank) {
+		this.rank = rank;
 	}
 
 	public Suit getSuit() {
 		return suit;
 	}
 
-	public Bitmap getCardImage() {
-		return cardImage;
+	public void setSuit(Suit suit) {
+		this.suit = suit;
 	}
 
-	public void setCardImage(Bitmap cardImage) {
-		this.cardImage = cardImage;
+	public int getResId() {
+		return resId;
 	}
-	
-	public String toString() {
-		return rank + " of " + suit;
+
+	public void setResId(int resId) {
+		this.resId = resId;
 	}
 
 	public boolean isSelected() {
@@ -45,7 +45,7 @@ public class Card implements Comparable<Card> {
 	public void setSelected(boolean selected) {
 		this.selected = selected;
 	}
-	
+
 	@Override
 	public int compareTo(Card arg0) {
 		if (suit.getStrength() - arg0.getSuit().getStrength() == 0) {

@@ -1,7 +1,5 @@
 package com.companyname.hearts.model;
 
-import android.content.Context;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -18,7 +16,7 @@ public class HeartsModel {
 	private ArrayList<Card> board;
 	private int roundsPlayed;
 
-	public HeartsModel(String player1Name, String player2Name, String player3Name, String player4Name, Context context) {
+	public HeartsModel(String player1Name, String player2Name, String player3Name, String player4Name) {
 		human = new Player(player1Name);
 		comp1 = new Player(player2Name);
 		comp2 = new Player(player3Name);
@@ -27,7 +25,7 @@ public class HeartsModel {
 		playing = true;
 		heartsBroken = false;
 		board = new ArrayList<>();
-		deck = new Deck(context);
+		deck = new Deck();
 		roundsPlayed = 1;
 	}
 
