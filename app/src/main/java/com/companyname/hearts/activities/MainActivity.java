@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         computer3Name.setText(playerNames[3]);
 
         game = new HeartsModel(playerNames[0], playerNames[1], playerNames[2], playerNames[3]);
-        game.getDeck().shuffle();;
+        game.getDeck().shuffle();
         game.getDeck().deal(game.getPlayer1(), game.getPlayer2(), game.getPlayer3(), game.getPlayer4());
         displayImages();
 
