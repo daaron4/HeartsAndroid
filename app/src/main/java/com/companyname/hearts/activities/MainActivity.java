@@ -25,17 +25,6 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13;
 
     private HeartsModel game;
-    private int turns;
-    private boolean timeToShuffleAndDeal;
-    private Random rand;
-    private int randNum;
-    private boolean passing;
-    private int roundsPlayed;
-    private int timesClicked;
-    private ArrayList<Card> temp;
-
-    // ToDo: delete this variable when ready:
-    private int scoreBoard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,157 +74,10 @@ public class MainActivity extends AppCompatActivity {
         computer3Name.setText(playerNames[3]);
 
         game = new HeartsModel(playerNames[0], playerNames[1], playerNames[2], playerNames[3]);
+        game.getDeck().shuffle();;
+        game.getDeck().deal(game.getPlayer1(), game.getPlayer2(), game.getPlayer3(), game.getPlayer4());
+        displayImages();
 
-        turns = 1;
-        rand = new Random();
-        randNum = -1;
-        timeToShuffleAndDeal = true;
-        passing = true;
-        temp = new ArrayList<>();
-        roundsPlayed = 0;
-        timesClicked = 0;
-        // ToDo: handle this:
-        scoreBoard = -9001;
-
-        start();
-    }
-
-    public void displayOldCards() {
-        // ToDo: write this method
-    }
-
-    public void updateScoreBoard() {
-        // ToDo: write this method
-    }
-
-    public void displayPoints() {
-        // ToDo: write this method
-    }
-
-    public void removeOldCards() {
-        // ToDo: write this method
-    }
-
-    public void start() {
-        if (turns == 14) {
-            // Calculate points:
-            game.calculatePoints();
-            // Display old cards:
-            displayOldCards();
-            // date scoreBoard:
-            updateScoreBoard();
-            // Display points:
-            displayPoints();
-            // Clear the board:
-            removeOldCards();
-            // Update playing to see if the game has ended:
-            game.updatePlayingGUI();
-            // Game is over, display winner, ask to play again:
-            if (game.getPlaying() == false) {
-
-            }
-            // Get ready for the next hand:
-            // ToDo: rewrite this as well:
-//            game.reset();
-//            turns = 1;
-//            timeToShuffleAndDeal = true;
-//            passing = true;
-        }
-        if (timeToShuffleAndDeal == true) {
-            roundsPlayed++;
-            game.getDeck().shuffle();
-            game.getDeck().deal(game.getPlayer1(), game.getPlayer2(),
-                    game.getPlayer3(), game.getPlayer4());
-            // Organize hands:
-            game.sort(game.getPlayer1().getHand());
-            game.sort(game.getPlayer2().getHand());
-            game.sort(game.getPlayer3().getHand());
-            game.sort(game.getPlayer4().getHand());
-            Collections.sort(game.getPlayer1().getHand());
-            Collections.sort(game.getPlayer2().getHand());
-            Collections.sort(game.getPlayer3().getHand());
-            Collections.sort(game.getPlayer4().getHand());
-
-            // Pass Cards:
-            // ToDo: deal with passing later
-            // game.passCards(game.getRoundsPlayed());
-
-            // display the game:
-            displayImages();
-            timeToShuffleAndDeal = false;
-            if (turns == 1) {
-                game.setLeadingPlayer(game.playerWithTheTwoOfClubs());
-            }
-
-            if (game.getLeadingPlayer() == game.getPlayer2()) {
-                System.out.println("comp1 goes");
-                // comp1 plays a card:
-                Card comp1Card;
-                comp1Card = game.computerPlaysACard(1, turns);
-                // add card to board:
-                game.getBoard().add(0, comp1Card);
-
-                // comp2 plays a card:
-                Card comp2Card;
-                comp2Card = game.computerPlaysACard(2, turns);
-                // add card to board:
-                game.getBoard().add(1, comp2Card);
-
-                // comp3 plays a card:
-                Card comp3Card;
-                comp3Card = game.computerPlaysACard(3, turns);
-                // add card to board:
-                game.getBoard().add(2, comp3Card);
-
-            }
-
-            // /////////////////////////////////////////
-            // Now dealing with lead is comp2:
-
-            else if (game.getLeadingPlayer() == game.getPlayer3()) {
-                System.out.println("comp2 goes");
-                // comp2 plays a card:
-                Card comp2Card;
-                comp2Card = game.computerPlaysACard(2, turns);
-                // add card to board:
-                game.getBoard().add(0, comp2Card);
-
-                // comp3 plays a card:
-                Card comp3Card;
-                comp3Card = game.computerPlaysACard(3, turns);
-                // add card to board:
-                game.getBoard().add(1, comp3Card);
-
-
-            }
-            // /////////////////////////////////////////
-            // Now dealing with lead is comp3:
-
-            else if (game.getLeadingPlayer() == game.getPlayer4()) {
-                System.out.println("comp3 goes");
-                // comp3 plays a card:
-                Card comp3Card;
-                comp3Card = game.computerPlaysACard(3, turns);
-                // add card to board:
-                game.getBoard().add(0, comp3Card);
-
-            }
-
-            displayBoard();
-
-        }
-
-        // Pass Cards:
-        // ToDo: deal with passing later
-
-    }
-
-    public void displayBoard() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < game.getBoard().size(); i++) {
-            stringBuilder.append(game.getBoard().get(i).toString()).append("\n");
-        }
-        testView.setText(stringBuilder.toString());
     }
 
     public void displayImages() {
@@ -270,6 +112,26 @@ public class MainActivity extends AppCompatActivity {
 
     public void clickedCard(int i) {
         testView.setText(game.getPlayer1().getHand().get(i).toString());
+    }
+
+    public void displayOldCards() {
+        // ToDo: write this method
+    }
+
+    public void updateScoreBoard() {
+        // ToDo: write this method
+    }
+
+    public void displayPoints() {
+        // ToDo: write this method
+    }
+
+    public void removeOldCards() {
+        // ToDo: write this method
+    }
+
+    public void displayBoard() {
+        // ToDo: write this method
     }
 
     ImageButton.OnClickListener onCardClick = new ImageButton.OnClickListener() {
