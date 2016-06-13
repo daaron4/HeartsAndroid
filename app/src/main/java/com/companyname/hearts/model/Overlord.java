@@ -1,7 +1,6 @@
 package com.companyname.hearts.model;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Overlord {
 
@@ -9,7 +8,6 @@ public class Overlord {
     private boolean heartsBroken;
     private int roundsPlayed;
     private Player leadingPlayer;
-    private Player currentPlayer;
 
     private static Overlord instance = null;
 
@@ -19,10 +17,9 @@ public class Overlord {
         heartsBroken = false;
         roundsPlayed = 1;
         leadingPlayer = playerWithTheTwoOfClubs();
-        currentPlayer = playerWithTheTwoOfClubs();
     }
 
-    public static Overlord getOverlord() {
+    public static Overlord getInstance() {
         if(instance == null) {
             instance = new Overlord();
         }
@@ -32,34 +29,59 @@ public class Overlord {
     public Player playerWithTheTwoOfClubs() {
         Player playerWithTwoOfClubs = null;
         for (int i = 0; i < 13; i++) {
-            if (Table.getTable().getPlayer1().getHand().get(i).getRank().getValue() == 2
-                    && Table.getTable().getPlayer1().getHand().get(i).getSuit() == Suit.Clubs)
-                playerWithTwoOfClubs = Table.getTable().getPlayer1();
-            if (Table.getTable().getPlayer2().getHand().get(i).getRank().getValue() == 2
-                    && Table.getTable().getPlayer2().getHand().get(i).getSuit() == Suit.Clubs)
-                playerWithTwoOfClubs = Table.getTable().getPlayer2();
-            if (Table.getTable().getPlayer3().getHand().get(i).getRank().getValue() == 2
-                    && Table.getTable().getPlayer3().getHand().get(i).getSuit() == Suit.Clubs)
-                playerWithTwoOfClubs = Table.getTable().getPlayer3();
-            if (Table.getTable().getPlayer4().getHand().get(i).getRank().getValue() == 2
-                    && Table.getTable().getPlayer4().getHand().get(i).getSuit() == Suit.Clubs)
-                playerWithTwoOfClubs = Table.getTable().getPlayer4();
+            if (Table.getInstance().getPlayer1().getHand().get(i).getRank().getValue() == 2
+                    && Table.getInstance().getPlayer1().getHand().get(i).getSuit() == Suit.Clubs)
+                playerWithTwoOfClubs = Table.getInstance().getPlayer1();
+            if (Table.getInstance().getPlayer2().getHand().get(i).getRank().getValue() == 2
+                    && Table.getInstance().getPlayer2().getHand().get(i).getSuit() == Suit.Clubs)
+                playerWithTwoOfClubs = Table.getInstance().getPlayer2();
+            if (Table.getInstance().getPlayer3().getHand().get(i).getRank().getValue() == 2
+                    && Table.getInstance().getPlayer3().getHand().get(i).getSuit() == Suit.Clubs)
+                playerWithTwoOfClubs = Table.getInstance().getPlayer3();
+            if (Table.getInstance().getPlayer4().getHand().get(i).getRank().getValue() == 2
+                    && Table.getInstance().getPlayer4().getHand().get(i).getSuit() == Suit.Clubs)
+                playerWithTwoOfClubs = Table.getInstance().getPlayer4();
         }
         return playerWithTwoOfClubs;
     }
 
-//    public Player determineTrickWinner() {
-//        Card winner = Table.getTable().getBoard().get(0);
-//        Suit lead = winner.getSuit();
-//        int leadValue = winner.getRank().getValue();
-//        for (int i = 1; i < Table.getTable().getBoard().size(); i++) {
-//            if (Table.getTable().getBoard().get(i).getSuit() == lead) {
-//                if (Table.getTable().getBoard().get(i).getRank().getValue() > leadValue) {
-//                    winner = Table.getTable().getBoard().get(i);
-//                    leadValue = winner.getRank().getValue();
-//                }
-//            }
-//        }
+    public Player determineTrickWinner() {
+        Player winningPlayer = getLeadingPlayer();
+        Card winner = Table.getInstance().getBoard().get(0);
+        Suit lead = winner.getSuit();
+        int leadValue = winner.getRank().getValue();
+        for (int i = 1; i < Table.getInstance().getBoard().size(); i++) {
+            if (Table.getInstance().getBoard().get(i).getSuit() == lead) {
+                if (Table.getInstance().getBoard().get(i).getRank().getValue() > leadValue) {
+                    winner = Table.getInstance().getBoard().get(i);
+                    leadValue = winner.getRank().getValue();
+                    winningPlayer = setCurrentWinningPlayer();
+                }
+            }
+        }
+        for (int i = 0; i < Table.getInstance().getBoard().size(); i++) {
+            winningPlayer.getOldCards().add(Table.getInstance().getBoard().get(i));
+        }
+        Table.getInstance().getBoard().clear();
+        setLeadingPlayer(winningPlayer);
+        return winningPlayer;
+    }
+
+    private Player setCurrentWinningPlayer() {
+        if (getLeadingPlayer() == Table.getInstance().getPlayer1()) {
+            return Table.getInstance().getPlayer2();
+        }
+        else if (getLeadingPlayer() == Table.getInstance().getPlayer2()) {
+            return Table.getInstance().getPlayer3();
+        }
+        else if (getLeadingPlayer() == Table.getInstance().getPlayer3()) {
+            return Table.getInstance().getPlayer4();
+        }
+        else {
+            return Table.getInstance().getPlayer1();
+        }
+    }
+
 //
 //
 //
@@ -595,7 +617,7 @@ public class Overlord {
             return true;
         }
 
-        if (Table.getTable().getBoard().isEmpty()) {
+        if (Table.getInstance().getBoard().isEmpty()) {
             // Nobody has played any cards yet, make sure they don't play a
             // heart, or the queen, if hearts have not been broken:
             if (heartsBroken == false) {
@@ -611,7 +633,7 @@ public class Overlord {
             return true;
         } else {
             // board is not empty so there is at least one card in board:
-            Suit leadingSuit = Table.getTable().getBoard().get(0).getSuit();
+            Suit leadingSuit = Table.getInstance().getBoard().get(0).getSuit();
             // Check to see if the current player can follow suit:
             int times = 0;
             for (int i = 0; i < handHoldingCard.size(); i++) {
@@ -656,14 +678,6 @@ public class Overlord {
 
     public void setLeadingPlayer(Player newPlayer) {
         leadingPlayer = newPlayer;
-    }
-
-    public Player getCurrentPlayer() {
-        return currentPlayer;
-    }
-
-    public void setCurrentPlayer(Player newPlayer) {
-        currentPlayer = newPlayer;
     }
 
     public int getRoundsPlayed() {

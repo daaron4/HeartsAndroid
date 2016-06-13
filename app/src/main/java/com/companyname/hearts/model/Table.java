@@ -17,7 +17,7 @@ public class Table {
         // Do no allow instantiation
     }
 
-    public static Table getTable() {
+    public static Table getInstance() {
         if(instance == null) {
             instance = new Table();
         }

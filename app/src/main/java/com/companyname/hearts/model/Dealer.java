@@ -15,7 +15,7 @@ public class Dealer {
         deck = new Deck();
     }
 
-    public static Dealer getDealer() {
+    public static Dealer getInstance() {
         if(instance == null) {
             instance = new Dealer();
         }
@@ -25,7 +25,7 @@ public class Dealer {
     public void shuffle() {
         // Shuffles the deck:
         int times = 0;
-        while (times < 200) {
+        while (times < 400) {
             Random rand = new Random();
             int randNum = rand.nextInt(52);
             int randNum2 = rand.nextInt(52);
