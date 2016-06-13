@@ -126,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void beginGame() {
+        System.out.println(Overlord.getInstance().getLeadingPlayer().getName() + " has the two of clubs.");
         Card computerSelection;
         if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer2()) {
             System.out.println("Current player: " + Table.getInstance().getPlayer2().getName());
@@ -172,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
                     + " played: "+ computerSelection.toString() + "\n");
         }
 
-        else {
+        else if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer4()) {
             System.out.println("Current player: " + Table.getInstance().getPlayer4().getName());
             computerSelection = ComputerManager.makeMove(Table.getInstance().getPlayer4());
             System.out.println("Card selected: " + computerSelection.toString());
@@ -187,15 +188,19 @@ public class MainActivity extends AppCompatActivity {
     public void clickedCard(int i) {
         Card computerSelection;
         if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer2()) {
+            // ToDo: add check for can play card here:
+
             Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
+            testView.setText(testView.getText() + "Player 1 played: " + Table.getInstance().getPlayer1().getHand().get(i).toString() + "\n");
 
             Player winner = Overlord.getInstance().determineTrickWinner();
             // ToDo: display winner to user:
             System.out.println(winner.getName() + " wins the trick.");
-            testView.setText(testView.getText() + winner.getName() + "\n");
+            testView.setText(testView.getText() + winner.getName() + " wins the trick." + "\n");
         }
         else if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer3()) {
             Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
+            testView.setText(testView.getText() + "Player 1 played: " + Table.getInstance().getPlayer1().getHand().get(i).toString() + "\n");
 
             System.out.println("Current player: " + Table.getInstance().getPlayer2().getName());
             computerSelection = ComputerManager.makeMove(Table.getInstance().getPlayer2());
@@ -208,10 +213,11 @@ public class MainActivity extends AppCompatActivity {
             Player winner = Overlord.getInstance().determineTrickWinner();
             // ToDo: display winner to user:
             System.out.println(winner.getName() + " wins the trick.");
-            testView.setText(testView.getText() + winner.getName() + "\n");
+            testView.setText(testView.getText() + winner.getName() + " wins the trick." + "\n");
         }
         else if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer4()) {
             Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
+            testView.setText(testView.getText() + "Player 1 played: " + Table.getInstance().getPlayer1().getHand().get(i).toString() + "\n");
 
             System.out.println("Current player: " + Table.getInstance().getPlayer2().getName());
             computerSelection = ComputerManager.makeMove(Table.getInstance().getPlayer2());
@@ -232,11 +238,12 @@ public class MainActivity extends AppCompatActivity {
             Player winner = Overlord.getInstance().determineTrickWinner();
             // ToDo: display winner to user:
             System.out.println(winner.getName() + " wins the trick.");
-            testView.setText(testView.getText() + winner.getName() + "\n");
+            testView.setText(testView.getText() + winner.getName() + " wins the trick." + "\n");
         }
 
         else {
             Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
+            testView.setText(testView.getText() + "Player 1 played: " + Table.getInstance().getPlayer1().getHand().get(i).toString() + "\n");
 
             System.out.println("Current player: " + Table.getInstance().getPlayer2().getName());
             computerSelection = ComputerManager.makeMove(Table.getInstance().getPlayer2());
@@ -265,7 +272,7 @@ public class MainActivity extends AppCompatActivity {
             Player winner = Overlord.getInstance().determineTrickWinner();
             // ToDo: display winner to user:
             System.out.println(winner.getName() + " wins the trick.");
-            testView.setText(testView.getText() + winner.getName() + "\n");
+            testView.setText(testView.getText() + winner.getName() + " wins the trick." + "\n");
         }
 
     }
