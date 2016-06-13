@@ -48,12 +48,7 @@ public class Card implements Comparable<Card> {
 
     @Override
     public String toString() {
-        return "Card{" +
-                "rank=" + rank +
-                ", suit=" + suit +
-                ", resId=" + resId +
-                ", selected=" + selected +
-                '}';
+        return rank + " of " + suit;
     }
 
     @Override

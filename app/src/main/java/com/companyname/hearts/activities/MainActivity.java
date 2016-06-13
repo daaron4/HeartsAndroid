@@ -1,5 +1,7 @@
 package com.companyname.hearts.activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,11 +11,10 @@ import android.widget.TextView;
 
 import com.companyname.hearts.R;
 import com.companyname.hearts.model.Card;
-import com.companyname.hearts.model.HeartsModel;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
+import com.companyname.hearts.model.ComputerManager;
+import com.companyname.hearts.model.Dealer;
+import com.companyname.hearts.model.Overlord;
+import com.companyname.hearts.model.Table;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,8 +24,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView computer3Name;
     private TextView testView;
     private ImageButton b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13;
-
-    private HeartsModel game;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,27 +72,27 @@ public class MainActivity extends AppCompatActivity {
         computer2Name.setText(playerNames[2]);
         computer3Name.setText(playerNames[3]);
 
-        game = new HeartsModel(playerNames[0], playerNames[1], playerNames[2], playerNames[3]);
-        game.getDeck().shuffle();
-        game.getDeck().deal(game.getPlayer1(), game.getPlayer2(), game.getPlayer3(), game.getPlayer4());
+        Table.getTable().initializeTable(playerNames[0], playerNames[1], playerNames[2], playerNames[3]);
+        Dealer.getDealer().shuffle();
+        Dealer.getDealer().deal(Table.getTable().getPlayer1(), Table.getTable().getPlayer2(), Table.getTable().getPlayer3(), Table.getTable().getPlayer4());
         displayImages();
-
+        startGamePopUp();
     }
 
     public void displayImages() {
-        Card c1 = game.getPlayer1().getHand().get(0);
-        Card c2 = game.getPlayer1().getHand().get(1);
-        Card c3 = game.getPlayer1().getHand().get(2);
-        Card c4 = game.getPlayer1().getHand().get(3);
-        Card c5 = game.getPlayer1().getHand().get(4);
-        Card c6 = game.getPlayer1().getHand().get(5);
-        Card c7 = game.getPlayer1().getHand().get(6);
-        Card c8 = game.getPlayer1().getHand().get(7);
-        Card c9 = game.getPlayer1().getHand().get(8);
-        Card c10 = game.getPlayer1().getHand().get(9);
-        Card c11 = game.getPlayer1().getHand().get(10);
-        Card c12 = game.getPlayer1().getHand().get(11);
-        Card c13 = game.getPlayer1().getHand().get(12);
+        Card c1 = Table.getTable().getPlayer1().getHand().get(0);
+        Card c2 = Table.getTable().getPlayer1().getHand().get(1);
+        Card c3 = Table.getTable().getPlayer1().getHand().get(2);
+        Card c4 = Table.getTable().getPlayer1().getHand().get(3);
+        Card c5 = Table.getTable().getPlayer1().getHand().get(4);
+        Card c6 = Table.getTable().getPlayer1().getHand().get(5);
+        Card c7 = Table.getTable().getPlayer1().getHand().get(6);
+        Card c8 = Table.getTable().getPlayer1().getHand().get(7);
+        Card c9 = Table.getTable().getPlayer1().getHand().get(8);
+        Card c10 = Table.getTable().getPlayer1().getHand().get(9);
+        Card c11 = Table.getTable().getPlayer1().getHand().get(10);
+        Card c12 = Table.getTable().getPlayer1().getHand().get(11);
+        Card c13 = Table.getTable().getPlayer1().getHand().get(12);
 
         b1.setImageResource(c1.getResId());
         b2.setImageResource(c2.getResId());
@@ -110,8 +109,37 @@ public class MainActivity extends AppCompatActivity {
         b13.setImageResource(c13.getResId());
     }
 
+    public void startGamePopUp() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Hearts");
+        builder.setMessage("Welcome to Hearts!");
+        builder.setIcon(R.mipmap.ic_launcher);
+        builder.setPositiveButton("Start Playing!", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                beginGame();
+            }
+        });
+        builder.setCancelable(false);
+        builder.show();
+    }
+
+    public void beginGame() {
+        // ToDo: here!
+        while (Overlord.getOverlord().getCurrentPlayer() != Table.getTable().getPlayer1()) {
+            System.out.println("Current player: " + Overlord.getOverlord().getCurrentPlayer().getName());
+            Card computerSelection = ComputerManager.makeMove();
+            System.out.println("Card selected: " + computerSelection.toString());
+            Table.getTable().getBoard().add(computerSelection);
+            //ToDo: display this card:
+            testView.setText(testView.getText() + Overlord.getOverlord().getCurrentPlayer().getName()
+                    + " played "+ computerSelection.toString() + "\n");
+        }
+        //Overlord.getOverlord().determineTrickWinner();
+    }
+
     public void clickedCard(int i) {
-        testView.setText(game.getPlayer1().getHand().get(i).toString());
+        testView.setText(Table.getTable().getPlayer1().getHand().get(i).toString());
     }
 
     public void displayOldCards() {
