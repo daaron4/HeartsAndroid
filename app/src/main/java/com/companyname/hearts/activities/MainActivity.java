@@ -183,7 +183,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void removeCardFromView(int i) {
-        // ToDo: remove listeners:
         if (i == 0) {
             b1.setImageResource(0);
             b1.setOnClickListener(null);
@@ -257,8 +256,6 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     public void clickedCard(int i) {
         // ToDo: debugging, as well as check for when to reset turns and display score:
-        // ToDo: fix glitch where user can't not follow suit:
-        // ToDo: something wrong with two of clubs:
         Card computerSelection;
         if (Overlord.getInstance().getRoundsPlayed() == 14) {
             Overlord.getInstance().reset();
@@ -268,6 +265,8 @@ public class MainActivity extends AppCompatActivity {
                 if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1())) {
                     Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
                     testView.setText(testView.getText() + "Player 1 played: " + Table.getInstance().getPlayer1().getHand().get(i).toString() + "\n");
+                    // ToDo: deal with issue with removing cards:
+                    //Table.getInstance().getPlayer1().getHand().remove(i);
 
                     Overlord.getInstance().determineTrickWinner();
                     displayTrickWinnerPopUp();
@@ -283,6 +282,8 @@ public class MainActivity extends AppCompatActivity {
                 if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1())) {
                     Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
                     testView.setText(testView.getText() + "Player 1 played: " + Table.getInstance().getPlayer1().getHand().get(i).toString() + "\n");
+                    // ToDo: deal with issue with removing cards:
+                    //Table.getInstance().getPlayer1().getHand().remove(i);
 
                     computerSelection = ComputerManager.computer1MakesMove();
                     Table.getInstance().getBoard().add(computerSelection);
@@ -303,6 +304,8 @@ public class MainActivity extends AppCompatActivity {
                 if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1())) {
                     Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
                     testView.setText(testView.getText() + "Player 1 played: " + Table.getInstance().getPlayer1().getHand().get(i).toString() + "\n");
+                    // ToDo: deal with issue with removing cards:
+                    //Table.getInstance().getPlayer1().getHand().remove(i);
 
                     computerSelection = ComputerManager.computer1MakesMove();
                     Table.getInstance().getBoard().add(computerSelection);
@@ -329,6 +332,8 @@ public class MainActivity extends AppCompatActivity {
                 if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1())) {
                     Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
                     testView.setText(testView.getText() + "Player 1 played: " + Table.getInstance().getPlayer1().getHand().get(i).toString() + "\n");
+                    // ToDo: deal with issue with removing cards:
+                    //Table.getInstance().getPlayer1().getHand().remove(i);
 
                     computerSelection = ComputerManager.computer1MakesMove();
                     Table.getInstance().getBoard().add(computerSelection);
