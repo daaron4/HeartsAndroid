@@ -68,4 +68,8 @@ public class Dealer {
         }
     }
 
+    public Deck getDeck() {
+        return deck;
+    }
+
 }

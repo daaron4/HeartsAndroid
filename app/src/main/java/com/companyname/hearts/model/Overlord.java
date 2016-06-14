@@ -1,6 +1,7 @@
 package com.companyname.hearts.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Overlord {
 
@@ -45,232 +46,86 @@ public class Overlord {
         return playerWithTwoOfClubs;
     }
 
-    public Player determineTrickWinner() {
-        Player winningPlayer = getLeadingPlayer();
+    public void determineTrickWinner() {
+        System.out.println("Board is: " + Arrays.toString(Table.getInstance().getBoard().toArray()));
         Card winner = Table.getInstance().getBoard().get(0);
         Suit lead = winner.getSuit();
         int leadValue = winner.getRank().getValue();
+        int winnerPosition = 0;
         for (int i = 1; i < Table.getInstance().getBoard().size(); i++) {
             if (Table.getInstance().getBoard().get(i).getSuit() == lead) {
                 if (Table.getInstance().getBoard().get(i).getRank().getValue() > leadValue) {
                     winner = Table.getInstance().getBoard().get(i);
+                    winnerPosition = i;
                     leadValue = winner.getRank().getValue();
-                    winningPlayer = setCurrentWinningPlayer();
                 }
             }
         }
-        for (int i = 0; i < Table.getInstance().getBoard().size(); i++) {
-            winningPlayer.getOldCards().add(Table.getInstance().getBoard().get(i));
-        }
-        Table.getInstance().getBoard().clear();
-        setLeadingPlayer(winningPlayer);
-        return winningPlayer;
-    }
 
-    private Player setCurrentWinningPlayer() {
+        // Leading player wins hand:
         if (getLeadingPlayer() == Table.getInstance().getPlayer1()) {
-            return Table.getInstance().getPlayer2();
+            if (winnerPosition == 0) {
+
+            }
+            else if (winnerPosition == 1) {
+                setLeadingPlayer(Table.getInstance().getPlayer2());
+            }
+            else if (winnerPosition == 2) {
+                setLeadingPlayer(Table.getInstance().getPlayer3());
+            }
+            else {
+                setLeadingPlayer(Table.getInstance().getPlayer4());
+            }
         }
         else if (getLeadingPlayer() == Table.getInstance().getPlayer2()) {
-            return Table.getInstance().getPlayer3();
+            if (winnerPosition == 0) {
+
+            }
+            else if (winnerPosition == 1) {
+                setLeadingPlayer(Table.getInstance().getPlayer3());
+            }
+            else if (winnerPosition == 2) {
+                setLeadingPlayer(Table.getInstance().getPlayer4());
+            }
+            else {
+                setLeadingPlayer(Table.getInstance().getPlayer1());
+            }
         }
         else if (getLeadingPlayer() == Table.getInstance().getPlayer3()) {
-            return Table.getInstance().getPlayer4();
+            if (winnerPosition == 0) {
+
+            }
+            else if (winnerPosition == 1) {
+                setLeadingPlayer(Table.getInstance().getPlayer4());
+            }
+            else if (winnerPosition == 2) {
+                setLeadingPlayer(Table.getInstance().getPlayer1());
+            }
+            else {
+                setLeadingPlayer(Table.getInstance().getPlayer2());
+            }
         }
         else {
-            return Table.getInstance().getPlayer1();
+            if (winnerPosition == 0) {
+
+            }
+            else if (winnerPosition == 1) {
+                setLeadingPlayer(Table.getInstance().getPlayer1());
+            }
+            else if (winnerPosition == 2) {
+                setLeadingPlayer(Table.getInstance().getPlayer2());
+            }
+            else {
+                setLeadingPlayer(Table.getInstance().getPlayer3());
+            }
         }
+
+        for (int i = 0; i < Table.getInstance().getBoard().size(); i++) {
+            getLeadingPlayer().getOldCards().add(Table.getInstance().getBoard().get(i));
+        }
+        Table.getInstance().getBoard().clear();
     }
 
-//
-//
-//
-//
-//        if (playerNumber == 1) {
-//            System.out.println("The " + winner.toString() + " wins the hand");
-//            // We know that the human lead off, so we know who played
-//            // what in board
-//            if (winner == board.get(0)) {
-//                System.out.println(human.getName() + " wins the hand");
-//                // Cards in board go to player's other hand
-//                for (int i = 0; i < 4; i++)
-//                    human.getOldCards().add(board.get(i));
-//                // Clear the board
-//                board.clear();
-//                // Assign the leading player
-//                leadingPlayer = human;
-//            }
-//
-//            else if (winner == board.get(1)) {
-//                System.out.println(comp1.getName() + " wins the hand");
-//                // Cards in board go to comp1 other hand
-//                for (int i = 0; i < 4; i++)
-//                    comp1.getOldCards().add(board.get(i));
-//                // Clear the board
-//                board.clear();
-//                // Assign the leading player
-//                leadingPlayer = comp1;
-//            } else if (winner == board.get(2)) {
-//                System.out.println(comp2.getName() + " wins the hand");
-//                // Cards in board go to comp2 other hand
-//                for (int i = 0; i < 4; i++)
-//                    comp2.getOldCards().add(board.get(i));
-//                // Clear the board
-//                board.clear();
-//                // Assign the leading player
-//                leadingPlayer = comp2;
-//
-//            } else if (winner == board.get(3)) {
-//                System.out.println(comp3.getName() + " wins the hand");
-//                // Cards in board go to comp3 other hand
-//                for (int i = 0; i < 4; i++)
-//                    comp3.getOldCards().add(board.get(i));
-//                // Clear the board
-//                board.clear();
-//                // Assign the leading player
-//                leadingPlayer = comp3;
-//
-//            }
-//        } else if (playerNumber == 2) {
-//            System.out.println("The " + winner.toString() + " wins the hand");
-//
-//            // comp1 is leading card, board[0]
-//            if (winner == board.get(0)) {
-//                System.out.println(comp1.getName() + " wins the hand");
-//                // Cards in board go to player's other hand
-//                for (int i = 0; i < 4; i++)
-//                    comp1.getOldCards().add(board.get(i));
-//                // Clear the board
-//                board.clear();
-//                // Assign the leading player
-//                leadingPlayer = comp1;
-//            } else {
-//                if (winner == board.get(1)) {
-//                    System.out.println(comp2.getName() + " wins the hand");
-//                    // Cards in board go to player's other hand
-//                    for (int i = 0; i < 4; i++)
-//                        comp2.getOldCards().add(board.get(i));
-//                    // Clear the board
-//                    board.clear();
-//                    // Assign the leading player
-//                    leadingPlayer = comp2;
-//                } else if (winner == board.get(2)) {
-//                    System.out.println(comp3.getName() + " wins the hand");
-//                    // Cards in board go to player's other hand
-//                    for (int i = 0; i < 4; i++)
-//                        comp3.getOldCards().add(board.get(i));
-//                    // Clear the board
-//                    board.clear();
-//                    // Assign the leading player
-//                    leadingPlayer = comp3;
-//
-//                } else if (winner == board.get(3)) {
-//                    System.out.println(human.getName() + " wins the hand");
-//                    // Cards in board go to player's other hand
-//                    for (int i = 0; i < 4; i++)
-//                        human.getOldCards().add(board.get(i));
-//                    // Clear the board
-//                    board.clear();
-//                    // Assign the leading player
-//                    leadingPlayer = human;
-//
-//                }
-//            }
-//        } else if (playerNumber == 3) {
-//            System.out.println("The " + winner.toString() + " wins the hand");
-//
-//            // comp2 is leading card, board[0]
-//            if (winner == board.get(0)) {
-//                System.out.println(comp2.getName() + " wins the hand");
-//                // Cards in board go to player's other hand
-//                for (int i = 0; i < 4; i++)
-//                    comp2.getOldCards().add(board.get(i));
-//                // Clear the board
-//                board.clear();
-//                // Assign the leading player
-//                leadingPlayer = comp2;
-//            } else {
-//                if (winner == board.get(1)) {
-//                    System.out.println(comp3.getName() + " wins the hand");
-//                    // Cards in board go to player's other hand
-//                    for (int i = 0; i < 4; i++)
-//                        comp3.getOldCards().add(board.get(i));
-//                    // Clear the board
-//                    board.clear();
-//                    // Assign the leading player
-//                    leadingPlayer = comp3;
-//                } else if (winner == board.get(2)) {
-//                    System.out.println(human.getName() + " wins the hand");
-//                    // Cards in board go to player's other hand
-//                    for (int i = 0; i < 4; i++)
-//                        human.getOldCards().add(board.get(i));
-//                    // Clear the board
-//                    board.clear();
-//                    // Assign the leading player
-//                    leadingPlayer = human;
-//
-//                } else if (winner == board.get(3)) {
-//                    System.out.println(comp1.getName() + " wins the hand");
-//                    // Cards in board go to player's other hand
-//                    for (int i = 0; i < 4; i++)
-//                        comp1.getOldCards().add(board.get(i));
-//                    // Clear the board
-//                    board.clear();
-//                    // Assign the leading player
-//                    leadingPlayer = comp1;
-//
-//                }
-//            }
-//        } else {
-//            System.out.println("The " + winner.toString() + " wins the hand");
-//            // Find out who played that card:
-//            // comp3 is leading card, board[0]
-//            if (winner == board.get(0)) {
-//                System.out.println(comp3.getName() + " wins the hand");
-//                // Cards in board go to player's other hand
-//                for (int i = 0; i < 4; i++)
-//                    comp3.getOldCards().add(board.get(i));
-//                // Clear the board
-//                board.clear();
-//                // Assign the leading player
-//                leadingPlayer = comp3;
-//            } else {
-//                if (winner == board.get(1)) {
-//                    System.out.println(human.getName() + " wins the hand");
-//                    // Cards in board go to player's other hand
-//                    for (int i = 0; i < 4; i++)
-//                        human.getOldCards().add(board.get(i));
-//                    // Clear the board
-//                    board.clear();
-//                    // Assign the leading player
-//                    leadingPlayer = human;
-//                } else if (winner == board.get(2)) {
-//                    System.out.println(comp1.getName() + " wins the hand");
-//                    // Cards in board go to player's other hand
-//                    for (int i = 0; i < 4; i++)
-//                        comp1.getOldCards().add(board.get(i));
-//                    // Clear the board
-//                    board.clear();
-//                    // Assign the leading player
-//                    leadingPlayer = comp1;
-//
-//                } else if (winner == board.get(3)) {
-//                    System.out.println(comp2.getName() + " wins the hand");
-//                    // Cards in board go to player's other hand
-//                    for (int i = 0; i < 4; i++)
-//                        comp2.getOldCards().add(board.get(i));
-//                    // Clear the board
-//                    board.clear();
-//                    // Assign the leading player
-//                    leadingPlayer = comp2;
-//
-//                }
-//            }
-//
-//        }
-//
-//    }
-//
 //    // ToDo: tells us which way we are passing instead of this:
 //    public void passCards(int roundsPlayed) {
 //        // display the game:

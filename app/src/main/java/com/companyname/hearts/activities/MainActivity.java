@@ -125,60 +125,56 @@ public class MainActivity extends AppCompatActivity {
         builder.show();
     }
 
+    public void cantPlayThatPopUp() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Hearts");
+        builder.setMessage("You can't play that!");
+        builder.setIcon(R.mipmap.ic_launcher);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // does nothing
+            }
+        });
+        builder.setCancelable(false);
+        builder.show();
+    }
+
     public void beginGame() {
         System.out.println(Overlord.getInstance().getLeadingPlayer().getName() + " has the two of clubs.");
         Card computerSelection;
         if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer2()) {
-            System.out.println("Current player: " + Table.getInstance().getPlayer2().getName());
-            computerSelection = ComputerManager.makeMove(Table.getInstance().getPlayer2());
-            System.out.println("Card selected: " + computerSelection.toString());
+            computerSelection = ComputerManager.computer1MakesMove();
             Table.getInstance().getBoard().add(computerSelection);
-            //ToDo: display this card:
             testView.setText(testView.getText() + Table.getInstance().getPlayer2().getName()
                     + " played: "+ computerSelection.toString() + "\n");
 
-            System.out.println("Current player: " + Table.getInstance().getPlayer3().getName());
-            computerSelection = ComputerManager.makeMove(Table.getInstance().getPlayer3());
-            System.out.println("Card selected: " + computerSelection.toString());
+            computerSelection = ComputerManager.computer2MakesMove();
             Table.getInstance().getBoard().add(computerSelection);
-            //ToDo: display this card:
             testView.setText(testView.getText() + Table.getInstance().getPlayer3().getName()
                     + " played: "+ computerSelection.toString() + "\n");
 
-            System.out.println("Current player: " + Table.getInstance().getPlayer4().getName());
-            computerSelection = ComputerManager.makeMove(Table.getInstance().getPlayer4());
-            System.out.println("Card selected: " + computerSelection.toString());
+            computerSelection = ComputerManager.computer3MakesMove();
             Table.getInstance().getBoard().add(computerSelection);
-            //ToDo: display this card:
             testView.setText(testView.getText() + Table.getInstance().getPlayer4().getName()
                     + " played: "+ computerSelection.toString() + "\n");
-
         }
 
         else if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer3()) {
-            System.out.println("Current player: " + Table.getInstance().getPlayer3().getName());
-            computerSelection = ComputerManager.makeMove(Table.getInstance().getPlayer3());
-            System.out.println("Card selected: " + computerSelection.toString());
+            computerSelection = ComputerManager.computer2MakesMove();
             Table.getInstance().getBoard().add(computerSelection);
-            //ToDo: display this card:
             testView.setText(testView.getText() + Table.getInstance().getPlayer3().getName()
                     + " played: "+ computerSelection.toString() + "\n");
 
-            System.out.println("Current player: " + Table.getInstance().getPlayer4().getName());
-            computerSelection = ComputerManager.makeMove(Table.getInstance().getPlayer4());
-            System.out.println("Card selected: " + computerSelection.toString());
+            computerSelection = ComputerManager.computer3MakesMove();
             Table.getInstance().getBoard().add(computerSelection);
-            //ToDo: display this card:
             testView.setText(testView.getText() + Table.getInstance().getPlayer4().getName()
                     + " played: "+ computerSelection.toString() + "\n");
         }
 
         else if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer4()) {
-            System.out.println("Current player: " + Table.getInstance().getPlayer4().getName());
-            computerSelection = ComputerManager.makeMove(Table.getInstance().getPlayer4());
-            System.out.println("Card selected: " + computerSelection.toString());
+            computerSelection = ComputerManager.computer3MakesMove();
             Table.getInstance().getBoard().add(computerSelection);
-            //ToDo: display this card:
             testView.setText(testView.getText() + Table.getInstance().getPlayer4().getName()
                     + " played: "+ computerSelection.toString() + "\n");
         }
@@ -188,91 +184,88 @@ public class MainActivity extends AppCompatActivity {
     public void clickedCard(int i) {
         Card computerSelection;
         if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer2()) {
-            // ToDo: add check for can play card here:
+            if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1().getHand(),
+                    Overlord.getInstance().getLeadingPlayer(), Table.getInstance().getPlayer1(), Overlord.getInstance().getRoundsPlayed())) {
+                Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
+                testView.setText(testView.getText() + "Player 1 played: " + Table.getInstance().getPlayer1().getHand().get(i).toString() + "\n");
 
-            Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
-            testView.setText(testView.getText() + "Player 1 played: " + Table.getInstance().getPlayer1().getHand().get(i).toString() + "\n");
-
-            Player winner = Overlord.getInstance().determineTrickWinner();
-            // ToDo: display winner to user:
-            System.out.println(winner.getName() + " wins the trick.");
-            testView.setText(testView.getText() + winner.getName() + " wins the trick." + "\n");
+                Overlord.getInstance().determineTrickWinner();
+                testView.setText(testView.getText() + Overlord.getInstance().getLeadingPlayer().getName() + " wins the trick." + "\n");
+            }
+            else {
+                cantPlayThatPopUp();
+            }
         }
         else if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer3()) {
-            Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
-            testView.setText(testView.getText() + "Player 1 played: " + Table.getInstance().getPlayer1().getHand().get(i).toString() + "\n");
+            if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1().getHand(),
+                    Overlord.getInstance().getLeadingPlayer(), Table.getInstance().getPlayer1(), Overlord.getInstance().getRoundsPlayed())) {
+                Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
+                testView.setText(testView.getText() + "Player 1 played: " + Table.getInstance().getPlayer1().getHand().get(i).toString() + "\n");
 
-            System.out.println("Current player: " + Table.getInstance().getPlayer2().getName());
-            computerSelection = ComputerManager.makeMove(Table.getInstance().getPlayer2());
-            System.out.println("Card selected: " + computerSelection.toString());
-            Table.getInstance().getBoard().add(computerSelection);
-            //ToDo: display this card:
-            testView.setText(testView.getText() + Table.getInstance().getPlayer2().getName()
-                    + " played: "+ computerSelection.toString() + "\n");
+                computerSelection = ComputerManager.computer1MakesMove();
+                Table.getInstance().getBoard().add(computerSelection);
+                testView.setText(testView.getText() + Table.getInstance().getPlayer2().getName()
+                        + " played: "+ computerSelection.toString() + "\n");
 
-            Player winner = Overlord.getInstance().determineTrickWinner();
-            // ToDo: display winner to user:
-            System.out.println(winner.getName() + " wins the trick.");
-            testView.setText(testView.getText() + winner.getName() + " wins the trick." + "\n");
+                Overlord.getInstance().determineTrickWinner();
+                testView.setText(testView.getText() + Overlord.getInstance().getLeadingPlayer().getName() + " wins the trick." + "\n");
+            }
+            else {
+                cantPlayThatPopUp();
+            }
         }
         else if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer4()) {
-            Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
-            testView.setText(testView.getText() + "Player 1 played: " + Table.getInstance().getPlayer1().getHand().get(i).toString() + "\n");
+            if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1().getHand(),
+                    Overlord.getInstance().getLeadingPlayer(), Table.getInstance().getPlayer1(), Overlord.getInstance().getRoundsPlayed())) {
+                Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
+                testView.setText(testView.getText() + "Player 1 played: " + Table.getInstance().getPlayer1().getHand().get(i).toString() + "\n");
 
-            System.out.println("Current player: " + Table.getInstance().getPlayer2().getName());
-            computerSelection = ComputerManager.makeMove(Table.getInstance().getPlayer2());
-            System.out.println("Card selected: " + computerSelection.toString());
-            Table.getInstance().getBoard().add(computerSelection);
-            //ToDo: display this card:
-            testView.setText(testView.getText() + Table.getInstance().getPlayer2().getName()
-                    + " played: "+ computerSelection.toString() + "\n");
+                computerSelection = ComputerManager.computer1MakesMove();
+                Table.getInstance().getBoard().add(computerSelection);
+                testView.setText(testView.getText() + Table.getInstance().getPlayer2().getName()
+                        + " played: "+ computerSelection.toString() + "\n");
 
-            System.out.println("Current player: " + Table.getInstance().getPlayer3().getName());
-            computerSelection = ComputerManager.makeMove(Table.getInstance().getPlayer3());
-            System.out.println("Card selected: " + computerSelection.toString());
-            Table.getInstance().getBoard().add(computerSelection);
-            //ToDo: display this card:
-            testView.setText(testView.getText() + Table.getInstance().getPlayer3().getName()
-                    + " played: "+ computerSelection.toString() + "\n");
+                computerSelection = ComputerManager.computer2MakesMove();
+                Table.getInstance().getBoard().add(computerSelection);
+                testView.setText(testView.getText() + Table.getInstance().getPlayer3().getName()
+                        + " played: "+ computerSelection.toString() + "\n");
 
-            Player winner = Overlord.getInstance().determineTrickWinner();
-            // ToDo: display winner to user:
-            System.out.println(winner.getName() + " wins the trick.");
-            testView.setText(testView.getText() + winner.getName() + " wins the trick." + "\n");
+                Overlord.getInstance().determineTrickWinner();
+                testView.setText(testView.getText() + Overlord.getInstance().getLeadingPlayer().getName() + " wins the trick." + "\n");
+            }
+            else {
+                cantPlayThatPopUp();
+            }
         }
 
         else {
-            Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
-            testView.setText(testView.getText() + "Player 1 played: " + Table.getInstance().getPlayer1().getHand().get(i).toString() + "\n");
+            if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1().getHand(),
+                    Overlord.getInstance().getLeadingPlayer(), Table.getInstance().getPlayer1(), Overlord.getInstance().getRoundsPlayed())) {
+                Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
+                testView.setText(testView.getText() + "Player 1 played: " + Table.getInstance().getPlayer1().getHand().get(i).toString() + "\n");
 
-            System.out.println("Current player: " + Table.getInstance().getPlayer2().getName());
-            computerSelection = ComputerManager.makeMove(Table.getInstance().getPlayer2());
-            System.out.println("Card selected: " + computerSelection.toString());
-            Table.getInstance().getBoard().add(computerSelection);
-            //ToDo: display this card:
-            testView.setText(testView.getText() + Table.getInstance().getPlayer2().getName()
-                    + " played: "+ computerSelection.toString() + "\n");
+                computerSelection = ComputerManager.computer1MakesMove();
+                Table.getInstance().getBoard().add(computerSelection);
+                testView.setText(testView.getText() + Table.getInstance().getPlayer2().getName()
+                        + " played: "+ computerSelection.toString() + "\n");
 
-            System.out.println("Current player: " + Table.getInstance().getPlayer3().getName());
-            computerSelection = ComputerManager.makeMove(Table.getInstance().getPlayer3());
-            System.out.println("Card selected: " + computerSelection.toString());
-            Table.getInstance().getBoard().add(computerSelection);
-            //ToDo: display this card:
-            testView.setText(testView.getText() + Table.getInstance().getPlayer3().getName()
-                    + " played: "+ computerSelection.toString() + "\n");
+                computerSelection = ComputerManager.computer2MakesMove();
+                Table.getInstance().getBoard().add(computerSelection);
+                testView.setText(testView.getText() + Table.getInstance().getPlayer3().getName()
+                        + " played: "+ computerSelection.toString() + "\n");
 
-            System.out.println("Current player: " + Table.getInstance().getPlayer4().getName());
-            computerSelection = ComputerManager.makeMove(Table.getInstance().getPlayer4());
-            System.out.println("Card selected: " + computerSelection.toString());
-            Table.getInstance().getBoard().add(computerSelection);
-            //ToDo: display this card:
-            testView.setText(testView.getText() + Table.getInstance().getPlayer4().getName()
-                    + " played: "+ computerSelection.toString() + "\n");
+                computerSelection = ComputerManager.computer3MakesMove();
+                Table.getInstance().getBoard().add(computerSelection);
+                testView.setText(testView.getText() + Table.getInstance().getPlayer4().getName()
+                        + " played: "+ computerSelection.toString() + "\n");
 
-            Player winner = Overlord.getInstance().determineTrickWinner();
-            // ToDo: display winner to user:
-            System.out.println(winner.getName() + " wins the trick.");
-            testView.setText(testView.getText() + winner.getName() + " wins the trick." + "\n");
+                Overlord.getInstance().determineTrickWinner();
+                testView.setText(testView.getText() + Overlord.getInstance().getLeadingPlayer().getName() + " wins the trick." + "\n");
+            }
+            else {
+                cantPlayThatPopUp();
+            }
+
         }
 
     }

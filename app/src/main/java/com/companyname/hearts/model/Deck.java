@@ -80,21 +80,6 @@ public class Deck {
 		return deck.get(index);
 	}
 
-	public boolean contains(Card card) {
-		return deck.contains(card);
-	}
-
-	public String toString() {
-		String str = "";
-		for (int i = 0; i < 52; i++) {
-			str += deck.get(i).getRank().toString() + " of "
-					+ deck.get(i).getSuit().toString() + " ";
-			if (i == 13 || i == 26 || i == 39 || i == 51)
-				str += "\n";
-		}
-		return str;
-	}
-
 	public void remove(int index) {
 		deck.remove(index);
 	}
