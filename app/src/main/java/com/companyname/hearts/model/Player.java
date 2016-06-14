@@ -48,7 +48,32 @@ public class Player {
 	}
 
 	public void organizeHand() {
-        // ToDo: write this method
+        // ToDo: sort by number too:
+        int spot = 0;
+        for (int i = 0; i < getHand().size(); i++) {
+            if (getHand().get(i).getSuit() == Suit.Hearts) {
+                Card temp = new Card(getHand().get(i).getRank(), getHand().get(i).getSuit(),getHand().get(i).getResId());
+                getHand().remove(i);
+                getHand().add(0, temp);
+                spot++;
+            }
+        }
+        for (int i = 0; i < getHand().size(); i++) {
+            if (getHand().get(i).getSuit() == Suit.Spades) {
+                Card temp = new Card(getHand().get(i).getRank(), getHand().get(i).getSuit(),getHand().get(i).getResId());
+                getHand().remove(i);
+                getHand().add(spot, temp);
+                spot++;
+            }
+        }
+        for (int i = 0; i < getHand().size(); i++) {
+            if (getHand().get(i).getSuit() == Suit.Diamonds) {
+                Card temp = new Card(getHand().get(i).getRank(), getHand().get(i).getSuit(),getHand().get(i).getResId());
+                getHand().remove(i);
+                getHand().add(spot, temp);
+                spot++;
+            }
+        }
     }
 
 }
