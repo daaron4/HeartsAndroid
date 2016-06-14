@@ -76,6 +76,9 @@ public class MainActivity extends AppCompatActivity {
         Table.getInstance().initializeTable(playerNames[0], playerNames[1], playerNames[2], playerNames[3]);
         Dealer.getInstance().shuffle();
         Dealer.getInstance().deal(Table.getInstance().getPlayer1(), Table.getInstance().getPlayer2(), Table.getInstance().getPlayer3(), Table.getInstance().getPlayer4());
+        // ToDo: move this line:
+        displayImages();
+
         startGamePopUp();
     }
 
@@ -141,9 +144,9 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     public void beginGame() {
-        // ToDo: decide if computer hands should be sorted as well
-        Table.getInstance().getPlayer1().organizeHand();
-        displayImages();
+//        // ToDo: decide if computer hands should be sorted as well
+//        Table.getInstance().getPlayer1().organizeHand();
+//        displayImages();
 
         System.out.println(Overlord.getInstance().getLeadingPlayer().getName() + " has the two of clubs.");
         Card computerSelection;
