@@ -186,42 +186,55 @@ public class MainActivity extends AppCompatActivity {
         // ToDo: remove listeners:
         if (i == 0) {
             b1.setImageResource(0);
+            b1.setOnClickListener(null);
         }
         else if (i == 1) {
             b2.setImageResource(0);
+            b2.setOnClickListener(null);
         }
         else if (i == 2) {
             b3.setImageResource(0);
+            b3.setOnClickListener(null);
         }
         else if (i == 3) {
             b4.setImageResource(0);
+            b4.setOnClickListener(null);
         }
         else if (i == 4) {
             b5.setImageResource(0);
+            b5.setOnClickListener(null);
         }
         else if (i == 5) {
             b6.setImageResource(0);
+            b6.setOnClickListener(null);
         }
         else if (i == 6) {
             b7.setImageResource(0);
+            b7.setOnClickListener(null);
         }
         else if (i == 7) {
             b8.setImageResource(0);
+            b8.setOnClickListener(null);
         }
         else if (i == 8) {
             b9.setImageResource(0);
+            b9.setOnClickListener(null);
         }
         else if (i == 9) {
             b10.setImageResource(0);
+            b10.setOnClickListener(null);
         }
         else if (i == 10) {
             b11.setImageResource(0);
+            b11.setOnClickListener(null);
         }
         else if (i == 11) {
             b12.setImageResource(0);
+            b12.setOnClickListener(null);
         }
         else if (i == 12) {
             b13.setImageResource(0);
+            b13.setOnClickListener(null);
         }
 
     }
