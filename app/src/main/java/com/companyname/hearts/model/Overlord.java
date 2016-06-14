@@ -126,6 +126,17 @@ public class Overlord {
         Table.getInstance().getBoard().clear();
     }
 
+    public void reset() {
+        // Clear all OldCards:
+        Table.getInstance().getPlayer1().getOldCards().clear();
+        Table.getInstance().getPlayer2().getOldCards().clear();
+        Table.getInstance().getPlayer3().getOldCards().clear();
+        Table.getInstance().getPlayer4().getOldCards().clear();
+        heartsBroken = false;
+        // increment roundPlayed so that passing works:
+        roundsPlayed++;
+    }
+
 //    // ToDo: tells us which way we are passing instead of this:
 //    public void passCards(int roundsPlayed) {
 //        // display the game:
@@ -258,18 +269,6 @@ public class Overlord {
 //
 //    }
 //
-//    // ToDo: tell the table to reset itself:
-//    public void reset() {
-//        // Clear all OldCards:
-//        human.getOldCards().clear();
-//        comp1.getOldCards().clear();
-//        comp2.getOldCards().clear();
-//        comp3.getOldCards().clear();
-//        // reset heartsBorken:
-//        heartsBroken = false;
-//        // increment roundPlayed so that passing works:
-//        roundsPlayed++;
-//    }
 //
 //    public void calculatePoints() {
 //        // Check for moon shoot:
@@ -407,9 +406,9 @@ public class Overlord {
 //        System.out.println();
 //    }
 
-    public boolean canPlayCard(Card userCard, ArrayList<Card> handHoldingCard, Player lead, Player whosPlaying, int turn) {
-        if (turn == 1) {
-            if (lead == whosPlaying) {
+    public boolean canPlayCard(Card userCard, Player whosPlaying) {
+        if (getRoundsPlayed() == 1) {
+            if (getLeadingPlayer() == whosPlaying) {
                 if (!(userCard.getSuit() == Suit.Clubs && userCard.getRank()
                         .getValue() == 2)) {
                     return false;
@@ -420,8 +419,8 @@ public class Overlord {
             // of spades or hearts, unless its all you have:
             else {
                 int numberOfClubs = 0;
-                for (int i = 0; i < handHoldingCard.size(); i++) {
-                    if (handHoldingCard.get(i).getSuit() == Suit.Clubs) {
+                for (int i = 0; i < whosPlaying.getHand().size(); i++) {
+                    if (whosPlaying.getHand().get(i).getSuit() == Suit.Clubs) {
                         numberOfClubs++;
                     }
                 }
@@ -434,9 +433,9 @@ public class Overlord {
                 // other choice:
                 else {
                     int notHearts = 0;
-                    for (int i = 0; i < handHoldingCard.size(); i++) {
-                        if (handHoldingCard.get(i).getSuit() != Suit.Hearts
-                                || (handHoldingCard.get(i).getSuit() != Suit.Spades && handHoldingCard
+                    for (int i = 0; i < whosPlaying.getHand().size(); i++) {
+                        if (whosPlaying.getHand().get(i).getSuit() != Suit.Hearts
+                                || (whosPlaying.getHand().get(i).getSuit() != Suit.Spades && whosPlaying.getHand()
                                 .get(i).getRank() != Rank.Queen)) {
                             notHearts++;
                         }
@@ -460,13 +459,13 @@ public class Overlord {
         // If all you have is hearts or all hearts and the queen of spades, you
         // can play right away no matter what:
         int numHearts = 0;
-        for (int i = 0; i < handHoldingCard.size(); i++) {
-            if (handHoldingCard.get(i).getSuit() == Suit.Hearts
-                    || (handHoldingCard.get(i).getSuit() == Suit.Spades && handHoldingCard
+        for (int i = 0; i < whosPlaying.getHand().size(); i++) {
+            if (whosPlaying.getHand().get(i).getSuit() == Suit.Hearts
+                    || (whosPlaying.getHand().get(i).getSuit() == Suit.Spades && whosPlaying.getHand()
                     .get(i).getRank() == Rank.Queen))
                 numHearts++;
         }
-        if (numHearts == handHoldingCard.size()) {
+        if (numHearts == whosPlaying.getHand().size()) {
             // All you have is hearts, return true and break hearts:
             heartsBroken = true;
             return true;
@@ -491,13 +490,13 @@ public class Overlord {
             Suit leadingSuit = Table.getInstance().getBoard().get(0).getSuit();
             // Check to see if the current player can follow suit:
             int times = 0;
-            for (int i = 0; i < handHoldingCard.size(); i++) {
-                if (handHoldingCard.get(i).getSuit() == leadingSuit)
+            for (int i = 0; i < whosPlaying.getHand().size(); i++) {
+                if (whosPlaying.getHand().get(i).getSuit() == leadingSuit)
                     times++;
             }
             // I have to follow suit here
             if (times > 0) {
-                // Didnt follow suit, cant do this because they have the leading
+                // Didn't follow suit, cant do this because they have the leading
                 // suit
                 if (userCard.getSuit() != leadingSuit) {
                     // System.out.println("Cant play that, you must follow Suit, ");

@@ -9,8 +9,7 @@ public class ComputerManager {
         Card computerSelection = null;
         for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
             computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
-            if (Overlord.getInstance().canPlayCard(computerSelection, Table.getInstance().getPlayer2().getHand(),
-                    Overlord.getInstance().getLeadingPlayer(), Table.getInstance().getPlayer2(), Overlord.getInstance().getRoundsPlayed())) {
+            if (Overlord.getInstance().canPlayCard(computerSelection, Table.getInstance().getPlayer2())) {
                 break;
             }
         }
@@ -23,8 +22,7 @@ public class ComputerManager {
         Card computerSelection = null;
         for (int i = 0; i < Table.getInstance().getPlayer3().getHand().size(); i++) {
             computerSelection = Table.getInstance().getPlayer3().getHand().get(i);
-            if (Overlord.getInstance().canPlayCard(computerSelection, Table.getInstance().getPlayer3().getHand(),
-                    Overlord.getInstance().getLeadingPlayer(), Table.getInstance().getPlayer3(), Overlord.getInstance().getRoundsPlayed())) {
+            if (Overlord.getInstance().canPlayCard(computerSelection, Table.getInstance().getPlayer3())) {
                 break;
             }
         }
@@ -37,8 +35,7 @@ public class ComputerManager {
         Card computerSelection = null;
         for (int i = 0; i < Table.getInstance().getPlayer4().getHand().size(); i++) {
             computerSelection = Table.getInstance().getPlayer4().getHand().get(i);
-            if (Overlord.getInstance().canPlayCard(computerSelection, Table.getInstance().getPlayer4().getHand(),
-                    Overlord.getInstance().getLeadingPlayer(), Table.getInstance().getPlayer4(), Overlord.getInstance().getRoundsPlayed())) {
+            if (Overlord.getInstance().canPlayCard(computerSelection, Table.getInstance().getPlayer4())) {
                 break;
             }
         }
