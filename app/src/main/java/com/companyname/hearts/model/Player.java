@@ -47,4 +47,8 @@ public class Player {
 		this.hand = hand;
 	}
 
+	public void organizeHand() {
+        // ToDo: write this method
+    }
+
 }

@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void beginGame() {
-        //Table.getInstance().getPlayer1().organizeHand();
+        Table.getInstance().getPlayer1().organizeHand();
         System.out.println(Overlord.getInstance().getLeadingPlayer().getName() + " has the two of clubs.");
         Card computerSelection;
         if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer2()) {
