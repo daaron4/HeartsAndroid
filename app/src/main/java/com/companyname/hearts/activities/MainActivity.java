@@ -1,5 +1,6 @@
 package com.companyname.hearts.activities;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -181,6 +182,50 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void removeCardFromView(int i) {
+        if (i == 0) {
+            b1.setImageResource(0);
+        }
+        else if (i == 1) {
+            b2.setImageResource(0);
+        }
+        else if (i == 2) {
+            b3.setImageResource(0);
+        }
+        else if (i == 3) {
+            b4.setImageResource(0);
+        }
+        else if (i == 4) {
+            b5.setImageResource(0);
+        }
+        else if (i == 5) {
+            b6.setImageResource(0);
+        }
+        else if (i == 6) {
+            b7.setImageResource(0);
+        }
+        else if (i == 7) {
+            b8.setImageResource(0);
+        }
+        else if (i == 8) {
+            b9.setImageResource(0);
+        }
+        else if (i == 9) {
+            b10.setImageResource(0);
+        }
+        else if (i == 10) {
+            b11.setImageResource(0);
+        }
+        else if (i == 11) {
+            b12.setImageResource(0);
+        }
+        else if (i == 12) {
+            b13.setImageResource(0);
+        }
+
+    }
+
+    @SuppressLint("SetTextI18n")
     public void clickedCard(int i) {
         Card computerSelection;
         if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer2()) {
@@ -191,6 +236,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Overlord.getInstance().determineTrickWinner();
                 testView.setText(testView.getText() + Overlord.getInstance().getLeadingPlayer().getName() + " wins the trick." + "\n");
+                removeCardFromView(i);
             }
             else {
                 cantPlayThatPopUp();
@@ -209,6 +255,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Overlord.getInstance().determineTrickWinner();
                 testView.setText(testView.getText() + Overlord.getInstance().getLeadingPlayer().getName() + " wins the trick." + "\n");
+                removeCardFromView(i);
             }
             else {
                 cantPlayThatPopUp();
@@ -232,6 +279,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Overlord.getInstance().determineTrickWinner();
                 testView.setText(testView.getText() + Overlord.getInstance().getLeadingPlayer().getName() + " wins the trick." + "\n");
+                removeCardFromView(i);
             }
             else {
                 cantPlayThatPopUp();
@@ -261,6 +309,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Overlord.getInstance().determineTrickWinner();
                 testView.setText(testView.getText() + Overlord.getInstance().getLeadingPlayer().getName() + " wins the trick." + "\n");
+                removeCardFromView(i);
             }
             else {
                 cantPlayThatPopUp();
