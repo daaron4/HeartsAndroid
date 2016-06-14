@@ -1,6 +1,5 @@
 package com.companyname.hearts.model;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Overlord {
@@ -133,11 +132,102 @@ public class Overlord {
         Table.getInstance().getPlayer3().getOldCards().clear();
         Table.getInstance().getPlayer4().getOldCards().clear();
         heartsBroken = false;
-        // increment roundPlayed so that passing works:
+        // increment roundPlayed:
         roundsPlayed++;
     }
 
-//    // ToDo: tells us which way we are passing instead of this:
+    public void updatePlaying() {
+        if (Table.getInstance().getPlayer1().getPoints() >= 100 || Table.getInstance().getPlayer2().getPoints() >= 100
+                || Table.getInstance().getPlayer3().getPoints() >= 100 || Table.getInstance().getPlayer4().getPoints() >= 100) {
+            playing = false;
+        }
+    }
+
+    public void calculatePoints() {
+        int player1Points = 0;
+        int player2Points = 0;
+        int player3Points = 0;
+        int player4Points = 0;
+
+        for (int i = 0; i < Table.getInstance().getPlayer1().getOldCards().size(); i++) {
+            if (Table.getInstance().getPlayer1().getOldCards().get(i).getSuit() == Suit.Hearts)
+                player1Points++;
+            if (Table.getInstance().getPlayer1().getOldCards().get(i).getSuit() == Suit.Spades
+                    && Table.getInstance().getPlayer1().getOldCards().get(i).getRank() == Rank.Queen)
+                player1Points = player1Points + 13;
+        }
+        for (int i = 0; i < Table.getInstance().getPlayer2().getOldCards().size(); i++) {
+            if (Table.getInstance().getPlayer2().getOldCards().get(i).getSuit() == Suit.Hearts)
+                player2Points++;
+            if (Table.getInstance().getPlayer2().getOldCards().get(i).getSuit() == Suit.Spades
+                    && Table.getInstance().getPlayer2().getOldCards().get(i).getRank() == Rank.Queen)
+                player2Points = player2Points + 13;
+        }
+        for (int i = 0; i < Table.getInstance().getPlayer3().getOldCards().size(); i++) {
+            if (Table.getInstance().getPlayer3().getOldCards().get(i).getSuit() == Suit.Hearts)
+                player3Points++;
+            if (Table.getInstance().getPlayer3().getOldCards().get(i).getSuit() == Suit.Spades
+                    && Table.getInstance().getPlayer3().getOldCards().get(i).getRank() == Rank.Queen)
+                player3Points = player3Points + 13;
+        }
+        for (int i = 0; i < Table.getInstance().getPlayer4().getOldCards().size(); i++) {
+            if (Table.getInstance().getPlayer4().getOldCards().get(i).getSuit() == Suit.Hearts)
+                player4Points++;
+            if (Table.getInstance().getPlayer4().getOldCards().get(i).getSuit() == Suit.Spades
+                    && Table.getInstance().getPlayer4().getOldCards().get(i).getRank() == Rank.Queen)
+                player4Points = player4Points + 13;
+        }
+        // Calculate points, moon shoot:
+        if (player1Points == 26) {
+            Table.getInstance().getPlayer2().setPoints(Table.getInstance().getPlayer2().getPoints() + 26);
+            Table.getInstance().getPlayer3().setPoints(Table.getInstance().getPlayer3().getPoints() + 26);
+            Table.getInstance().getPlayer4().setPoints(Table.getInstance().getPlayer4().getPoints() + 26);
+        } else if (player2Points == 26) {
+            Table.getInstance().getPlayer1().setPoints(Table.getInstance().getPlayer1().getPoints() + 26);
+            Table.getInstance().getPlayer3().setPoints(Table.getInstance().getPlayer3().getPoints() + 26);
+            Table.getInstance().getPlayer4().setPoints(Table.getInstance().getPlayer4().getPoints() + 26);
+        } else if (player3Points == 26) {
+            Table.getInstance().getPlayer1().setPoints(Table.getInstance().getPlayer1().getPoints() + 26);
+            Table.getInstance().getPlayer2().setPoints(Table.getInstance().getPlayer2().getPoints() + 26);
+            Table.getInstance().getPlayer4().setPoints(Table.getInstance().getPlayer4().getPoints() + 26);
+        } else if (player4Points == 26) {
+            Table.getInstance().getPlayer1().setPoints(Table.getInstance().getPlayer1().getPoints() + 26);
+            Table.getInstance().getPlayer2().setPoints(Table.getInstance().getPlayer2().getPoints() + 26);
+            Table.getInstance().getPlayer3().setPoints(Table.getInstance().getPlayer3().getPoints() + 26);
+        } else {
+            // Calculate points, no moon shoot:
+            for (int i = 0; i < Table.getInstance().getPlayer1().getOldCards().size(); i++) {
+                if (Table.getInstance().getPlayer1().getOldCards().get(i).getSuit() == Suit.Hearts)
+                    Table.getInstance().getPlayer1().setPoints(Table.getInstance().getPlayer1().getPoints() + 1);
+                if (Table.getInstance().getPlayer1().getOldCards().get(i).getSuit() == Suit.Spades
+                        && Table.getInstance().getPlayer1().getOldCards().get(i).getRank() == Rank.Queen)
+                    Table.getInstance().getPlayer1().setPoints(Table.getInstance().getPlayer1().getPoints() + 13);
+            }
+            for (int i = 0; i < Table.getInstance().getPlayer2().getOldCards().size(); i++) {
+                if (Table.getInstance().getPlayer2().getOldCards().get(i).getSuit() == Suit.Hearts)
+                    Table.getInstance().getPlayer2().setPoints(Table.getInstance().getPlayer2().getPoints() + 1);
+                if (Table.getInstance().getPlayer2().getOldCards().get(i).getSuit() == Suit.Spades
+                        && Table.getInstance().getPlayer2().getOldCards().get(i).getRank() == Rank.Queen)
+                    Table.getInstance().getPlayer2().setPoints(Table.getInstance().getPlayer2().getPoints() + 13);
+            }
+            for (int i = 0; i < Table.getInstance().getPlayer3().getOldCards().size(); i++) {
+                if (Table.getInstance().getPlayer3().getOldCards().get(i).getSuit() == Suit.Hearts)
+                    Table.getInstance().getPlayer3().setPoints(Table.getInstance().getPlayer3().getPoints() + 1);
+                if (Table.getInstance().getPlayer3().getOldCards().get(i).getSuit() == Suit.Spades
+                        && Table.getInstance().getPlayer3().getOldCards().get(i).getRank() == Rank.Queen)
+                    Table.getInstance().getPlayer3().setPoints(Table.getInstance().getPlayer3().getPoints() + 13);
+            }
+            for (int i = 0; i < Table.getInstance().getPlayer4().getOldCards().size(); i++) {
+                if (Table.getInstance().getPlayer4().getOldCards().get(i).getSuit() == Suit.Hearts)
+                    Table.getInstance().getPlayer4().setPoints(Table.getInstance().getPlayer4().getPoints() + 1);
+                if (Table.getInstance().getPlayer4().getOldCards().get(i).getSuit() == Suit.Spades
+                        && Table.getInstance().getPlayer4().getOldCards().get(i).getRank() == Rank.Queen)
+                    Table.getInstance().getPlayer4().setPoints(Table.getInstance().getPlayer4().getPoints() + 13);
+            }
+        }
+    }
+
+//    // ToDo: old passing logic:
 //    public void passCards(int roundsPlayed) {
 //        // display the game:
 //        System.out.println("Human hand:");
@@ -268,143 +358,6 @@ public class Overlord {
 //        System.out.println();
 //
 //    }
-//
-//
-//    public void calculatePoints() {
-//        // Check for moon shoot:
-//        int player1Points = 0;
-//        int player2Points = 0;
-//        int player3Points = 0;
-//        int player4Points = 0;
-//
-//        for (int i = 0; i < human.getOldCards().size(); i++) {
-//            if (human.getOldCards().get(i).getSuit() == Suit.Hearts)
-//                player1Points++;
-//            if (human.getOldCards().get(i).getSuit() == Suit.Spades
-//                    && human.getOldCards().get(i).getRank() == Rank.Queen)
-//                player1Points = player1Points + 13;
-//        }
-//        for (int i = 0; i < comp1.getOldCards().size(); i++) {
-//            if (comp1.getOldCards().get(i).getSuit() == Suit.Hearts)
-//                player2Points++;
-//            if (comp1.getOldCards().get(i).getSuit() == Suit.Spades
-//                    && comp1.getOldCards().get(i).getRank() == Rank.Queen)
-//                player2Points = player2Points + 13;
-//        }
-//        for (int i = 0; i < comp2.getOldCards().size(); i++) {
-//            if (comp2.getOldCards().get(i).getSuit() == Suit.Hearts)
-//                player3Points++;
-//            if (comp2.getOldCards().get(i).getSuit() == Suit.Spades
-//                    && comp2.getOldCards().get(i).getRank() == Rank.Queen)
-//                player3Points = player3Points + 13;
-//        }
-//        for (int i = 0; i < comp3.getOldCards().size(); i++) {
-//            if (comp3.getOldCards().get(i).getSuit() == Suit.Hearts)
-//                player4Points++;
-//            if (comp3.getOldCards().get(i).getSuit() == Suit.Spades
-//                    && comp3.getOldCards().get(i).getRank() == Rank.Queen)
-//                player4Points = player4Points + 13;
-//        }
-//
-//        if (player1Points == 26) {
-//            // Add 26 points to all computers:
-//            comp1.setPoints(comp1.getPoints() + 26);
-//            comp2.setPoints(comp2.getPoints() + 26);
-//            comp3.setPoints(comp3.getPoints() + 26);
-//        } else if (player2Points == 26) {
-//            // Add 26 points to human and comp2 and comp3:
-//            human.setPoints(human.getPoints() + 26);
-//            comp2.setPoints(comp2.getPoints() + 26);
-//            comp3.setPoints(comp3.getPoints() + 26);
-//        } else if (player3Points == 26) {
-//            // Add 26 points to human and comp1 and comp3
-//            human.setPoints(human.getPoints() + 26);
-//            comp1.setPoints(comp1.getPoints() + 26);
-//            comp3.setPoints(comp3.getPoints() + 26);
-//        } else if (player4Points == 26) {
-//            // Add 26 points to human and comp1 and comp2
-//            human.setPoints(human.getPoints() + 26);
-//            comp1.setPoints(comp1.getPoints() + 26);
-//            comp2.setPoints(comp2.getPoints() + 26);
-//        } else {
-//            // Calculate points, no moon shoot:
-//            for (int i = 0; i < human.getOldCards().size(); i++) {
-//                if (human.getOldCards().get(i).getSuit() == Suit.Hearts)
-//                    human.setPoints(human.getPoints() + 1);
-//                if (human.getOldCards().get(i).getSuit() == Suit.Spades
-//                        && human.getOldCards().get(i).getRank() == Rank.Queen)
-//                    human.setPoints(human.getPoints() + 13);
-//            }
-//            for (int i = 0; i < comp1.getOldCards().size(); i++) {
-//                if (comp1.getOldCards().get(i).getSuit() == Suit.Hearts)
-//                    comp1.setPoints(comp1.getPoints() + 1);
-//                if (comp1.getOldCards().get(i).getSuit() == Suit.Spades
-//                        && comp1.getOldCards().get(i).getRank() == Rank.Queen)
-//                    comp1.setPoints(comp1.getPoints() + 13);
-//            }
-//            for (int i = 0; i < comp2.getOldCards().size(); i++) {
-//                if (comp2.getOldCards().get(i).getSuit() == Suit.Hearts)
-//                    comp2.setPoints(comp2.getPoints() + 1);
-//                if (comp2.getOldCards().get(i).getSuit() == Suit.Spades
-//                        && comp2.getOldCards().get(i).getRank() == Rank.Queen)
-//                    comp2.setPoints(comp2.getPoints() + 13);
-//            }
-//            for (int i = 0; i < comp3.getOldCards().size(); i++) {
-//                if (comp3.getOldCards().get(i).getSuit() == Suit.Hearts)
-//                    comp3.setPoints(comp3.getPoints() + 1);
-//                if (comp3.getOldCards().get(i).getSuit() == Suit.Spades
-//                        && comp3.getOldCards().get(i).getRank() == Rank.Queen)
-//                    comp3.setPoints(comp3.getPoints() + 13);
-//            }
-//        }
-//    }
-//
-//    public void updatePlaying() {
-//        if (human.getPoints() >= 100 || comp1.getPoints() >= 100
-//                || comp2.getPoints() >= 100 || comp3.getPoints() >= 100) {
-//            displayWinner();
-//            playing = false;
-//        }
-//
-//    }
-//
-//    public void displayWinner() {
-//        int oneMin = Math.min(human.getPoints(), comp1.getPoints());
-//        int twoMin = Math.min(comp2.getPoints(), comp3.getPoints());
-//        int overallMin = Math.min(oneMin, twoMin);
-//        if (overallMin == human.getPoints())
-//            System.out.println("YOU WIN THE GAME!");
-//        else if (overallMin == comp1.getPoints())
-//            System.out.println("Computer one wins the game...");
-//        else if (overallMin == comp2.getPoints())
-//            System.out.println("Computer two wins the game...");
-//        else if (overallMin == comp3.getPoints())
-//            System.out.println("Computer three wins the game...");
-//
-//    }
-//    public String displayWinnerStringVersion() {
-//        int oneMin = Math.min(human.getPoints(), comp1.getPoints());
-//        int twoMin = Math.min(comp2.getPoints(), comp3.getPoints());
-//        int overallMin = Math.min(oneMin, twoMin);
-//        if (overallMin == human.getPoints())
-//            return human.getName() + " WINS THE GAME!!!!! PENIS!!";
-//        else if (overallMin == comp1.getPoints())
-//            return comp1.getName() + " WINS THE GAME!!!!! WOOPS!!";
-//        else if (overallMin == comp2.getPoints())
-//            return comp2.getName() + " WINS THE GAME!!!!! TERD CITY!!";
-//        else if (overallMin == comp3.getPoints())
-//            return comp3.getName() + " WINS THE GAME!!!!! YOU SUCK!!";
-//        else
-//            return "";
-//    }
-//
-//    public void displayPoints() {
-//        System.out.println("Human Points: " + human.getPoints());
-//        System.out.println("Computer One Points: " + comp1.getPoints());
-//        System.out.println("Computer Two Points: " + comp2.getPoints());
-//        System.out.println("Computer Three Points: " + comp3.getPoints());
-//        System.out.println();
-//    }
 
     public boolean canPlayCard(Card userCard, Player whosPlaying) {
         if (getRoundsPlayed() == 1) {
@@ -516,14 +469,6 @@ public class Overlord {
 
     public boolean getPlaying() {
         return playing;
-    }
-
-    public void setPlaying(boolean newValue) {
-        playing = newValue;
-    }
-
-    public boolean getHeartsBroken() {
-        return heartsBroken;
     }
 
     public Player getLeadingPlayer() {

@@ -15,7 +15,6 @@ import com.companyname.hearts.model.Card;
 import com.companyname.hearts.model.ComputerManager;
 import com.companyname.hearts.model.Dealer;
 import com.companyname.hearts.model.Overlord;
-import com.companyname.hearts.model.Player;
 import com.companyname.hearts.model.Table;
 
 public class MainActivity extends AppCompatActivity {
@@ -253,12 +252,44 @@ public class MainActivity extends AppCompatActivity {
         builder.show();
     }
 
+    public void displayScorePopUp() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Hearts");
+        builder.setMessage(Table.getInstance().getPlayer1().getName() + " : " + Table.getInstance().getPlayer1().getPoints() + "\n" +
+                Table.getInstance().getPlayer2().getName() + " : " + Table.getInstance().getPlayer2().getPoints() + "\n"  +
+                Table.getInstance().getPlayer3().getName() + " : " + Table.getInstance().getPlayer3().getPoints() + "\n" +
+                Table.getInstance().getPlayer4().getName() + " : " + Table.getInstance().getPlayer4().getPoints() + "\n" );
+        builder.setIcon(R.mipmap.ic_launcher);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // ToDo: write remove cards method if needed:
+                removeOldCards();
+                beginGame();
+            }
+        });
+        builder.setCancelable(false);
+        builder.show();
+    }
+
     @SuppressLint("SetTextI18n")
     public void clickedCard(int i) {
         // ToDo: debugging, as well as check for when to reset turns and display score:
         Card computerSelection;
         if (Overlord.getInstance().getRoundsPlayed() == 14) {
             Overlord.getInstance().reset();
+            Overlord.getInstance().calculatePoints();
+            Overlord.getInstance().updatePlaying();
+            // Game Over:
+            if (!Overlord.getInstance().getPlaying()) {
+                // ToDo: decide on how to handle game over
+            }
+            else {
+                // ToDo: display the score for now its a pop up:
+                displayScorePopUp();
+                // ToDo: show old cards? if so write method below:
+                displayOldCards();
+            }
         }
         else {
             if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer2()) {
@@ -369,19 +400,7 @@ public class MainActivity extends AppCompatActivity {
         // ToDo: write this method
     }
 
-    public void updateScoreBoard() {
-        // ToDo: write this method
-    }
-
-    public void displayPoints() {
-        // ToDo: write this method
-    }
-
     public void removeOldCards() {
-        // ToDo: write this method
-    }
-
-    public void displayBoard() {
         // ToDo: write this method
     }
 
