@@ -8,6 +8,7 @@ import java.util.Random;
 public class Dealer {
 
     private static Dealer instance = null;
+
     private Deck deck;
 
     private Dealer() {

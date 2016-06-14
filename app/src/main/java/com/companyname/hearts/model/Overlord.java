@@ -227,7 +227,7 @@ public class Overlord {
         }
     }
 
-//    // ToDo: old passing logic:
+//    // ToDo: old passing logic, might need some day:
 //    public void passCards(int roundsPlayed) {
 //        // display the game:
 //        System.out.println("Human hand:");

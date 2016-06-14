@@ -141,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void beginGame() {
+        //Table.getInstance().getPlayer1().organizeHand();
         System.out.println(Overlord.getInstance().getLeadingPlayer().getName() + " has the two of clubs.");
         Card computerSelection;
         if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer2()) {
@@ -397,11 +398,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void displayOldCards() {
-        // ToDo: write this method
+        // ToDo: write this method if needed:
     }
 
     public void removeOldCards() {
-        // ToDo: write this method
+        // ToDo: write this method if needed:
     }
 
     ImageButton.OnClickListener onCardClick = new ImageButton.OnClickListener() {

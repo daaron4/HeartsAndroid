@@ -17,9 +17,10 @@ public enum Rank {
 	
 	private int rank;
 	
-	private Rank(int rank) {
+	Rank(int rank) {
 		this.rank = rank;
 	}
+
 	public int getValue() {
 		return rank;
 	}

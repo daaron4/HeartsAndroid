@@ -19,14 +19,6 @@ public class Player {
 		this.oldCards = oldCards;
 	}
 
-	public String getCardAsString(int index) {
-		return hand.get(index).toString();
-	}
-	
-	public String getOldCardsCardAsString(int index) {
-		return oldCards.get(index).toString();
-	}
-	
 	public String getName() {
 		return name;
 	}
