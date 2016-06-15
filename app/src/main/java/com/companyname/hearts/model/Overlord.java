@@ -16,7 +16,6 @@ public class Overlord {
         playing = true;
         heartsBroken = false;
         roundsPlayed = 1;
-        leadingPlayer = playerWithTheTwoOfClubs();
     }
 
     public static Overlord getInstance() {
@@ -26,23 +25,21 @@ public class Overlord {
         return instance;
     }
 
-    public Player playerWithTheTwoOfClubs() {
-        Player playerWithTwoOfClubs = null;
+    public void setPlayerWithTheTwoOfClubs() {
         for (int i = 0; i < 13; i++) {
             if (Table.getInstance().getPlayer1().getHand().get(i).getRank().getValue() == 2
                     && Table.getInstance().getPlayer1().getHand().get(i).getSuit() == Suit.Clubs)
-                playerWithTwoOfClubs = Table.getInstance().getPlayer1();
+                leadingPlayer = Table.getInstance().getPlayer1();
             if (Table.getInstance().getPlayer2().getHand().get(i).getRank().getValue() == 2
                     && Table.getInstance().getPlayer2().getHand().get(i).getSuit() == Suit.Clubs)
-                playerWithTwoOfClubs = Table.getInstance().getPlayer2();
+                leadingPlayer = Table.getInstance().getPlayer2();
             if (Table.getInstance().getPlayer3().getHand().get(i).getRank().getValue() == 2
                     && Table.getInstance().getPlayer3().getHand().get(i).getSuit() == Suit.Clubs)
-                playerWithTwoOfClubs = Table.getInstance().getPlayer3();
+                leadingPlayer = Table.getInstance().getPlayer3();
             if (Table.getInstance().getPlayer4().getHand().get(i).getRank().getValue() == 2
                     && Table.getInstance().getPlayer4().getHand().get(i).getSuit() == Suit.Clubs)
-                playerWithTwoOfClubs = Table.getInstance().getPlayer4();
+                leadingPlayer = Table.getInstance().getPlayer4();
         }
-        return playerWithTwoOfClubs;
     }
 
     public void determineTrickWinner() {
@@ -126,17 +123,16 @@ public class Overlord {
     }
 
     public void reset() {
-        // Clear all OldCards:
         Table.getInstance().getPlayer1().getHand().clear();
+        Table.getInstance().getPlayer2().getHand().clear();
+        Table.getInstance().getPlayer3().getHand().clear();
+        Table.getInstance().getPlayer4().getHand().clear();
         Table.getInstance().getPlayer1().getOldCards().clear();
         Table.getInstance().getPlayer2().getOldCards().clear();
         Table.getInstance().getPlayer3().getOldCards().clear();
         Table.getInstance().getPlayer4().getOldCards().clear();
         heartsBroken = false;
-        // increment roundPlayed:
         roundsPlayed = 1;
-        Dealer.getInstance().deal(Table.getInstance().getPlayer1(), Table.getInstance().getPlayer2(), Table.getInstance().getPlayer3(), Table.getInstance().getPlayer4());
-        leadingPlayer = playerWithTheTwoOfClubs();
     }
 
     public void updatePlaying() {
@@ -230,6 +226,7 @@ public class Overlord {
         }
     }
 
+    // ToDo: make this different
     public String getWinningPlayerName() {
         int oneMin = Math.min(Table.getInstance().getPlayer1().getPoints(), Table.getInstance().getPlayer2().getPoints());
         int twoMin = Math.min(Table.getInstance().getPlayer3().getPoints(), Table.getInstance().getPlayer4().getPoints());

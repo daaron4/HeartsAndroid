@@ -20,6 +20,8 @@ import com.companyname.hearts.model.Rank;
 import com.companyname.hearts.model.Suit;
 import com.companyname.hearts.model.Table;
 
+import java.util.Arrays;
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView playerName;
@@ -60,6 +62,14 @@ public class MainActivity extends AppCompatActivity {
         b11 = (ImageButton) findViewById(R.id.card_11);
         b12 = (ImageButton) findViewById(R.id.card_12);
         b13 = (ImageButton) findViewById(R.id.card_13);
+
+        Intent currentIntent = getIntent();
+        String[] playerNames = currentIntent.getStringArrayExtra("playerNames");
+        playerName.setText(playerNames[0]);
+        computer1Name.setText(playerNames[1]);
+        computer2Name.setText(playerNames[2]);
+        computer3Name.setText(playerNames[3]);
+        Table.getInstance().initializeTable(playerNames[0], playerNames[1], playerNames[2], playerNames[3]);
     }
 
     private void createListeners() {
@@ -79,17 +89,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpGame() {
-        Intent currentIntent = getIntent();
-        String[] playerNames = currentIntent.getStringArrayExtra("playerNames");
-        playerName.setText(playerNames[0]);
-        computer1Name.setText(playerNames[1]);
-        computer2Name.setText(playerNames[2]);
-        computer3Name.setText(playerNames[3]);
-
-        Table.getInstance().initializeTable(playerNames[0], playerNames[1], playerNames[2], playerNames[3]);
         Dealer.getInstance().shuffle();
-        Dealer.getInstance().deal(Table.getInstance().getPlayer1(), Table.getInstance().getPlayer2(), Table.getInstance().getPlayer3(), Table.getInstance().getPlayer4());
-
+        Dealer.getInstance().deal(Table.getInstance().getPlayer1(), Table.getInstance().getPlayer2(),
+                Table.getInstance().getPlayer3(), Table.getInstance().getPlayer4());
+        Overlord.getInstance().setPlayerWithTheTwoOfClubs();
         Table.getInstance().getPlayer1().organizeHand();
         // ToDo: decide if computer hands should be sorted as well
         Table.getInstance().getPlayer2().organizeHand();
@@ -98,6 +101,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void displayImages() {
+        // ToDo: remove this debug message:
+        System.out.println(Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
+
         Card c1 = Table.getInstance().getPlayer1().getHand().get(0);
         Card c2 = Table.getInstance().getPlayer1().getHand().get(1);
         Card c3 = Table.getInstance().getPlayer1().getHand().get(2);
@@ -135,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setPositiveButton("Start Playing!", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                beginGame();
+                beginRound();
             }
         });
         builder.setCancelable(false);
@@ -168,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
                 if (Overlord.getInstance().getRoundsPlayed() == 14) {
                     displayScorePopUp();
                 } else {
-                    beginGame();
+                    beginRound();
                 }
             }
         });
@@ -198,16 +204,10 @@ public class MainActivity extends AppCompatActivity {
                     // ToDo: decide on how to handle game over, for now is a simple toast
                     Toast.makeText(MainActivity.this, Overlord.getInstance().getWinningPlayerName(), Toast.LENGTH_LONG).show();
                 } else {
-                    Table.getInstance().getPlayer1().organizeHand();
-
-                    // ToDo: decide if computer hands should be sorted as well
-                    Table.getInstance().getPlayer2().organizeHand();
-                    Table.getInstance().getPlayer3().organizeHand();
-                    Table.getInstance().getPlayer4().organizeHand();
-
+                    setUpGame();
                     displayImages();
                     createListeners();
-                    beginGame();
+                    beginRound();
                 }
             }
         });
@@ -216,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @SuppressLint("SetTextI18n")
-    private void beginGame() {
+    private void beginRound() {
         Card computerSelection;
         if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer2()) {
             computerSelection = ComputerManager.computer1MakesMove();
