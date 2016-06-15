@@ -15,6 +15,8 @@ import com.companyname.hearts.model.Card;
 import com.companyname.hearts.model.ComputerManager;
 import com.companyname.hearts.model.Dealer;
 import com.companyname.hearts.model.Overlord;
+import com.companyname.hearts.model.Rank;
+import com.companyname.hearts.model.Suit;
 import com.companyname.hearts.model.Table;
 
 public class MainActivity extends AppCompatActivity {
@@ -284,9 +286,9 @@ public class MainActivity extends AppCompatActivity {
         // ToDo: debugging, as well as check for when to reset turns and display score:
         Card computerSelection;
         if (Overlord.getInstance().getRoundsPlayed() == 14) {
-            Overlord.getInstance().reset();
             Overlord.getInstance().calculatePoints();
             Overlord.getInstance().updatePlaying();
+            Overlord.getInstance().reset();
             // Game Over:
             if (!Overlord.getInstance().getPlaying()) {
                 // ToDo: decide on how to handle game over
@@ -304,7 +306,9 @@ public class MainActivity extends AppCompatActivity {
                     Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
                     testView.setText(testView.getText() + "Player 1 played: " + Table.getInstance().getPlayer1().getHand().get(i).toString() + "\n");
                     // ToDo: deal with issue with removing cards:
-                    //Table.getInstance().getPlayer1().getHand().remove(i);
+                    Table.getInstance().getPlayer1().getHand().remove(i);
+                    Table.getInstance().getPlayer1().getHand().add(i, new Card(Rank.Joker, Suit.Joker, R.drawable.derpycard));
+
 
                     Overlord.getInstance().determineTrickWinner();
                     displayTrickWinnerPopUp();
@@ -321,7 +325,8 @@ public class MainActivity extends AppCompatActivity {
                     Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
                     testView.setText(testView.getText() + "Player 1 played: " + Table.getInstance().getPlayer1().getHand().get(i).toString() + "\n");
                     // ToDo: deal with issue with removing cards:
-                    //Table.getInstance().getPlayer1().getHand().remove(i);
+                    Table.getInstance().getPlayer1().getHand().remove(i);
+                    Table.getInstance().getPlayer1().getHand().add(i, new Card(Rank.Joker, Suit.Joker, R.drawable.derpycard));
 
                     computerSelection = ComputerManager.computer1MakesMove();
                     Table.getInstance().getBoard().add(computerSelection);
@@ -343,7 +348,8 @@ public class MainActivity extends AppCompatActivity {
                     Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
                     testView.setText(testView.getText() + "Player 1 played: " + Table.getInstance().getPlayer1().getHand().get(i).toString() + "\n");
                     // ToDo: deal with issue with removing cards:
-                    //Table.getInstance().getPlayer1().getHand().remove(i);
+                    Table.getInstance().getPlayer1().getHand().remove(i);
+                    Table.getInstance().getPlayer1().getHand().add(i, new Card(Rank.Joker, Suit.Joker, R.drawable.derpycard));
 
                     computerSelection = ComputerManager.computer1MakesMove();
                     Table.getInstance().getBoard().add(computerSelection);
@@ -371,7 +377,9 @@ public class MainActivity extends AppCompatActivity {
                     Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
                     testView.setText(testView.getText() + "Player 1 played: " + Table.getInstance().getPlayer1().getHand().get(i).toString() + "\n");
                     // ToDo: deal with issue with removing cards:
-                    //Table.getInstance().getPlayer1().getHand().remove(i);
+                    Table.getInstance().getPlayer1().getHand().remove(i);
+                    Table.getInstance().getPlayer1().getHand().add(i, new Card(Rank.Joker, Suit.Joker, R.drawable.derpycard));
+
 
                     computerSelection = ComputerManager.computer1MakesMove();
                     Table.getInstance().getBoard().add(computerSelection);
