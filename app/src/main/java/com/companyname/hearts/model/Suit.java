@@ -8,6 +8,7 @@ public enum Suit {
 	Suit(int strength) {
 		this.strength = strength;
 	}
+
 	public int getStrength() {
 		return strength;
 	}
