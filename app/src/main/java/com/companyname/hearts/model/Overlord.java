@@ -127,13 +127,14 @@ public class Overlord {
 
     public void reset() {
         // Clear all OldCards:
+        Table.getInstance().getPlayer1().getHand().clear();
         Table.getInstance().getPlayer1().getOldCards().clear();
         Table.getInstance().getPlayer2().getOldCards().clear();
         Table.getInstance().getPlayer3().getOldCards().clear();
         Table.getInstance().getPlayer4().getOldCards().clear();
         heartsBroken = false;
         // increment roundPlayed:
-        roundsPlayed=1;
+        roundsPlayed = 1;
         Dealer.getInstance().deal(Table.getInstance().getPlayer1(), Table.getInstance().getPlayer2(), Table.getInstance().getPlayer3(), Table.getInstance().getPlayer4());
         leadingPlayer = playerWithTheTwoOfClubs();
     }
