@@ -133,7 +133,9 @@ public class Overlord {
         Table.getInstance().getPlayer4().getOldCards().clear();
         heartsBroken = false;
         // increment roundPlayed:
-        roundsPlayed++;
+        roundsPlayed=1;
+        Dealer.getInstance().deal(Table.getInstance().getPlayer1(), Table.getInstance().getPlayer2(), Table.getInstance().getPlayer3(), Table.getInstance().getPlayer4());
+        leadingPlayer = playerWithTheTwoOfClubs();
     }
 
     public void updatePlaying() {
