@@ -230,6 +230,25 @@ public class Overlord {
         }
     }
 
+    public String getWinningPlayerName() {
+        int oneMin = Math.min(Table.getInstance().getPlayer1().getPoints(), Table.getInstance().getPlayer2().getPoints());
+        int twoMin = Math.min(Table.getInstance().getPlayer3().getPoints(), Table.getInstance().getPlayer4().getPoints());
+        int overallMin = Math.min(oneMin, twoMin);
+        if (overallMin == Table.getInstance().getPlayer1().getPoints()) {
+            return Table.getInstance().getPlayer1().getName() + " wins the game!";
+        }
+        else if (overallMin == Table.getInstance().getPlayer2().getPoints()) {
+            return Table.getInstance().getPlayer2().getName() + " wins the game!";
+        }
+        else if (overallMin == Table.getInstance().getPlayer3().getPoints()) {
+            return Table.getInstance().getPlayer3().getName() + " wins the game!";
+        }
+        else {
+            return Table.getInstance().getPlayer4().getName() + " wins the game!";
+        }
+
+    }
+
 //    // ToDo: old passing logic, might need some day:
 //    public void passCards(int roundsPlayed) {
 //        // display the game:

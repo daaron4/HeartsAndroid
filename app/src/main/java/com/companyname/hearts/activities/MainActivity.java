@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.companyname.hearts.R;
 import com.companyname.hearts.model.Card;
@@ -52,19 +53,7 @@ public class MainActivity extends AppCompatActivity {
         b12 = (ImageButton) findViewById(R.id.card_12);
         b13 = (ImageButton) findViewById(R.id.card_13);
 
-        b1.setOnClickListener(onCardClick);
-        b2.setOnClickListener(onCardClick);
-        b3.setOnClickListener(onCardClick);
-        b4.setOnClickListener(onCardClick);
-        b5.setOnClickListener(onCardClick);
-        b6.setOnClickListener(onCardClick);
-        b7.setOnClickListener(onCardClick);
-        b8.setOnClickListener(onCardClick);
-        b9.setOnClickListener(onCardClick);
-        b10.setOnClickListener(onCardClick);
-        b11.setOnClickListener(onCardClick);
-        b12.setOnClickListener(onCardClick);
-        b13.setOnClickListener(onCardClick);
+        createListeners();
 
         testView = (TextView) findViewById(R.id.test_view);
 
@@ -78,10 +67,26 @@ public class MainActivity extends AppCompatActivity {
         Table.getInstance().initializeTable(playerNames[0], playerNames[1], playerNames[2], playerNames[3]);
         Dealer.getInstance().shuffle();
         Dealer.getInstance().deal(Table.getInstance().getPlayer1(), Table.getInstance().getPlayer2(), Table.getInstance().getPlayer3(), Table.getInstance().getPlayer4());
-        // ToDo: move this line:
-        displayImages();
 
+        Table.getInstance().getPlayer1().organizeHand();
+        displayImages();
         startGamePopUp();
+    }
+
+    public void createListeners() {
+        b1.setOnClickListener(onCardClick);
+        b2.setOnClickListener(onCardClick);
+        b3.setOnClickListener(onCardClick);
+        b4.setOnClickListener(onCardClick);
+        b5.setOnClickListener(onCardClick);
+        b6.setOnClickListener(onCardClick);
+        b7.setOnClickListener(onCardClick);
+        b8.setOnClickListener(onCardClick);
+        b9.setOnClickListener(onCardClick);
+        b10.setOnClickListener(onCardClick);
+        b11.setOnClickListener(onCardClick);
+        b12.setOnClickListener(onCardClick);
+        b13.setOnClickListener(onCardClick);
     }
 
     public void displayImages() {
@@ -268,9 +273,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 // Game Over:
                 if (!Overlord.getInstance().getPlaying()) {
-                    // ToDo: decide on how to handle game over
+                    // ToDo: decide on how to handle game over, for now is a simple toast
+                    Toast.makeText(MainActivity.this, Overlord.getInstance().getWinningPlayerName(), Toast.LENGTH_LONG).show();
                 } else {
-                   beginGame();
+                    Table.getInstance().getPlayer1().organizeHand();
+                    displayImages();
+                    createListeners();
+                    beginGame();
                 }
             }
         });
@@ -289,7 +298,6 @@ public class MainActivity extends AppCompatActivity {
                 // ToDo: deal with issue with removing cards:
                 Table.getInstance().getPlayer1().getHand().remove(i);
                 Table.getInstance().getPlayer1().getHand().add(i, new Card(Rank.Joker, Suit.Joker, R.drawable.derpycard));
-
 
                 Overlord.getInstance().determineTrickWinner();
                 displayTrickWinnerPopUp();
