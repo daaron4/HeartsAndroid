@@ -33,11 +33,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initializeViews();
+        createListeners();
+        setUpGame();
+        displayImages();
+        startGamePopUp();
+    }
 
+    private void initializeViews() {
         playerName = (TextView) findViewById(R.id.player_name);
         computer1Name = (TextView) findViewById(R.id.computer1_name);
         computer2Name = (TextView) findViewById(R.id.computer2_name);
         computer3Name = (TextView) findViewById(R.id.computer3_name);
+        testView = (TextView) findViewById(R.id.test_view);
 
         b1 = (ImageButton) findViewById(R.id.card_1);
         b2 = (ImageButton) findViewById(R.id.card_2);
@@ -52,28 +60,9 @@ public class MainActivity extends AppCompatActivity {
         b11 = (ImageButton) findViewById(R.id.card_11);
         b12 = (ImageButton) findViewById(R.id.card_12);
         b13 = (ImageButton) findViewById(R.id.card_13);
-
-        createListeners();
-
-        testView = (TextView) findViewById(R.id.test_view);
-
-        Intent currentIntent = getIntent();
-        String[] playerNames = currentIntent.getStringArrayExtra("playerNames");
-        playerName.setText(playerNames[0]);
-        computer1Name.setText(playerNames[1]);
-        computer2Name.setText(playerNames[2]);
-        computer3Name.setText(playerNames[3]);
-
-        Table.getInstance().initializeTable(playerNames[0], playerNames[1], playerNames[2], playerNames[3]);
-        Dealer.getInstance().shuffle();
-        Dealer.getInstance().deal(Table.getInstance().getPlayer1(), Table.getInstance().getPlayer2(), Table.getInstance().getPlayer3(), Table.getInstance().getPlayer4());
-
-        Table.getInstance().getPlayer1().organizeHand();
-        displayImages();
-        startGamePopUp();
     }
 
-    public void createListeners() {
+    private void createListeners() {
         b1.setOnClickListener(onCardClick);
         b2.setOnClickListener(onCardClick);
         b3.setOnClickListener(onCardClick);
@@ -89,7 +78,26 @@ public class MainActivity extends AppCompatActivity {
         b13.setOnClickListener(onCardClick);
     }
 
-    public void displayImages() {
+    private void setUpGame() {
+        Intent currentIntent = getIntent();
+        String[] playerNames = currentIntent.getStringArrayExtra("playerNames");
+        playerName.setText(playerNames[0]);
+        computer1Name.setText(playerNames[1]);
+        computer2Name.setText(playerNames[2]);
+        computer3Name.setText(playerNames[3]);
+
+        Table.getInstance().initializeTable(playerNames[0], playerNames[1], playerNames[2], playerNames[3]);
+        Dealer.getInstance().shuffle();
+        Dealer.getInstance().deal(Table.getInstance().getPlayer1(), Table.getInstance().getPlayer2(), Table.getInstance().getPlayer3(), Table.getInstance().getPlayer4());
+
+        Table.getInstance().getPlayer1().organizeHand();
+        // ToDo: decide if computer hands should be sorted as well
+        Table.getInstance().getPlayer2().organizeHand();
+        Table.getInstance().getPlayer3().organizeHand();
+        Table.getInstance().getPlayer4().organizeHand();
+    }
+
+    private void displayImages() {
         Card c1 = Table.getInstance().getPlayer1().getHand().get(0);
         Card c2 = Table.getInstance().getPlayer1().getHand().get(1);
         Card c3 = Table.getInstance().getPlayer1().getHand().get(2);
@@ -119,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         b13.setImageResource(c13.getResId());
     }
 
-    public void startGamePopUp() {
+    private void startGamePopUp() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Hearts");
         builder.setMessage("Welcome to Hearts!");
@@ -134,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
         builder.show();
     }
 
-    public void cantPlayThatPopUp() {
+    private void cantPlayThatPopUp() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Hearts");
         builder.setMessage("You can't play that!");
@@ -149,13 +157,66 @@ public class MainActivity extends AppCompatActivity {
         builder.show();
     }
 
-    @SuppressLint("SetTextI18n")
-    public void beginGame() {
-//        // ToDo: decide if computer hands should be sorted as well
-//        Table.getInstance().getPlayer1().organizeHand();
-//        displayImages();
+    private void displayTrickWinnerPopUp() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Hearts");
+        builder.setMessage(Overlord.getInstance().getLeadingPlayer().getName() + " wins the trick.");
+        builder.setIcon(R.mipmap.ic_launcher);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (Overlord.getInstance().getRoundsPlayed() == 14) {
+                    displayScorePopUp();
+                } else {
+                    beginGame();
+                }
+            }
+        });
+        builder.setCancelable(false);
+        builder.show();
+    }
 
-        System.out.println(Overlord.getInstance().getLeadingPlayer().getName() + " has the two of clubs.");
+    private void displayScorePopUp() {
+        // ToDo: write remove cards method if needed:
+        removeOldCards();
+        Overlord.getInstance().calculatePoints();
+        Overlord.getInstance().updatePlaying();
+        Overlord.getInstance().reset();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Hearts");
+        builder.setMessage(Table.getInstance().getPlayer1().getName() + " : " + Table.getInstance().getPlayer1().getPoints() + "\n" +
+                Table.getInstance().getPlayer2().getName() + " : " + Table.getInstance().getPlayer2().getPoints() + "\n" +
+                Table.getInstance().getPlayer3().getName() + " : " + Table.getInstance().getPlayer3().getPoints() + "\n" +
+                Table.getInstance().getPlayer4().getName() + " : " + Table.getInstance().getPlayer4().getPoints() + "\n");
+        builder.setIcon(R.mipmap.ic_launcher);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // Game Over:
+                if (!Overlord.getInstance().getPlaying()) {
+                    // ToDo: decide on how to handle game over, for now is a simple toast
+                    Toast.makeText(MainActivity.this, Overlord.getInstance().getWinningPlayerName(), Toast.LENGTH_LONG).show();
+                } else {
+                    Table.getInstance().getPlayer1().organizeHand();
+
+                    // ToDo: decide if computer hands should be sorted as well
+                    Table.getInstance().getPlayer2().organizeHand();
+                    Table.getInstance().getPlayer3().organizeHand();
+                    Table.getInstance().getPlayer4().organizeHand();
+
+                    displayImages();
+                    createListeners();
+                    beginGame();
+                }
+            }
+        });
+        builder.setCancelable(false);
+        builder.show();
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void beginGame() {
         Card computerSelection;
         if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer2()) {
             computerSelection = ComputerManager.computer1MakesMove();
@@ -191,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void removeCardFromView(int i) {
+    private void removeCardFromView(int i) {
         if (i == 0) {
             b1.setImageResource(0);
             b1.setOnClickListener(null);
@@ -235,60 +296,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void displayTrickWinnerPopUp() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Hearts");
-        builder.setMessage(Overlord.getInstance().getLeadingPlayer().getName() + " wins the trick.");
-        builder.setIcon(R.mipmap.ic_launcher);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if (Overlord.getInstance().getRoundsPlayed() == 14) {
-                    displayScorePopUp();
-                } else {
-                    beginGame();
-                }
-            }
-        });
-        builder.setCancelable(false);
-        builder.show();
-    }
-
-    public void displayScorePopUp() {
-        // ToDo: write remove cards method if needed:
-        removeOldCards();
-        Overlord.getInstance().calculatePoints();
-        Overlord.getInstance().updatePlaying();
-        Overlord.getInstance().reset();
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Hearts");
-        builder.setMessage(Table.getInstance().getPlayer1().getName() + " : " + Table.getInstance().getPlayer1().getPoints() + "\n" +
-                Table.getInstance().getPlayer2().getName() + " : " + Table.getInstance().getPlayer2().getPoints() + "\n" +
-                Table.getInstance().getPlayer3().getName() + " : " + Table.getInstance().getPlayer3().getPoints() + "\n" +
-                Table.getInstance().getPlayer4().getName() + " : " + Table.getInstance().getPlayer4().getPoints() + "\n");
-        builder.setIcon(R.mipmap.ic_launcher);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                // Game Over:
-                if (!Overlord.getInstance().getPlaying()) {
-                    // ToDo: decide on how to handle game over, for now is a simple toast
-                    Toast.makeText(MainActivity.this, Overlord.getInstance().getWinningPlayerName(), Toast.LENGTH_LONG).show();
-                } else {
-                    Table.getInstance().getPlayer1().organizeHand();
-                    displayImages();
-                    createListeners();
-                    beginGame();
-                }
-            }
-        });
-        builder.setCancelable(false);
-        builder.show();
-    }
-
     @SuppressLint("SetTextI18n")
-    public void clickedCard(int i) {
+    private void clickedCard(int i) {
         // ToDo: debugging, as well as check for when to reset turns and display score:
         Card computerSelection;
         if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer2()) {
@@ -391,11 +400,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void displayOldCards() {
+    private void displayOldCards() {
         // ToDo: write this method if needed:
     }
 
-    public void removeOldCards() {
+    private void removeOldCards() {
         // ToDo: write this method if needed:
     }
 
