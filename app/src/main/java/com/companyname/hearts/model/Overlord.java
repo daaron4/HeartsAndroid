@@ -471,6 +471,10 @@ public class Overlord {
         return playing;
     }
 
+    public boolean getHeartsBroken() {
+        return heartsBroken;
+    }
+
     public Player getLeadingPlayer() {
         return leadingPlayer;
     }

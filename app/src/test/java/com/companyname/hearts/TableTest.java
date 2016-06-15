@@ -16,9 +16,13 @@ import static org.junit.Assert.*;
  */
 public class TableTest {
 
+    @Before
+    public void setUp() {
+        Table.getInstance().initializeTable("Player One", "Player Two", "Player Three", "Player Four");
+    }
+
     @Test
     public void testTable() {
-        Table.getInstance().initializeTable("Player One", "Player Two", "Player Three", "Player Four");
         assertEquals("Player One", Table.getInstance().getPlayer1().getName());
         assertEquals("Player Two", Table.getInstance().getPlayer2().getName());
         assertEquals("Player Three", Table.getInstance().getPlayer3().getName());
