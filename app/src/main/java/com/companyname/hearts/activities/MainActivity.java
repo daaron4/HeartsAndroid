@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +21,7 @@ import com.companyname.hearts.model.Rank;
 import com.companyname.hearts.model.Suit;
 import com.companyname.hearts.model.Table;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,7 +31,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView computer2Name;
     private TextView computer3Name;
     private TextView testView;
+    private Button passButton;
     private ImageButton b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13;
+    private ArrayList<Card> playerCardsToComputer = new ArrayList<>();
+    private ArrayList<Card> computerCardsToPlayer = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         createListeners();
         setUpGame();
         displayImages();
-        startGamePopUp();
+        beginRound();
     }
 
     private void initializeViews() {
@@ -48,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
         computer2Name = (TextView) findViewById(R.id.computer2_name);
         computer3Name = (TextView) findViewById(R.id.computer3_name);
         testView = (TextView) findViewById(R.id.test_view);
+        passButton = (Button) findViewById(R.id.pass_cards_button);
+        passButton.setVisibility(View.VISIBLE);
 
         b1 = (ImageButton) findViewById(R.id.card_1);
         b2 = (ImageButton) findViewById(R.id.card_2);
@@ -101,9 +108,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void displayImages() {
-        // ToDo: remove this debug message:
-        System.out.println(Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
-
         Card c1 = Table.getInstance().getPlayer1().getHand().get(0);
         Card c2 = Table.getInstance().getPlayer1().getHand().get(1);
         Card c3 = Table.getInstance().getPlayer1().getHand().get(2);
@@ -131,21 +135,6 @@ public class MainActivity extends AppCompatActivity {
         b11.setImageResource(c11.getResId());
         b12.setImageResource(c12.getResId());
         b13.setImageResource(c13.getResId());
-    }
-
-    private void startGamePopUp() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Hearts");
-        builder.setMessage("Welcome to Hearts!");
-        builder.setIcon(R.mipmap.ic_launcher);
-        builder.setPositiveButton("Start Playing!", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                beginRound();
-            }
-        });
-        builder.setCancelable(false);
-        builder.show();
     }
 
     private void cantPlayThatPopUp() {
@@ -217,37 +206,39 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void beginRound() {
-        Card computerSelection;
-        if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer2()) {
-            computerSelection = ComputerManager.computer1MakesMove();
-            Table.getInstance().getBoard().add(computerSelection);
-            testView.setText(testView.getText() + Table.getInstance().getPlayer2().getName()
-                    + " played: " + computerSelection.toString() + "\n");
+        if (!Overlord.getInstance().getPassing()) {
+            Card computerSelection;
+            if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer2()) {
+                computerSelection = ComputerManager.computer1MakesMove();
+                Table.getInstance().getBoard().add(computerSelection);
+                testView.setText(testView.getText() + Table.getInstance().getPlayer2().getName()
+                        + " played: " + computerSelection.toString() + "\n");
 
-            computerSelection = ComputerManager.computer2MakesMove();
-            Table.getInstance().getBoard().add(computerSelection);
-            testView.setText(testView.getText() + Table.getInstance().getPlayer3().getName()
-                    + " played: " + computerSelection.toString() + "\n");
+                computerSelection = ComputerManager.computer2MakesMove();
+                Table.getInstance().getBoard().add(computerSelection);
+                testView.setText(testView.getText() + Table.getInstance().getPlayer3().getName()
+                        + " played: " + computerSelection.toString() + "\n");
 
-            computerSelection = ComputerManager.computer3MakesMove();
-            Table.getInstance().getBoard().add(computerSelection);
-            testView.setText(testView.getText() + Table.getInstance().getPlayer4().getName()
-                    + " played: " + computerSelection.toString() + "\n");
-        } else if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer3()) {
-            computerSelection = ComputerManager.computer2MakesMove();
-            Table.getInstance().getBoard().add(computerSelection);
-            testView.setText(testView.getText() + Table.getInstance().getPlayer3().getName()
-                    + " played: " + computerSelection.toString() + "\n");
+                computerSelection = ComputerManager.computer3MakesMove();
+                Table.getInstance().getBoard().add(computerSelection);
+                testView.setText(testView.getText() + Table.getInstance().getPlayer4().getName()
+                        + " played: " + computerSelection.toString() + "\n");
+            } else if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer3()) {
+                computerSelection = ComputerManager.computer2MakesMove();
+                Table.getInstance().getBoard().add(computerSelection);
+                testView.setText(testView.getText() + Table.getInstance().getPlayer3().getName()
+                        + " played: " + computerSelection.toString() + "\n");
 
-            computerSelection = ComputerManager.computer3MakesMove();
-            Table.getInstance().getBoard().add(computerSelection);
-            testView.setText(testView.getText() + Table.getInstance().getPlayer4().getName()
-                    + " played: " + computerSelection.toString() + "\n");
-        } else if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer4()) {
-            computerSelection = ComputerManager.computer3MakesMove();
-            Table.getInstance().getBoard().add(computerSelection);
-            testView.setText(testView.getText() + Table.getInstance().getPlayer4().getName()
-                    + " played: " + computerSelection.toString() + "\n");
+                computerSelection = ComputerManager.computer3MakesMove();
+                Table.getInstance().getBoard().add(computerSelection);
+                testView.setText(testView.getText() + Table.getInstance().getPlayer4().getName()
+                        + " played: " + computerSelection.toString() + "\n");
+            } else if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer4()) {
+                computerSelection = ComputerManager.computer3MakesMove();
+                Table.getInstance().getBoard().add(computerSelection);
+                testView.setText(testView.getText() + Table.getInstance().getPlayer4().getName()
+                        + " played: " + computerSelection.toString() + "\n");
+            }
         }
 
     }
@@ -298,107 +289,184 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void clickedCard(int i) {
-        // ToDo: debugging, as well as check for when to reset turns and display score:
-        Card computerSelection;
-        if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer2()) {
-            if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1())) {
-                Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
-                testView.setText(testView.getText() + "Player 1 played: " + Table.getInstance().getPlayer1().getHand().get(i).toString() + "\n");
-                // ToDo: deal with issue with removing cards:
-                Table.getInstance().getPlayer1().getHand().remove(i);
-                Table.getInstance().getPlayer1().getHand().add(i, new Card(Rank.Joker, Suit.Joker, R.drawable.derpycard));
+        if (!Overlord.getInstance().getPassing()) {
+            Card computerSelection;
+            if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer2()) {
+                if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1())) {
+                    Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
+                    testView.setText(testView.getText() + "Player 1 played: " + Table.getInstance().getPlayer1().getHand().get(i).toString() + "\n");
+                    // ToDo: deal with issue with removing cards:
+                    Table.getInstance().getPlayer1().getHand().remove(i);
+                    Table.getInstance().getPlayer1().getHand().add(i, new Card(Rank.Joker, Suit.Joker, R.drawable.derpycard));
 
-                Overlord.getInstance().determineTrickWinner();
-                displayTrickWinnerPopUp();
-                removeCardFromView(i);
-                testView.setText("");
-                Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
+                    Overlord.getInstance().determineTrickWinner();
+                    displayTrickWinnerPopUp();
+                    removeCardFromView(i);
+                    testView.setText("");
+                    Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
+                } else {
+                    cantPlayThatPopUp();
+                }
+            } else if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer3()) {
+                if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1())) {
+                    Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
+                    testView.setText(testView.getText() + "Player 1 played: " + Table.getInstance().getPlayer1().getHand().get(i).toString() + "\n");
+                    // ToDo: deal with issue with removing cards:
+                    Table.getInstance().getPlayer1().getHand().remove(i);
+                    Table.getInstance().getPlayer1().getHand().add(i, new Card(Rank.Joker, Suit.Joker, R.drawable.derpycard));
+
+                    computerSelection = ComputerManager.computer1MakesMove();
+                    Table.getInstance().getBoard().add(computerSelection);
+                    testView.setText(testView.getText() + Table.getInstance().getPlayer2().getName()
+                            + " played: " + computerSelection.toString() + "\n");
+
+                    Overlord.getInstance().determineTrickWinner();
+                    displayTrickWinnerPopUp();
+                    removeCardFromView(i);
+                    testView.setText("");
+                    Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
+                } else {
+                    cantPlayThatPopUp();
+                }
+            } else if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer4()) {
+                if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1())) {
+                    Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
+                    testView.setText(testView.getText() + "Player 1 played: " + Table.getInstance().getPlayer1().getHand().get(i).toString() + "\n");
+                    // ToDo: deal with issue with removing cards:
+                    Table.getInstance().getPlayer1().getHand().remove(i);
+                    Table.getInstance().getPlayer1().getHand().add(i, new Card(Rank.Joker, Suit.Joker, R.drawable.derpycard));
+
+                    computerSelection = ComputerManager.computer1MakesMove();
+                    Table.getInstance().getBoard().add(computerSelection);
+                    testView.setText(testView.getText() + Table.getInstance().getPlayer2().getName()
+                            + " played: " + computerSelection.toString() + "\n");
+
+                    computerSelection = ComputerManager.computer2MakesMove();
+                    Table.getInstance().getBoard().add(computerSelection);
+                    testView.setText(testView.getText() + Table.getInstance().getPlayer3().getName()
+                            + " played: " + computerSelection.toString() + "\n");
+
+                    Overlord.getInstance().determineTrickWinner();
+                    displayTrickWinnerPopUp();
+                    removeCardFromView(i);
+                    testView.setText("");
+                    Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
+                } else {
+                    cantPlayThatPopUp();
+                }
             } else {
-                cantPlayThatPopUp();
+                if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1())) {
+                    Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
+                    testView.setText(testView.getText() + "Player 1 played: " + Table.getInstance().getPlayer1().getHand().get(i).toString() + "\n");
+                    // ToDo: deal with issue with removing cards:
+                    Table.getInstance().getPlayer1().getHand().remove(i);
+                    Table.getInstance().getPlayer1().getHand().add(i, new Card(Rank.Joker, Suit.Joker, R.drawable.derpycard));
+
+
+                    computerSelection = ComputerManager.computer1MakesMove();
+                    Table.getInstance().getBoard().add(computerSelection);
+                    testView.setText(testView.getText() + Table.getInstance().getPlayer2().getName()
+                            + " played: " + computerSelection.toString() + "\n");
+
+                    computerSelection = ComputerManager.computer2MakesMove();
+                    Table.getInstance().getBoard().add(computerSelection);
+                    testView.setText(testView.getText() + Table.getInstance().getPlayer3().getName()
+                            + " played: " + computerSelection.toString() + "\n");
+
+                    computerSelection = ComputerManager.computer3MakesMove();
+                    Table.getInstance().getBoard().add(computerSelection);
+                    testView.setText(testView.getText() + Table.getInstance().getPlayer4().getName()
+                            + " played: " + computerSelection.toString() + "\n");
+
+                    Overlord.getInstance().determineTrickWinner();
+                    displayTrickWinnerPopUp();
+                    removeCardFromView(i);
+                    testView.setText("");
+                    Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
+                } else {
+                    cantPlayThatPopUp();
+                }
+
             }
-        } else if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer3()) {
-            if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1())) {
-                Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
-                testView.setText(testView.getText() + "Player 1 played: " + Table.getInstance().getPlayer1().getHand().get(i).toString() + "\n");
-                // ToDo: deal with issue with removing cards:
-                Table.getInstance().getPlayer1().getHand().remove(i);
-                Table.getInstance().getPlayer1().getHand().add(i, new Card(Rank.Joker, Suit.Joker, R.drawable.derpycard));
-
-                computerSelection = ComputerManager.computer1MakesMove();
-                Table.getInstance().getBoard().add(computerSelection);
-                testView.setText(testView.getText() + Table.getInstance().getPlayer2().getName()
-                        + " played: " + computerSelection.toString() + "\n");
-
-                Overlord.getInstance().determineTrickWinner();
-                displayTrickWinnerPopUp();
-                removeCardFromView(i);
-                testView.setText("");
-                Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
-            } else {
-                cantPlayThatPopUp();
-            }
-        } else if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer4()) {
-            if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1())) {
-                Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
-                testView.setText(testView.getText() + "Player 1 played: " + Table.getInstance().getPlayer1().getHand().get(i).toString() + "\n");
-                // ToDo: deal with issue with removing cards:
-                Table.getInstance().getPlayer1().getHand().remove(i);
-                Table.getInstance().getPlayer1().getHand().add(i, new Card(Rank.Joker, Suit.Joker, R.drawable.derpycard));
-
-                computerSelection = ComputerManager.computer1MakesMove();
-                Table.getInstance().getBoard().add(computerSelection);
-                testView.setText(testView.getText() + Table.getInstance().getPlayer2().getName()
-                        + " played: " + computerSelection.toString() + "\n");
-
-                computerSelection = ComputerManager.computer2MakesMove();
-                Table.getInstance().getBoard().add(computerSelection);
-                testView.setText(testView.getText() + Table.getInstance().getPlayer3().getName()
-                        + " played: " + computerSelection.toString() + "\n");
-
-                Overlord.getInstance().determineTrickWinner();
-                displayTrickWinnerPopUp();
-                removeCardFromView(i);
-                testView.setText("");
-                Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
-            } else {
-                cantPlayThatPopUp();
-            }
-        } else {
-            if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1())) {
-                Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
-                testView.setText(testView.getText() + "Player 1 played: " + Table.getInstance().getPlayer1().getHand().get(i).toString() + "\n");
-                // ToDo: deal with issue with removing cards:
-                Table.getInstance().getPlayer1().getHand().remove(i);
-                Table.getInstance().getPlayer1().getHand().add(i, new Card(Rank.Joker, Suit.Joker, R.drawable.derpycard));
-
-
-                computerSelection = ComputerManager.computer1MakesMove();
-                Table.getInstance().getBoard().add(computerSelection);
-                testView.setText(testView.getText() + Table.getInstance().getPlayer2().getName()
-                        + " played: " + computerSelection.toString() + "\n");
-
-                computerSelection = ComputerManager.computer2MakesMove();
-                Table.getInstance().getBoard().add(computerSelection);
-                testView.setText(testView.getText() + Table.getInstance().getPlayer3().getName()
-                        + " played: " + computerSelection.toString() + "\n");
-
-                computerSelection = ComputerManager.computer3MakesMove();
-                Table.getInstance().getBoard().add(computerSelection);
-                testView.setText(testView.getText() + Table.getInstance().getPlayer4().getName()
-                        + " played: " + computerSelection.toString() + "\n");
-
-                Overlord.getInstance().determineTrickWinner();
-                displayTrickWinnerPopUp();
-                removeCardFromView(i);
-                testView.setText("");
-                Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
-            } else {
-                cantPlayThatPopUp();
-            }
-
         }
-
+        else {
+            passButton.setText(Overlord.getInstance().passingDirection());
+            passButton.setVisibility(View.VISIBLE);
+            System.out.println("Original Player 1 hand is: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
+            if (playerCardsToComputer.size() != 3) {
+                playerCardsToComputer.add(Table.getInstance().getPlayer1().getHand().get(i));
+                Table.getInstance().getPlayer1().getHand().remove(i);
+                removeCardFromView(i);
+                Table.getInstance().getPlayer1().getHand().add(i, new Card(Rank.Joker, Suit.Joker, R.drawable.derpycard));
+                System.out.println("Temp is: " + Arrays.toString(playerCardsToComputer.toArray()));
+            }
+            else {
+                Toast.makeText(MainActivity.this, "You must pass three cards", Toast.LENGTH_LONG).show();
+            }
+        }
     }
+
+    public void clickedPassCards(View view) {
+        if (playerCardsToComputer.size() < 3) {
+            Toast.makeText(MainActivity.this, "You must pass three cards", Toast.LENGTH_LONG).show();
+        }
+        else {
+            System.out.println("Original Player 2 hand is: " + Arrays.toString(Table.getInstance().getPlayer2().getHand().toArray()));
+            // ToDo: This works, but perhaps not in the way that it should
+            for (int i = 0; i < 3; i++) {
+                Card passMe = Table.getInstance().getPlayer2().getHand().get(i);
+                computerCardsToPlayer.add(passMe);
+                Table.getInstance().getPlayer2().getHand().remove(i);
+                Table.getInstance().getPlayer1().getHand().add(passMe);
+            }
+            for (int i = 0; i < Table.getInstance().getPlayer1().getHand().size(); i++) {
+                if (Table.getInstance().getPlayer1().getHand().get(i).toString().equals("Joker of Joker")) {
+                    Table.getInstance().getPlayer1().getHand().remove(i);
+                    System.out.println("REMOVED A JOKER");
+                    i--;
+                }
+            }
+
+            System.out.println("New Player 1 hand is: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
+            for (int i = 0; i < 3; i++) {
+                Table.getInstance().getPlayer2().getHand().add(playerCardsToComputer.get(i));
+            }
+            playerCardsToComputer.clear();
+            System.out.println("New Player 2 hand is: " + Arrays.toString(Table.getInstance().getPlayer2().getHand().toArray()));
+            Overlord.getInstance().setPassing(false);
+            passButton.setVisibility(View.INVISIBLE);
+
+            cardsReceivedPopUp();
+        }
+    }
+
+    private void cardsReceivedPopUp() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Hearts");
+        builder.setMessage("You received: " + Arrays.toString(computerCardsToPlayer.toArray()));
+        builder.setIcon(R.mipmap.ic_launcher);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                computerCardsToPlayer.clear();
+                Overlord.getInstance().setPlayerWithTheTwoOfClubs();
+                Table.getInstance().getPlayer1().organizeHand();
+                // ToDo: decide if computer hands should be sorted as well
+                Table.getInstance().getPlayer2().organizeHand();
+                Table.getInstance().getPlayer3().organizeHand();
+                Table.getInstance().getPlayer4().organizeHand();
+                for (int j = 0; j < 13; j++) {
+                    removeCardFromView(j);
+                }
+                displayImages();
+                createListeners();
+                beginRound();
+            }
+        });
+        builder.setCancelable(false);
+        builder.show();
+    }
+
 
     private void displayOldCards() {
         // ToDo: write this method if needed:

@@ -176,6 +176,19 @@
             android:textSize="25sp"
             android:textStyle="bold" />
 
+        <Button
+            android:id="@+id/pass_cards_button"
+            android:layout_width="wrap_content"
+            android:visibility="invisible"
+            android:onClick="clickedPassCards"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/computer3_name"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="Pass three cards left"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/computer3_name"
             android:layout_width="wrap_content"

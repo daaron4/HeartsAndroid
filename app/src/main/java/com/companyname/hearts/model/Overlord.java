@@ -6,6 +6,7 @@ public class Overlord {
 
     private boolean playing;
     private boolean heartsBroken;
+    private boolean passing;
     private int roundsPlayed;
     private Player leadingPlayer;
 
@@ -15,6 +16,8 @@ public class Overlord {
         // Do no allow instantiation
         playing = true;
         heartsBroken = false;
+        //ToDo: change to false for testing regular play without passing:
+        passing = true;
         roundsPlayed = 1;
     }
 
@@ -246,45 +249,23 @@ public class Overlord {
 
     }
 
-//    // ToDo: old passing logic, might need some day:
-//    public void passCards(int roundsPlayed) {
-//        // display the game:
-//        System.out.println("Human hand:");
-//        for (int i = 0; i < human.getHand().size(); i++)
-//            System.out.print(human.getCardAsString(i) + " ");
-//        System.out.println();
-//        System.out.println("Computer One hand:");
-//        for (int i = 0; i < comp1.getHand().size(); i++)
-//            System.out.print(comp1.getCardAsString(i) + " ");
-//        System.out.println();
-//        System.out.println("Computer Two hand:");
-//        for (int i = 0; i < comp2.getHand().size(); i++)
-//            System.out.print(comp2.getCardAsString(i) + " ");
-//        System.out.println();
-//        System.out.println("Computer Three hand:");
-//        for (int i = 0; i < comp3.getHand().size(); i++)
-//            System.out.print(comp3.getCardAsString(i) + " ");
+    // ToDo: old passing logic, might need some day:
+    public String passingDirection() {
+        // Pass Cards Direction:
+        if (roundsPlayed == 1 || roundsPlayed == 5 || roundsPlayed == 9
+                || roundsPlayed == 13) {
+            return "Pass three cards left";
+        }
+        if (roundsPlayed == 2 || roundsPlayed == 6 || roundsPlayed == 10) {
+            return "Pass three cards right";
+        }
+        if (roundsPlayed == 3 || roundsPlayed == 7 || roundsPlayed == 11) {
+            return  "Pass three cards across";
+        }
+        return "No passing";
+    }
+//        ArrayList<Card> temp = new ArrayList<>();
 //
-//        System.out.println();
-//
-//        // Pass Cards Direction:
-//        if (roundsPlayed == 1 || roundsPlayed == 5 || roundsPlayed == 9
-//                || roundsPlayed == 13) {
-//            System.out.println("Pass three cards left: ");
-//        }
-//        if (roundsPlayed == 2 || roundsPlayed == 6 || roundsPlayed == 10) {
-//            System.out.println("Pass three cards right: ");
-//        }
-//        if (roundsPlayed == 3 || roundsPlayed == 7 || roundsPlayed == 11) {
-//            System.out.println("Pass three cards across: ");
-//        }
-//        if (roundsPlayed == 4 || roundsPlayed == 8 || roundsPlayed == 12) {
-//            System.out.println("No Passing...: ");
-//        }
-//        ArrayList<Card> temp = new ArrayList<Card>();
-//
-//        System.out.println("Select first card: ");
-//        Scanner scan = new Scanner(System.in);
 //        String userSelection = scan.nextLine();
 //        Card firstUserCard = null;
 //        while (firstUserCard == null) {
@@ -492,6 +473,14 @@ public class Overlord {
 
     public boolean getHeartsBroken() {
         return heartsBroken;
+    }
+
+    public boolean getPassing() {
+        return passing;
+    }
+
+    public void setPassing(boolean newValue) {
+        passing = newValue;
     }
 
     public Player getLeadingPlayer() {
