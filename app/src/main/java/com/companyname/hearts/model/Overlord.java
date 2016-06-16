@@ -8,6 +8,7 @@ public class Overlord {
     private boolean heartsBroken;
     private boolean passing;
     private int roundsPlayed;
+    private int handsPlayed;
     private Player leadingPlayer;
 
     private static Overlord instance = null;
@@ -16,13 +17,13 @@ public class Overlord {
         // Do no allow instantiation
         playing = true;
         heartsBroken = false;
-        //ToDo: change to false for testing regular play without passing:
         passing = true;
         roundsPlayed = 1;
+        handsPlayed = 0;
     }
 
     public static Overlord getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new Overlord();
         }
         return instance;
@@ -136,6 +137,8 @@ public class Overlord {
         Table.getInstance().getPlayer4().getOldCards().clear();
         heartsBroken = false;
         roundsPlayed = 1;
+        handsPlayed ++;
+        getPassingDirection();
     }
 
     public void updatePlaying() {
@@ -249,115 +252,23 @@ public class Overlord {
 
     }
 
-    // ToDo: old passing logic, might need some day:
-    public String passingDirection() {
+    public String getPassingDirection() {
         // Pass Cards Direction:
-        if (roundsPlayed == 1 || roundsPlayed == 5 || roundsPlayed == 9
-                || roundsPlayed == 13) {
+        if (handsPlayed % 4 == 0) {
+            passing = true;
             return "Pass three cards left";
         }
-        if (roundsPlayed == 2 || roundsPlayed == 6 || roundsPlayed == 10) {
+        if (handsPlayed % 4 == 1) {
+            passing = true;
             return "Pass three cards right";
         }
-        if (roundsPlayed == 3 || roundsPlayed == 7 || roundsPlayed == 11) {
+        if (handsPlayed % 4 == 2) {
+            passing = true;
             return  "Pass three cards across";
         }
+        passing = false;
         return "No passing";
     }
-//        ArrayList<Card> temp = new ArrayList<>();
-//
-//        String userSelection = scan.nextLine();
-//        Card firstUserCard = null;
-//        while (firstUserCard == null) {
-//            for (int i = 0; i < human.getHand().size(); i++) {
-//                if (human.getCardAsString(i).equals(userSelection)) {
-//                    firstUserCard = human.getHand().get(i);
-//                    human.getHand().remove(i);
-//                    break;
-//                }
-//            }
-//            if (firstUserCard == null) {
-//                System.out.println("Try Again:");
-//                userSelection = scan.nextLine();
-//            }
-//        }
-//        temp.add(firstUserCard);
-//
-//        System.out.println("Select second card: ");
-//        userSelection = scan.nextLine();
-//        Card secondUserCard = null;
-//        while (secondUserCard == null) {
-//            for (int i = 0; i < human.getHand().size(); i++) {
-//                if (human.getCardAsString(i).equals(userSelection)) {
-//                    secondUserCard = human.getHand().get(i);
-//                    human.getHand().remove(i);
-//                    break;
-//                }
-//            }
-//            if (secondUserCard == null) {
-//                System.out.println("Try Again:");
-//                userSelection = scan.nextLine();
-//            }
-//        }
-//        temp.add(secondUserCard);
-//
-//        System.out.println("Select third card: ");
-//        userSelection = scan.nextLine();
-//        Card thirdUserCard = null;
-//        while (thirdUserCard == null) {
-//            for (int i = 0; i < human.getHand().size(); i++) {
-//                if (human.getCardAsString(i).equals(userSelection)) {
-//                    thirdUserCard = human.getHand().get(i);
-//                    human.getHand().remove(i);
-//                    break;
-//                }
-//            }
-//            if (thirdUserCard == null) {
-//                System.out.println("Try Again:");
-//                userSelection = scan.nextLine();
-//            }
-//        }
-//        temp.add(thirdUserCard);
-//
-//        // Display human hand before passing them:
-//        System.out.println("Cards before passing: ");
-//        for (int i = 0; i < human.getHand().size(); i++)
-//            System.out.print(human.getCardAsString(i) + " ");
-//
-//        // This method just gives the computer to the left three cards, and
-//        // gives
-//        // the user the first three cards of the computer to the left:
-//
-//        // Add cards from temp to end of comp1
-//        for (int i = 0; i < temp.size(); i++)
-//            comp1.getHand().add(temp.get(i));
-//
-//        // Clear temp:
-//        temp.clear();
-//        // Add first three Cards of comp1's hand to temp, and then remove them:
-//        temp.add(comp1.getHand().get(0));
-//        comp1.getHand().remove(0);
-//        temp.add(comp1.getHand().get(0));
-//        comp1.getHand().remove(0);
-//        temp.add(comp1.getHand().get(0));
-//        comp1.getHand().remove(0);
-//        System.out.println();
-//
-//        // display cards about to be received:
-//        System.out.println("You will get these cards: ");
-//        for (int i = 0; i < temp.size(); i++)
-//            System.out.println(temp.get(i).toString());
-//
-//        // Add cards from temp to end of human hand:
-//        for (int i = 0; i < temp.size(); i++)
-//            human.getHand().add(temp.get(i));
-//
-//        // sort the hands that changed:
-//        sort(human.getHand());
-//        sort(comp1.getHand());
-//        System.out.println();
-//
-//    }
 
     public boolean canPlayCard(Card userCard, Player whosPlaying) {
         if (getRoundsPlayed() == 1) {
@@ -427,7 +338,7 @@ public class Overlord {
         if (Table.getInstance().getBoard().isEmpty()) {
             // Nobody has played any cards yet, make sure they don't play a
             // heart, or the queen, if hearts have not been broken:
-            if (heartsBroken == false) {
+            if (!heartsBroken) {
                 if (userCard.getSuit() == Suit.Hearts
                         || (userCard.getSuit() == Suit.Spades && userCard
                         .getRank() == Rank.Queen)) {
@@ -456,7 +367,7 @@ public class Overlord {
                     return false;
                 }
             }
-            // Dont have to follow suit, can play whatever card you want
+            // Don't have to follow suit, can play whatever card you want
             // Check to see if this causes hearts to be broken:
             if (userCard.getSuit() == Suit.Hearts
                     || (userCard.getSuit() == Suit.Spades && userCard.getRank() == Rank.Queen)) {

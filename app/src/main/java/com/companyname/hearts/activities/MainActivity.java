@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
         computer3Name = (TextView) findViewById(R.id.computer3_name);
         testView = (TextView) findViewById(R.id.test_view);
         passButton = (Button) findViewById(R.id.pass_cards_button);
-        passButton.setVisibility(View.VISIBLE);
 
         b1 = (ImageButton) findViewById(R.id.card_1);
         b2 = (ImageButton) findViewById(R.id.card_2);
@@ -161,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (Overlord.getInstance().getRoundsPlayed() == 14) {
+                    // ToDo: display old cards if desired first:
                     displayScorePopUp();
                 } else {
                     beginRound();
@@ -172,8 +172,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void displayScorePopUp() {
-        // ToDo: write remove cards method if needed:
-        removeOldCards();
+        // ToDo: remove old cards if desired first:
         Overlord.getInstance().calculatePoints();
         Overlord.getInstance().updatePlaying();
         Overlord.getInstance().reset();
@@ -239,6 +238,10 @@ public class MainActivity extends AppCompatActivity {
                 testView.setText(testView.getText() + Table.getInstance().getPlayer4().getName()
                         + " played: " + computerSelection.toString() + "\n");
             }
+        }
+        else {
+            passButton.setText(Overlord.getInstance().getPassingDirection());
+            passButton.setVisibility(View.VISIBLE);
         }
 
     }
@@ -390,7 +393,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         else {
-            passButton.setText(Overlord.getInstance().passingDirection());
+            passButton.setText(Overlord.getInstance().getPassingDirection());
             passButton.setVisibility(View.VISIBLE);
             System.out.println("Original Player 1 hand is: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
             if (playerCardsToComputer.size() != 3) {
@@ -465,15 +468,6 @@ public class MainActivity extends AppCompatActivity {
         });
         builder.setCancelable(false);
         builder.show();
-    }
-
-
-    private void displayOldCards() {
-        // ToDo: write this method if needed:
-    }
-
-    private void removeOldCards() {
-        // ToDo: write this method if needed:
     }
 
     ImageButton.OnClickListener onCardClick = new ImageButton.OnClickListener() {
