@@ -177,26 +177,54 @@ public class MainActivity extends AppCompatActivity {
         Overlord.getInstance().updatePlaying();
         Overlord.getInstance().reset();
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Hearts");
-        builder.setMessage(Table.getInstance().getPlayer1().getName() + " : " + Table.getInstance().getPlayer1().getPoints() + "\n" +
-                Table.getInstance().getPlayer2().getName() + " : " + Table.getInstance().getPlayer2().getPoints() + "\n" +
-                Table.getInstance().getPlayer3().getName() + " : " + Table.getInstance().getPlayer3().getPoints() + "\n" +
-                Table.getInstance().getPlayer4().getName() + " : " + Table.getInstance().getPlayer4().getPoints() + "\n");
-        builder.setIcon(R.mipmap.ic_launcher);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                // Game Over:
-                if (!Overlord.getInstance().getPlaying()) {
-                    // ToDo: decide on how to handle game over, for now is a simple toast
-                    Toast.makeText(MainActivity.this, Overlord.getInstance().getWinningPlayerName(), Toast.LENGTH_LONG).show();
-                } else {
+        if (!Overlord.getInstance().getPlaying()) {
+            playAgainPopUp();
+        }
+        else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle("Hearts");
+            builder.setMessage(Table.getInstance().getPlayer1().getName() + " : " + Table.getInstance().getPlayer1().getPoints() + "\n" +
+                    Table.getInstance().getPlayer2().getName() + " : " + Table.getInstance().getPlayer2().getPoints() + "\n" +
+                    Table.getInstance().getPlayer3().getName() + " : " + Table.getInstance().getPlayer3().getPoints() + "\n" +
+                    Table.getInstance().getPlayer4().getName() + " : " + Table.getInstance().getPlayer4().getPoints() + "\n");
+            builder.setIcon(R.mipmap.ic_launcher);
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
                     setUpGame();
                     displayImages();
                     createListeners();
                     beginRound();
                 }
+            });
+            builder.setCancelable(false);
+            builder.show();
+        }
+    }
+
+    private void playAgainPopUp() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle(Overlord.getInstance().getWinningPlayerName());
+        builder.setMessage(Table.getInstance().getPlayer1().getName() + " : " + Table.getInstance().getPlayer1().getPoints() + "\n" +
+                Table.getInstance().getPlayer2().getName() + " : " + Table.getInstance().getPlayer2().getPoints() + "\n" +
+                Table.getInstance().getPlayer3().getName() + " : " + Table.getInstance().getPlayer3().getPoints() + "\n" +
+                Table.getInstance().getPlayer4().getName() + " : " + Table.getInstance().getPlayer4().getPoints() + "\n");
+        builder.setIcon(R.mipmap.ic_launcher);
+        builder.setPositiveButton("Play Again?", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Overlord.getInstance().prepareForNextGame();
+                setUpGame();
+                displayImages();
+                createListeners();
+                beginRound();
+            }
+        });
+        builder.setNegativeButton("Quit", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(MainActivity.this, "Bye", Toast.LENGTH_LONG).show();
+                finish();
             }
         });
         builder.setCancelable(false);
@@ -396,6 +424,7 @@ public class MainActivity extends AppCompatActivity {
             passButton.setText(Overlord.getInstance().getPassingDirection());
             passButton.setVisibility(View.VISIBLE);
             System.out.println("Original Player 1 hand is: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
+            // ToDo: add ability to deselect cards:
             if (playerCardsToComputer.size() != 3) {
                 playerCardsToComputer.add(Table.getInstance().getPlayer1().getHand().get(i));
                 Table.getInstance().getPlayer1().getHand().remove(i);
@@ -415,7 +444,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             System.out.println("Original Player 2 hand is: " + Arrays.toString(Table.getInstance().getPlayer2().getHand().toArray()));
-            // ToDo: This works, but perhaps not in the way that it should
+            // ToDo: This works, but perhaps not in the way that it should:
             for (int i = 0; i < 3; i++) {
                 Card passMe = Table.getInstance().getPlayer2().getHand().get(i);
                 computerCardsToPlayer.add(passMe);

@@ -141,6 +141,18 @@ public class Overlord {
         getPassingDirection();
     }
 
+    public void prepareForNextGame() {
+        playing = true;
+        heartsBroken = false;
+        passing = true;
+        roundsPlayed = 1;
+        handsPlayed = 0;
+        Table.getInstance().getPlayer1().setPoints(0);
+        Table.getInstance().getPlayer2().setPoints(0);
+        Table.getInstance().getPlayer3().setPoints(0);
+        Table.getInstance().getPlayer4().setPoints(0);
+    }
+
     public void updatePlaying() {
         if (Table.getInstance().getPlayer1().getPoints() >= 100 || Table.getInstance().getPlayer2().getPoints() >= 100
                 || Table.getInstance().getPlayer3().getPoints() >= 100 || Table.getInstance().getPlayer4().getPoints() >= 100) {
