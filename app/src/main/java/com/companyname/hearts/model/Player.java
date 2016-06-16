@@ -1,6 +1,7 @@
 package com.companyname.hearts.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Player {
 	private String name;
@@ -48,7 +49,6 @@ public class Player {
 	}
 
 	public void organizeHand() {
-        // ToDo: sort by number too:
         int spot = 0;
         for (int i = 0; i < getHand().size(); i++) {
             if (getHand().get(i).getSuit() == Suit.Hearts) {
@@ -74,6 +74,7 @@ public class Player {
                 spot++;
             }
         }
+        Collections.sort(getHand());
     }
 
 }

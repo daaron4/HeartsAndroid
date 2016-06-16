@@ -40,12 +40,19 @@ public class Card implements Comparable<Card> {
     }
 
     @Override
-	public int compareTo(Card arg0) {
-		if (suit.getStrength() - arg0.getSuit().getStrength() == 0) {
-			return rank.getValue() - arg0.getRank().getValue();
+	public int compareTo(Card otherCard) {
+		//Same suit
+		if (suit == otherCard.getSuit()) {
+			if (rank.getValue() < otherCard.getRank().getValue()) {
+                return -1;
+            }
+            else {
+                return 1;
+            }
 		}
+        //Different suit
 		else {
-			return 0;
+            return 0;
 		}
 	}
 

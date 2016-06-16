@@ -14,8 +14,6 @@ import static org.junit.Assert.*;
  */
 public class CardTest {
 
-    // ToDo: test compareTo() when ready:
-
     private Card testCard;
 
     @Before
@@ -35,4 +33,5 @@ public class CardTest {
         assertEquals(true, testCard.isSelected());
         assertTrue(testCard.getResId() > 0);
     }
+
 }
