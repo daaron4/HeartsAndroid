@@ -33,8 +33,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView testView;
     private Button passButton;
     private ImageButton b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13;
-    private ArrayList<Card> playerCardsToComputer = new ArrayList<>();
-    private ArrayList<Card> computerCardsToPlayer = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -272,96 +270,113 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void fixTransparentImages() {
+        b1.setAlpha((float) 1);
+        b2.setAlpha((float) 1);
+        b3.setAlpha((float) 1);
+        b4.setAlpha((float) 1);
+        b5.setAlpha((float) 1);
+        b6.setAlpha((float) 1);
+        b7.setAlpha((float) 1);
+        b8.setAlpha((float) 1);
+        b9.setAlpha((float) 1);
+        b10.setAlpha((float) 1);
+        b12.setAlpha((float) 1);
+        b12.setAlpha((float) 1);
+        b13.setAlpha((float) 1);
+    }
+
     private void passCardSelector(int i) {
         switch (i) {
             case 0:
-                if (b1.getAlpha() == 1) {
+                if (Table.getInstance().getPlayer1().getHand().get(0).isSelected()) {
                     b1.setAlpha((float) 0.5);
-                } else if (b1.getAlpha() == 0.5) {
-                b1.setAlpha((float) 1);
-            }
-            break;
+                }
+                else {
+                    b1.setAlpha((float) 1);
+                }
+                break;
             case 1:
-                if (b2.getAlpha() == 1) {
+                if (Table.getInstance().getPlayer1().getHand().get(1).isSelected()) {
                     b2.setAlpha((float) 0.5);
-                } else if (b2.getAlpha() == 0.5) {
+                } else {
                     b2.setAlpha((float) 1);
                 }
                 break;
             case 2:
-                if (b3.getAlpha() == 1) {
+                if (Table.getInstance().getPlayer1().getHand().get(2).isSelected()) {
                     b3.setAlpha((float) 0.5);
-                } else if (b3.getAlpha() == 0.5) {
+                } else {
                     b3.setAlpha((float) 1);
                 }
                 break;
             case 3:
-                if (b4.getAlpha() == 1) {
+                if (Table.getInstance().getPlayer1().getHand().get(3).isSelected()) {
                     b4.setAlpha((float) 0.5);
-                } else if (b4.getAlpha() == 0.5) {
+                } else {
                     b4.setAlpha((float) 1);
                 }
                 break;
             case 4:
-                if (b5.getAlpha() == 1) {
+                if (Table.getInstance().getPlayer1().getHand().get(4).isSelected()) {
                     b5.setAlpha((float) 0.5);
-                } else if (b5.getAlpha() == 0.5) {
+                } else {
                     b5.setAlpha((float) 1);
                 }
                 break;
             case 5:
-                if (b6.getAlpha() == 1) {
+                if (Table.getInstance().getPlayer1().getHand().get(5).isSelected()) {
                     b6.setAlpha((float) 0.5);
-                } else if (b6.getAlpha() == 0.5) {
+                } else {
                     b6.setAlpha((float) 1);
                 }
                 break;
             case 6:
-                if (b7.getAlpha() == 1) {
+                if (Table.getInstance().getPlayer1().getHand().get(6).isSelected()) {
                     b7.setAlpha((float) 0.5);
-                } else if (b7.getAlpha() == 0.5) {
+                } else {
                     b7.setAlpha((float) 1);
                 }
                 break;
             case 7:
-                if (b8.getAlpha() == 1) {
+                if (Table.getInstance().getPlayer1().getHand().get(7).isSelected()) {
                     b8.setAlpha((float) 0.5);
-                } else if (b8.getAlpha() == 0.5) {
+                } else {
                     b8.setAlpha((float) 1);
                 }
                 break;
             case 8:
-                if (b9.getAlpha() == 1) {
+                if (Table.getInstance().getPlayer1().getHand().get(8).isSelected()) {
                     b9.setAlpha((float) 0.5);
-                } else if (b9.getAlpha() == 0.5) {
+                } else {
                     b9.setAlpha((float) 1);
                 }
                 break;
             case 9:
-                if (b10.getAlpha() == 1) {
+                if (Table.getInstance().getPlayer1().getHand().get(9).isSelected()) {
                     b10.setAlpha((float) 0.5);
-                } else if (b10.getAlpha() == 0.5) {
+                } else {
                     b10.setAlpha((float) 1);
                 }
                 break;
             case 10:
-                if (b11.getAlpha() == 1) {
+                if (Table.getInstance().getPlayer1().getHand().get(10).isSelected()) {
                     b11.setAlpha((float) 0.5);
-                } else if (b11.getAlpha() == 0.5) {
+                } else {
                     b11.setAlpha((float) 1);
                 }
                 break;
             case 11:
-                if (b12.getAlpha() == 1) {
+                if (Table.getInstance().getPlayer1().getHand().get(11).isSelected()) {
                     b12.setAlpha((float) 0.5);
-                } else if (b12.getAlpha() == 0.5) {
+                } else {
                     b12.setAlpha((float) 1);
                 }
                 break;
             case 12:
-                if (b13.getAlpha() == 1) {
+                if (Table.getInstance().getPlayer1().getHand().get(12).isSelected()) {
                     b13.setAlpha((float) 0.5);
-                } else if (b13.getAlpha() == 0.5) {
+                } else {
                     b13.setAlpha((float) 1);
                 }
                 break;
@@ -513,66 +528,65 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             }
-        } else {
+        }
+        // We are passing here:
+        else {
             passButton.setText(Overlord.getInstance().getPassingDirection());
             passButton.setVisibility(View.VISIBLE);
-            System.out.println("Original Player 1 hand is: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
 
-            if (playerCardsToComputer.size() != 3) {
+            if (Table.getInstance().getPlayer1().getHand().get(i).isSelected()) {
+                Table.getInstance().getPlayer1().getHand().get(i).setSelected(false);
                 passCardSelector(i);
-                // ToDo: fix up stuff here:
-
-//                playerCardsToComputer.add(Table.getInstance().getPlayer1().getHand().get(i));
-//                Table.getInstance().getPlayer1().getHand().remove(i);
-//                removeCardFromView(i);
-//                Table.getInstance().getPlayer1().getHand().add(i, new Card(Rank.Joker, Suit.Joker, R.drawable.derpycard));
-                System.out.println("Temp is: " + Arrays.toString(playerCardsToComputer.toArray()));
-            } else {
-                Toast.makeText(MainActivity.this, "You must pass three cards", Toast.LENGTH_LONG).show();
             }
+            else {
+                if (Table.getInstance().getPlayer1().getNumberOfSelectedCards() != 3) {
+                    Table.getInstance().getPlayer1().getHand().get(i).setSelected(true);
+                    passCardSelector(i);
+                }
+                else {
+                    Toast.makeText(MainActivity.this, "You can't pass more than three cards", Toast.LENGTH_LONG).show();
+                }
+            }
+
         }
     }
 
     public void clickedPassCards(View view) {
-        if (playerCardsToComputer.size() < 3) {
+        if (Table.getInstance().getPlayer1().getNumberOfSelectedCards() != 3) {
             Toast.makeText(MainActivity.this, "You must pass three cards", Toast.LENGTH_LONG).show();
         } else {
+            System.out.println("Original Player 1 hand is: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
             System.out.println("Original Player 2 hand is: " + Arrays.toString(Table.getInstance().getPlayer2().getHand().toArray()));
-            // ToDo: This works, but should be handled by ComputerManager, commented out code below is correct:
-//            ArrayList<Card> computerCards = ComputerManager.passesCards();
-//
-//            for (int i = 0; i < computerCards.size(); i++) {
-//                Table.getInstance().getPlayer1().getHand().add(computerCards.get(i));
-//            }
-            // if total hand value < 139, pass low cards; if total hand value > 139, pass high cards.
+
+            for (int i = 0; i < Table.getInstance().getPlayer1().getHand().size(); i++) {
+                if (Table.getInstance().getPlayer1().getHand().get(i).isSelected()) {
+                    // ToDo: see if this matters in the future:
+                    //Table.getInstance().getPlayer1().getHand().get(i).setSelected(false);
+                    Table.getInstance().getPlayer2().getHand().add(Table.getInstance().getPlayer1().getHand().get(i));
+                    Table.getInstance().getPlayer1().getHand().remove(i);
+                }
+            }
+
+            // ToDo: make computer selections better:
+            ArrayList<Card> computerCardsToPlayer = new ArrayList<>();
             for (int i = 0; i < 3; i++) {
                 Card passMe = Table.getInstance().getPlayer2().getHand().get(i);
                 computerCardsToPlayer.add(passMe);
                 Table.getInstance().getPlayer2().getHand().remove(i);
                 Table.getInstance().getPlayer1().getHand().add(passMe);
             }
-            for (int i = 0; i < Table.getInstance().getPlayer1().getHand().size(); i++) {
-                if (Table.getInstance().getPlayer1().getHand().get(i).toString().equals("Joker of Joker")) {
-                    Table.getInstance().getPlayer1().getHand().remove(i);
-                    System.out.println("REMOVED A JOKER");
-                    i--;
-                }
-            }
 
             System.out.println("New Player 1 hand is: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
-            for (int i = 0; i < 3; i++) {
-                Table.getInstance().getPlayer2().getHand().add(playerCardsToComputer.get(i));
-            }
-            playerCardsToComputer.clear();
             System.out.println("New Player 2 hand is: " + Arrays.toString(Table.getInstance().getPlayer2().getHand().toArray()));
+
             Overlord.getInstance().setPassing(false);
             passButton.setVisibility(View.INVISIBLE);
 
-            cardsReceivedPopUp();
+            cardsReceivedPopUp(computerCardsToPlayer);
         }
     }
 
-    private void cardsReceivedPopUp() {
+    private void cardsReceivedPopUp(ArrayList<Card> computerCardsToPlayer) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Hearts");
         builder.setMessage("You received: " + Arrays.toString(computerCardsToPlayer.toArray()));
@@ -580,7 +594,6 @@ public class MainActivity extends AppCompatActivity {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                computerCardsToPlayer.clear();
                 Overlord.getInstance().setPlayerWithTheTwoOfClubs();
                 Table.getInstance().getPlayer1().organizeHand();
                 // ToDo: decide if computer hands should be sorted as well
@@ -590,6 +603,7 @@ public class MainActivity extends AppCompatActivity {
                 for (int j = 0; j < 13; j++) {
                     removeCardFromView(j);
                 }
+                fixTransparentImages();
                 displayImages();
                 createListeners();
                 beginRound();

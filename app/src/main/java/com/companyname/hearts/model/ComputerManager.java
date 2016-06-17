@@ -13,7 +13,7 @@ public class ComputerManager {
                 break;
             }
         }
-        System.out.println("Card selected: " + computerSelection.toString());
+        System.out.println("Computer 1 selected: " + computerSelection.toString());
         Table.getInstance().getPlayer2().getHand().remove(computerSelection);
         return computerSelection;
     }
@@ -26,7 +26,7 @@ public class ComputerManager {
                 break;
             }
         }
-        System.out.println("Card selected: " + computerSelection.toString());
+        System.out.println("Computer 2 selected: " + computerSelection.toString());
         Table.getInstance().getPlayer3().getHand().remove(computerSelection);
         return computerSelection;
     }
@@ -39,7 +39,7 @@ public class ComputerManager {
                 break;
             }
         }
-        System.out.println("Card selected: " + computerSelection.toString());
+        System.out.println("Computer 3 selected: " + computerSelection.toString());
         Table.getInstance().getPlayer4().getHand().remove(computerSelection);
         return computerSelection;
     }

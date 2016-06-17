@@ -48,6 +48,16 @@ public class Player {
 		this.hand = hand;
 	}
 
+	public int getNumberOfSelectedCards() {
+        int selectedCards = 0;
+        for (int i = 0; i < getHand().size(); i++) {
+            if (getHand().get(i).isSelected()) {
+                selectedCards++;
+            }
+        }
+        return selectedCards;
+    }
+
 	public void organizeHand() {
         int spot = 0;
         for (int i = 0; i < getHand().size(); i++) {
