@@ -179,8 +179,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (!Overlord.getInstance().getPlaying()) {
             playAgainPopUp();
-        }
-        else {
+        } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle("Hearts");
             builder.setMessage(Table.getInstance().getPlayer1().getName() + " : " + Table.getInstance().getPlayer1().getPoints() + "\n" +
@@ -266,12 +265,107 @@ public class MainActivity extends AppCompatActivity {
                 testView.setText(testView.getText() + Table.getInstance().getPlayer4().getName()
                         + " played: " + computerSelection.toString() + "\n");
             }
-        }
-        else {
+        } else {
             passButton.setText(Overlord.getInstance().getPassingDirection());
             passButton.setVisibility(View.VISIBLE);
         }
 
+    }
+
+    private void passCardSelector(int i) {
+        switch (i) {
+            case 0:
+                if (b1.getAlpha() == 1) {
+                    b1.setAlpha((float) 0.5);
+                } else if (b1.getAlpha() == 0.5) {
+                b1.setAlpha((float) 1);
+            }
+            break;
+            case 1:
+                if (b2.getAlpha() == 1) {
+                    b2.setAlpha((float) 0.5);
+                } else if (b2.getAlpha() == 0.5) {
+                    b2.setAlpha((float) 1);
+                }
+                break;
+            case 2:
+                if (b3.getAlpha() == 1) {
+                    b3.setAlpha((float) 0.5);
+                } else if (b3.getAlpha() == 0.5) {
+                    b3.setAlpha((float) 1);
+                }
+                break;
+            case 3:
+                if (b4.getAlpha() == 1) {
+                    b4.setAlpha((float) 0.5);
+                } else if (b4.getAlpha() == 0.5) {
+                    b4.setAlpha((float) 1);
+                }
+                break;
+            case 4:
+                if (b5.getAlpha() == 1) {
+                    b5.setAlpha((float) 0.5);
+                } else if (b5.getAlpha() == 0.5) {
+                    b5.setAlpha((float) 1);
+                }
+                break;
+            case 5:
+                if (b6.getAlpha() == 1) {
+                    b6.setAlpha((float) 0.5);
+                } else if (b6.getAlpha() == 0.5) {
+                    b6.setAlpha((float) 1);
+                }
+                break;
+            case 6:
+                if (b7.getAlpha() == 1) {
+                    b7.setAlpha((float) 0.5);
+                } else if (b7.getAlpha() == 0.5) {
+                    b7.setAlpha((float) 1);
+                }
+                break;
+            case 7:
+                if (b8.getAlpha() == 1) {
+                    b8.setAlpha((float) 0.5);
+                } else if (b8.getAlpha() == 0.5) {
+                    b8.setAlpha((float) 1);
+                }
+                break;
+            case 8:
+                if (b9.getAlpha() == 1) {
+                    b9.setAlpha((float) 0.5);
+                } else if (b9.getAlpha() == 0.5) {
+                    b9.setAlpha((float) 1);
+                }
+                break;
+            case 9:
+                if (b10.getAlpha() == 1) {
+                    b10.setAlpha((float) 0.5);
+                } else if (b10.getAlpha() == 0.5) {
+                    b10.setAlpha((float) 1);
+                }
+                break;
+            case 10:
+                if (b11.getAlpha() == 1) {
+                    b11.setAlpha((float) 0.5);
+                } else if (b11.getAlpha() == 0.5) {
+                    b11.setAlpha((float) 1);
+                }
+                break;
+            case 11:
+                if (b12.getAlpha() == 1) {
+                    b12.setAlpha((float) 0.5);
+                } else if (b12.getAlpha() == 0.5) {
+                    b12.setAlpha((float) 1);
+                }
+                break;
+            case 12:
+                if (b13.getAlpha() == 1) {
+                    b13.setAlpha((float) 0.5);
+                } else if (b13.getAlpha() == 0.5) {
+                    b13.setAlpha((float) 1);
+                }
+                break;
+        }
     }
 
     private void removeCardFromView(int i) {
@@ -419,20 +513,21 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             }
-        }
-        else {
+        } else {
             passButton.setText(Overlord.getInstance().getPassingDirection());
             passButton.setVisibility(View.VISIBLE);
             System.out.println("Original Player 1 hand is: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
-            // ToDo: add ability to deselect cards:
+
             if (playerCardsToComputer.size() != 3) {
-                playerCardsToComputer.add(Table.getInstance().getPlayer1().getHand().get(i));
-                Table.getInstance().getPlayer1().getHand().remove(i);
-                removeCardFromView(i);
-                Table.getInstance().getPlayer1().getHand().add(i, new Card(Rank.Joker, Suit.Joker, R.drawable.derpycard));
+                passCardSelector(i);
+                // ToDo: fix up stuff here:
+
+//                playerCardsToComputer.add(Table.getInstance().getPlayer1().getHand().get(i));
+//                Table.getInstance().getPlayer1().getHand().remove(i);
+//                removeCardFromView(i);
+//                Table.getInstance().getPlayer1().getHand().add(i, new Card(Rank.Joker, Suit.Joker, R.drawable.derpycard));
                 System.out.println("Temp is: " + Arrays.toString(playerCardsToComputer.toArray()));
-            }
-            else {
+            } else {
                 Toast.makeText(MainActivity.this, "You must pass three cards", Toast.LENGTH_LONG).show();
             }
         }
@@ -441,8 +536,7 @@ public class MainActivity extends AppCompatActivity {
     public void clickedPassCards(View view) {
         if (playerCardsToComputer.size() < 3) {
             Toast.makeText(MainActivity.this, "You must pass three cards", Toast.LENGTH_LONG).show();
-        }
-        else {
+        } else {
             System.out.println("Original Player 2 hand is: " + Arrays.toString(Table.getInstance().getPlayer2().getHand().toArray()));
             // ToDo: This works, but should be handled by ComputerManager, commented out code below is correct:
 //            ArrayList<Card> computerCards = ComputerManager.passesCards();
@@ -450,6 +544,7 @@ public class MainActivity extends AppCompatActivity {
 //            for (int i = 0; i < computerCards.size(); i++) {
 //                Table.getInstance().getPlayer1().getHand().add(computerCards.get(i));
 //            }
+            // if total hand value < 139, pass low cards; if total hand value > 139, pass high cards.
             for (int i = 0; i < 3; i++) {
                 Card passMe = Table.getInstance().getPlayer2().getHand().get(i);
                 computerCardsToPlayer.add(passMe);
