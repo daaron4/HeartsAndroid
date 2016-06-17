@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -14,8 +13,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.companyname.hearts.R;
+import com.companyname.hearts.ai.HAL9000;
+import com.companyname.hearts.ai.Terminator;
+import com.companyname.hearts.ai.Zombocom;
 import com.companyname.hearts.model.Card;
-import com.companyname.hearts.model.ComputerManager;
 import com.companyname.hearts.model.Dealer;
 import com.companyname.hearts.model.Overlord;
 import com.companyname.hearts.model.Rank;
@@ -234,32 +235,32 @@ public class MainActivity extends AppCompatActivity {
         if (!Overlord.getInstance().getPassing()) {
             Card computerSelection;
             if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer2()) {
-                computerSelection = ComputerManager.computer1MakesMove();
+                computerSelection = HAL9000.computer1MakesMove();
                 Table.getInstance().getBoard().add(computerSelection);
                 testView.setText(testView.getText() + Table.getInstance().getPlayer2().getName()
                         + " played: " + computerSelection.toString() + "\n");
 
-                computerSelection = ComputerManager.computer2MakesMove();
+                computerSelection = Terminator.computer2MakesMove();
                 Table.getInstance().getBoard().add(computerSelection);
                 testView.setText(testView.getText() + Table.getInstance().getPlayer3().getName()
                         + " played: " + computerSelection.toString() + "\n");
 
-                computerSelection = ComputerManager.computer3MakesMove();
+                computerSelection = Zombocom.computer3MakesMove();
                 Table.getInstance().getBoard().add(computerSelection);
                 testView.setText(testView.getText() + Table.getInstance().getPlayer4().getName()
                         + " played: " + computerSelection.toString() + "\n");
             } else if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer3()) {
-                computerSelection = ComputerManager.computer2MakesMove();
+                computerSelection = Terminator.computer2MakesMove();
                 Table.getInstance().getBoard().add(computerSelection);
                 testView.setText(testView.getText() + Table.getInstance().getPlayer3().getName()
                         + " played: " + computerSelection.toString() + "\n");
 
-                computerSelection = ComputerManager.computer3MakesMove();
+                computerSelection = Zombocom.computer3MakesMove();
                 Table.getInstance().getBoard().add(computerSelection);
                 testView.setText(testView.getText() + Table.getInstance().getPlayer4().getName()
                         + " played: " + computerSelection.toString() + "\n");
             } else if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer4()) {
-                computerSelection = ComputerManager.computer3MakesMove();
+                computerSelection = Zombocom.computer3MakesMove();
                 Table.getInstance().getBoard().add(computerSelection);
                 testView.setText(testView.getText() + Table.getInstance().getPlayer4().getName()
                         + " played: " + computerSelection.toString() + "\n");
@@ -456,7 +457,7 @@ public class MainActivity extends AppCompatActivity {
                     Table.getInstance().getPlayer1().getHand().remove(i);
                     Table.getInstance().getPlayer1().getHand().add(i, new Card(Rank.Joker, Suit.Joker, R.drawable.derpycard));
 
-                    computerSelection = ComputerManager.computer1MakesMove();
+                    computerSelection = HAL9000.computer1MakesMove();
                     Table.getInstance().getBoard().add(computerSelection);
                     testView.setText(testView.getText() + Table.getInstance().getPlayer2().getName()
                             + " played: " + computerSelection.toString() + "\n");
@@ -477,12 +478,12 @@ public class MainActivity extends AppCompatActivity {
                     Table.getInstance().getPlayer1().getHand().remove(i);
                     Table.getInstance().getPlayer1().getHand().add(i, new Card(Rank.Joker, Suit.Joker, R.drawable.derpycard));
 
-                    computerSelection = ComputerManager.computer1MakesMove();
+                    computerSelection = HAL9000.computer1MakesMove();
                     Table.getInstance().getBoard().add(computerSelection);
                     testView.setText(testView.getText() + Table.getInstance().getPlayer2().getName()
                             + " played: " + computerSelection.toString() + "\n");
 
-                    computerSelection = ComputerManager.computer2MakesMove();
+                    computerSelection = Terminator.computer2MakesMove();
                     Table.getInstance().getBoard().add(computerSelection);
                     testView.setText(testView.getText() + Table.getInstance().getPlayer3().getName()
                             + " played: " + computerSelection.toString() + "\n");
@@ -504,17 +505,17 @@ public class MainActivity extends AppCompatActivity {
                     Table.getInstance().getPlayer1().getHand().add(i, new Card(Rank.Joker, Suit.Joker, R.drawable.derpycard));
 
 
-                    computerSelection = ComputerManager.computer1MakesMove();
+                    computerSelection = HAL9000.computer1MakesMove();
                     Table.getInstance().getBoard().add(computerSelection);
                     testView.setText(testView.getText() + Table.getInstance().getPlayer2().getName()
                             + " played: " + computerSelection.toString() + "\n");
 
-                    computerSelection = ComputerManager.computer2MakesMove();
+                    computerSelection = Terminator.computer2MakesMove();
                     Table.getInstance().getBoard().add(computerSelection);
                     testView.setText(testView.getText() + Table.getInstance().getPlayer3().getName()
                             + " played: " + computerSelection.toString() + "\n");
 
-                    computerSelection = ComputerManager.computer3MakesMove();
+                    computerSelection = Zombocom.computer3MakesMove();
                     Table.getInstance().getBoard().add(computerSelection);
                     testView.setText(testView.getText() + Table.getInstance().getPlayer4().getName()
                             + " played: " + computerSelection.toString() + "\n");
