@@ -72,6 +72,14 @@ public class ComputerManager {
         Collections.sort(arrayOfDiamondsComp1);
         Collections.sort(arrayOfClubsComp1);
 
+        //logic for the two of clubs
+            if (arrayOfClubsComp1.contains(2)) {
+            //play the fucking card.
+        } else {
+                Collections.max(arrayOfClubsComp1);
+                //play this fucking card.
+            }
+
         for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
             computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
             if (Overlord.getInstance().canPlayCard(computerSelection, Table.getInstance().getPlayer2())) {
@@ -112,6 +120,20 @@ public class ComputerManager {
             }
         }
 
+        //mm doesn't know if this is how to do this.
+        Collections.sort(arrayOfHeartsComp2);
+        Collections.sort(arrayOfSpadesComp2);
+        Collections.sort(arrayOfDiamondsComp2);
+        Collections.sort(arrayOfClubsComp2);
+
+        //logic for the two of clubs
+        if (arrayOfClubsComp2.contains(2)) {
+            //play the fucking card.
+        } else {
+            Collections.max(arrayOfClubsComp2);
+            //play this fucking card.
+        }
+
         System.out.println("Comp 2 Card selected: " + computerSelection.toString());
         Table.getInstance().getPlayer3().getHand().remove(computerSelection);
         return computerSelection;
@@ -142,6 +164,20 @@ public class ComputerManager {
             if (Overlord.getInstance().canPlayCard(computerSelection, Table.getInstance().getPlayer3())) {
                 break;
             }
+        }
+
+        //mm doesn't know if this is how to do this.
+        Collections.sort(arrayOfHeartsComp3);
+        Collections.sort(arrayOfSpadesComp3);
+        Collections.sort(arrayOfDiamondsComp3);
+        Collections.sort(arrayOfClubsComp3);
+
+        //logic for the two of clubs
+        if (arrayOfClubsComp3.contains(2)) {
+            //play the fucking card.
+        } else {
+            Collections.max(arrayOfClubsComp3);
+            //play this fucking card.
         }
 
         System.out.println("Comp 3 card Card selected: " + computerSelection.toString());
