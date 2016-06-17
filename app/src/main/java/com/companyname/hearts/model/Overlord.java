@@ -10,6 +10,7 @@ public class Overlord {
     private int roundsPlayed;
     private int handsPlayed;
     private Player leadingPlayer;
+    private Player winningPlayer;
 
     private static Overlord instance = null;
 
@@ -244,24 +245,23 @@ public class Overlord {
         }
     }
 
-    // ToDo: make this different
-    public String getWinningPlayerName() {
+    public Player getWinningPlayer() {
         int oneMin = Math.min(Table.getInstance().getPlayer1().getPoints(), Table.getInstance().getPlayer2().getPoints());
         int twoMin = Math.min(Table.getInstance().getPlayer3().getPoints(), Table.getInstance().getPlayer4().getPoints());
         int overallMin = Math.min(oneMin, twoMin);
         if (overallMin == Table.getInstance().getPlayer1().getPoints()) {
-            return Table.getInstance().getPlayer1().getName() + " wins the game!";
+            winningPlayer = Table.getInstance().getPlayer1();
         }
         else if (overallMin == Table.getInstance().getPlayer2().getPoints()) {
-            return Table.getInstance().getPlayer2().getName() + " wins the game!";
+            winningPlayer = Table.getInstance().getPlayer2();
         }
         else if (overallMin == Table.getInstance().getPlayer3().getPoints()) {
-            return Table.getInstance().getPlayer3().getName() + " wins the game!";
+            winningPlayer = Table.getInstance().getPlayer3();
         }
         else {
-            return Table.getInstance().getPlayer4().getName() + " wins the game!";
+            winningPlayer = Table.getInstance().getPlayer4();
         }
-
+        return winningPlayer;
     }
 
     public String getPassingDirection() {

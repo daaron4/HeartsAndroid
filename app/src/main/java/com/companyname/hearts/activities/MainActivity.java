@@ -204,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void playAgainPopUp() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle(Overlord.getInstance().getWinningPlayerName());
+        builder.setTitle(Overlord.getInstance().getWinningPlayer().getName() + " wins the game!");
         builder.setMessage(Table.getInstance().getPlayer1().getName() + " : " + Table.getInstance().getPlayer1().getPoints() + "\n" +
                 Table.getInstance().getPlayer2().getName() + " : " + Table.getInstance().getPlayer2().getPoints() + "\n" +
                 Table.getInstance().getPlayer3().getName() + " : " + Table.getInstance().getPlayer3().getPoints() + "\n" +
