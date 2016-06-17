@@ -444,7 +444,12 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             System.out.println("Original Player 2 hand is: " + Arrays.toString(Table.getInstance().getPlayer2().getHand().toArray()));
-            // ToDo: This works, but perhaps not in the way that it should:
+            // ToDo: This works, but should be handled by ComputerManager, commented out code below is correct:
+//            ArrayList<Card> computerCards = ComputerManager.passesCards();
+//
+//            for (int i = 0; i < computerCards.size(); i++) {
+//                Table.getInstance().getPlayer1().getHand().add(computerCards.get(i));
+//            }
             for (int i = 0; i < 3; i++) {
                 Card passMe = Table.getInstance().getPlayer2().getHand().get(i);
                 computerCardsToPlayer.add(passMe);

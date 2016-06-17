@@ -10,7 +10,6 @@ public class Overlord {
     private int roundsPlayed;
     private int handsPlayed;
     private Player leadingPlayer;
-    private Player winningPlayer;
 
     private static Overlord instance = null;
 
@@ -246,6 +245,7 @@ public class Overlord {
     }
 
     public Player getWinningPlayer() {
+        Player winningPlayer;
         int oneMin = Math.min(Table.getInstance().getPlayer1().getPoints(), Table.getInstance().getPlayer2().getPoints());
         int twoMin = Math.min(Table.getInstance().getPlayer3().getPoints(), Table.getInstance().getPlayer4().getPoints());
         int overallMin = Math.min(oneMin, twoMin);
