@@ -72,22 +72,62 @@ public class ComputerManager {
         Collections.sort(arrayOfDiamondsComp1);
         Collections.sort(arrayOfClubsComp1);
 
-        if (numOfClubsComp1 != 0) {
-            String dOc = arrayOfClubsComp1.get(0).toString();
-            if (Overlord.getInstance().getRoundsPlayed() == 1 && dOc.equals("Deuce of Clubs")) {
+        //this is has clubs either Deuce or otherwise, and plays first trick.
+        if (Overlord.getInstance().getRoundsPlayed() == 1) {
+            if (numOfClubsComp1 != 0) {
+                if(arrayOfClubsComp1.get(0).toString().equals("Deuce of Clubs")) {
+                    for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
+                        computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
+                        if (computerSelection.getRank().getValue() == 2 && computerSelection.getSuit() == Suit.Clubs) {
+                            return Table.getInstance().getPlayer2().getHand().get(i);
+                        }
+                    }
+                }
+                else {
+                    String highestClub = arrayOfClubsComp1.get(arrayOfClubsComp1.size() -1).toString();
+                    for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
+                        computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
+                        if (computerSelection.toString().equals(highestClub)) {
+                            return Table.getInstance().getPlayer2().getHand().get(i);
+                        }
+                    }
+
+                }
+            }
+        }
+        else {
+            if (numOfDiamondsComp1 != 0) {
+                String highestDiamond = arrayOfDiamondsComp1.get(arrayOfDiamondsComp1.size() - 1).toString();
                 for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
                     computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
-                    if (computerSelection.getRank().getValue() == 2 && computerSelection.getSuit() == Suit.Clubs) {
+                    if (computerSelection.toString().equals(highestDiamond)) {
                         return Table.getInstance().getPlayer2().getHand().get(i);
                     }
                 }
 
-            } else {
-                return arrayOfClubsComp1.get(arrayOfClubsComp1.size() -1);
-                //play this fucking card.
+            }
+            else if (numOfSpadesComp1 != 0) {
+                String highestSpade = arrayOfSpadesComp1.get(arrayOfSpadesComp1.size() - 1).toString();
+                for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
+                    computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
+                    if (computerSelection.toString().equals(highestSpade)) {
+                        return Table.getInstance().getPlayer2().getHand().get(i);
+                    }
+                }
+            }
+            else if (numOfHeartsComp1 !=0) {
+                String highestHeart = arrayOfHeartsComp1.get(arrayOfHeartsComp1.size() - 1).toString();
+                for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
+                    computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
+                    if (computerSelection.toString().equals(highestHeart)) {
+                        return Table.getInstance().getPlayer2().getHand().get(i);
+                    }
+                }
             }
         }
 
+
+        //Original Crap
         for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
             computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
             if (Overlord.getInstance().canPlayCard(computerSelection, Table.getInstance().getPlayer2())) {
