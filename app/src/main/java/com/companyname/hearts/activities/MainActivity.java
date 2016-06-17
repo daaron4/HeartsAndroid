@@ -558,7 +558,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             for (int i = 0; i < Table.getInstance().getPlayer1().getHand().size(); i++) {
                 if (Table.getInstance().getPlayer1().getHand().get(i).isSelected()) {
-                    System.out.println("IN HERE");
                     Table.getInstance().getPlayer1().getHand().get(i).setSelected(false);
                     Table.getInstance().getPlayer2().getHand().add(Table.getInstance().getPlayer1().getHand().get(i));
                     Table.getInstance().getPlayer1().getHand().remove(i);
