@@ -1,6 +1,7 @@
 package com.companyname.hearts.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
 public class ComputerManager {
 
     public static Card computer1MakesMove() {
+        System.out.println("Computer 1 hand: " + Arrays.toString(Table.getInstance().getPlayer2().getHand().toArray()));
         int handValueComp1 = 0;
         int numOfHeartsComp1 = 0;
         int numOfSpadesComp1 = 0;
@@ -57,7 +59,9 @@ public class ComputerManager {
                         computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
                         if (computerSelection.getRank().getValue() == 2 && computerSelection.getSuit() == Suit.Clubs) {
                             System.out.println("Computer 1 played: " + Table.getInstance().getPlayer2().getHand().get(i).toString());
-                            return Table.getInstance().getPlayer2().getHand().get(i);
+                            computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
+                            Table.getInstance().getPlayer2().getHand().remove(i);
+                            return computerSelection;
                         }
                     }
                 }
@@ -67,7 +71,9 @@ public class ComputerManager {
                         computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
                         if (computerSelection.toString().equals(highestClub)) {
                             System.out.println("Computer 1 played: " + Table.getInstance().getPlayer2().getHand().get(i).toString());
-                            return Table.getInstance().getPlayer2().getHand().get(i);
+                            computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
+                            Table.getInstance().getPlayer2().getHand().remove(i);
+                            return computerSelection;
                         }
                     }
 
@@ -81,7 +87,9 @@ public class ComputerManager {
                     computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
                     if (computerSelection.toString().equals(highestDiamond)) {
                         System.out.println("Computer 1 played: " + Table.getInstance().getPlayer2().getHand().get(i).toString());
-                        return Table.getInstance().getPlayer2().getHand().get(i);
+                        computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
+                        Table.getInstance().getPlayer2().getHand().remove(i);
+                        return computerSelection;
                     }
                 }
 
@@ -92,7 +100,9 @@ public class ComputerManager {
                     computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
                     if (computerSelection.toString().equals(highestSpade)) {
                         System.out.println("Computer 1 played: " + Table.getInstance().getPlayer2().getHand().get(i).toString());
-                        return Table.getInstance().getPlayer2().getHand().get(i);
+                        computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
+                        Table.getInstance().getPlayer2().getHand().remove(i);
+                        return computerSelection;
                     }
                 }
             }
@@ -102,7 +112,9 @@ public class ComputerManager {
                     computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
                     if (computerSelection.toString().equals(highestHeart)) {
                         System.out.println("Computer 1 played: " + Table.getInstance().getPlayer2().getHand().get(i).toString());
-                        return Table.getInstance().getPlayer2().getHand().get(i);
+                        computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
+                        Table.getInstance().getPlayer2().getHand().remove(i);
+                        return computerSelection;
                     }
                 }
             }
@@ -122,6 +134,8 @@ public class ComputerManager {
     }
 
     public static Card computer2MakesMove() {
+        System.out.println("Computer 2 hand: " + Arrays.toString(Table.getInstance().getPlayer3().getHand().toArray()));
+
         //mm Comp2 variables
         int handValueComp2 = 0;
         int numOfHeartsComp2 = 0;
@@ -155,9 +169,6 @@ public class ComputerManager {
                 numOfClubsComp2++;
                 arrayOfClubsComp2.add(computerSelection);
             }
-            if (Overlord.getInstance().canPlayCard(computerSelection, Table.getInstance().getPlayer3())) {
-                break;
-            }
         }
 
         Collections.sort(arrayOfHeartsComp2);
@@ -173,7 +184,9 @@ public class ComputerManager {
                         computerSelection = Table.getInstance().getPlayer3().getHand().get(i);
                         if (computerSelection.getRank().getValue() == 2 && computerSelection.getSuit() == Suit.Clubs) {
                             System.out.println("Computer 2 played: " + Table.getInstance().getPlayer3().getHand().get(i).toString());
-                            return Table.getInstance().getPlayer3().getHand().get(i);
+                            computerSelection = Table.getInstance().getPlayer3().getHand().get(i);
+                            Table.getInstance().getPlayer3().getHand().remove(i);
+                            return computerSelection;
                         }
                     }
                 }
@@ -183,7 +196,9 @@ public class ComputerManager {
                         computerSelection = Table.getInstance().getPlayer3().getHand().get(i);
                         if (computerSelection.toString().equals(highestClub)) {
                             System.out.println("Computer 2 played: " + Table.getInstance().getPlayer3().getHand().get(i).toString());
-                            return Table.getInstance().getPlayer3().getHand().get(i);
+                            computerSelection = Table.getInstance().getPlayer3().getHand().get(i);
+                            Table.getInstance().getPlayer3().getHand().remove(i);
+                            return computerSelection;
                         }
                     }
 
@@ -197,7 +212,9 @@ public class ComputerManager {
                     computerSelection = Table.getInstance().getPlayer3().getHand().get(i);
                     if (computerSelection.toString().equals(highestDiamond)) {
                         System.out.println("Computer 2 played: " + Table.getInstance().getPlayer3().getHand().get(i).toString());
-                        return Table.getInstance().getPlayer3().getHand().get(i);
+                        computerSelection = Table.getInstance().getPlayer3().getHand().get(i);
+                        Table.getInstance().getPlayer3().getHand().remove(i);
+                        return computerSelection;
                     }
                 }
 
@@ -208,7 +225,9 @@ public class ComputerManager {
                     computerSelection = Table.getInstance().getPlayer3().getHand().get(i);
                     if (computerSelection.toString().equals(highestSpade)) {
                         System.out.println("Computer 2 played: " + Table.getInstance().getPlayer3().getHand().get(i).toString());
-                        return Table.getInstance().getPlayer3().getHand().get(i);
+                        computerSelection = Table.getInstance().getPlayer3().getHand().get(i);
+                        Table.getInstance().getPlayer3().getHand().remove(i);
+                        return computerSelection;
                     }
                 }
             }
@@ -218,7 +237,9 @@ public class ComputerManager {
                     computerSelection = Table.getInstance().getPlayer3().getHand().get(i);
                     if (computerSelection.toString().equals(highestHeart)) {
                         System.out.println("Computer 2 played: " + Table.getInstance().getPlayer3().getHand().get(i).toString());
-                        return Table.getInstance().getPlayer3().getHand().get(i);
+                        computerSelection = Table.getInstance().getPlayer3().getHand().get(i);
+                        Table.getInstance().getPlayer3().getHand().remove(i);
+                        return computerSelection;
                     }
                 }
             }
@@ -238,6 +259,8 @@ public class ComputerManager {
     }
 
     public static Card computer3MakesMove() {
+        System.out.println("Computer 3 hand: " + Arrays.toString(Table.getInstance().getPlayer4().getHand().toArray()));
+
         //mm Comp3 variables
         int handValueComp3 = 0;
         int numOfHeartsComp3 = 0;
@@ -271,9 +294,6 @@ public class ComputerManager {
                 numOfClubsComp3++;
                 arrayOfClubsComp3.add(computerSelection);
             }
-            if (Overlord.getInstance().canPlayCard(computerSelection, Table.getInstance().getPlayer3())) {
-                break;
-            }
         }
 
         Collections.sort(arrayOfHeartsComp3);
@@ -289,7 +309,9 @@ public class ComputerManager {
                         computerSelection = Table.getInstance().getPlayer4().getHand().get(i);
                         if (computerSelection.getRank().getValue() == 2 && computerSelection.getSuit() == Suit.Clubs) {
                             System.out.println("Computer 3 played: " + Table.getInstance().getPlayer4().getHand().get(i).toString());
-                            return Table.getInstance().getPlayer4().getHand().get(i);
+                            computerSelection = Table.getInstance().getPlayer4().getHand().get(i);
+                            Table.getInstance().getPlayer4().getHand().remove(i);
+                            return computerSelection;
                         }
                     }
                 }
@@ -299,7 +321,9 @@ public class ComputerManager {
                         computerSelection = Table.getInstance().getPlayer4().getHand().get(i);
                         if (computerSelection.toString().equals(highestClub)) {
                             System.out.println("Computer 3 played: " + Table.getInstance().getPlayer4().getHand().get(i).toString());
-                            return Table.getInstance().getPlayer4().getHand().get(i);
+                            computerSelection = Table.getInstance().getPlayer4().getHand().get(i);
+                            Table.getInstance().getPlayer4().getHand().remove(i);
+                            return computerSelection;
                         }
                     }
 
@@ -313,7 +337,9 @@ public class ComputerManager {
                     computerSelection = Table.getInstance().getPlayer4().getHand().get(i);
                     if (computerSelection.toString().equals(highestDiamond)) {
                         System.out.println("Computer 3 played: " + Table.getInstance().getPlayer4().getHand().get(i).toString());
-                        return Table.getInstance().getPlayer4().getHand().get(i);
+                        computerSelection = Table.getInstance().getPlayer4().getHand().get(i);
+                        Table.getInstance().getPlayer4().getHand().remove(i);
+                        return computerSelection;
                     }
                 }
 
@@ -324,7 +350,9 @@ public class ComputerManager {
                     computerSelection = Table.getInstance().getPlayer4().getHand().get(i);
                     if (computerSelection.toString().equals(highestSpade)) {
                         System.out.println("Computer 3 played: " + Table.getInstance().getPlayer4().getHand().get(i).toString());
-                        return Table.getInstance().getPlayer4().getHand().get(i);
+                        computerSelection = Table.getInstance().getPlayer4().getHand().get(i);
+                        Table.getInstance().getPlayer4().getHand().remove(i);
+                        return computerSelection;
                     }
                 }
             }
@@ -334,7 +362,9 @@ public class ComputerManager {
                     computerSelection = Table.getInstance().getPlayer4().getHand().get(i);
                     if (computerSelection.toString().equals(highestHeart)) {
                         System.out.println("Computer 3 played: " + Table.getInstance().getPlayer4().getHand().get(i).toString());
-                        return Table.getInstance().getPlayer4().getHand().get(i);
+                        computerSelection = Table.getInstance().getPlayer4().getHand().get(i);
+                        Table.getInstance().getPlayer4().getHand().remove(i);
+                        return computerSelection;
                     }
                 }
             }
