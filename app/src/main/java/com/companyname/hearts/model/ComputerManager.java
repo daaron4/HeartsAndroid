@@ -72,13 +72,21 @@ public class ComputerManager {
         Collections.sort(arrayOfDiamondsComp1);
         Collections.sort(arrayOfClubsComp1);
 
-        //logic for the two of clubs
-            if (arrayOfClubsComp1.contains(2)) {
-            //play the fucking card.
-        } else {
-                Collections.max(arrayOfClubsComp1);
+        if (numOfClubsComp1 != 0) {
+            String dOc = arrayOfClubsComp1.get(0).toString();
+            if (Overlord.getInstance().getRoundsPlayed() == 1 && dOc.equals("Deuce of Clubs")) {
+                for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
+                    computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
+                    if (computerSelection.getRank().getValue() == 2 && computerSelection.getSuit() == Suit.Clubs) {
+                        return Table.getInstance().getPlayer2().getHand().get(i);
+                    }
+                }
+
+            } else {
+                return arrayOfClubsComp1.get(arrayOfClubsComp1.size() -1);
                 //play this fucking card.
             }
+        }
 
         for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
             computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
