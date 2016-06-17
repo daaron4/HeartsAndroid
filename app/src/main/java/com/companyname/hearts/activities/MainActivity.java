@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -555,15 +556,13 @@ public class MainActivity extends AppCompatActivity {
         if (Table.getInstance().getPlayer1().getNumberOfSelectedCards() != 3) {
             Toast.makeText(MainActivity.this, "You must pass three cards", Toast.LENGTH_LONG).show();
         } else {
-            System.out.println("Original Player 1 hand is: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
-            System.out.println("Original Player 2 hand is: " + Arrays.toString(Table.getInstance().getPlayer2().getHand().toArray()));
-
             for (int i = 0; i < Table.getInstance().getPlayer1().getHand().size(); i++) {
                 if (Table.getInstance().getPlayer1().getHand().get(i).isSelected()) {
-                    // ToDo: see if this matters in the future:
-                    //Table.getInstance().getPlayer1().getHand().get(i).setSelected(false);
+                    System.out.println("IN HERE");
+                    Table.getInstance().getPlayer1().getHand().get(i).setSelected(false);
                     Table.getInstance().getPlayer2().getHand().add(Table.getInstance().getPlayer1().getHand().get(i));
                     Table.getInstance().getPlayer1().getHand().remove(i);
+                    i--;
                 }
             }
 
@@ -576,15 +575,13 @@ public class MainActivity extends AppCompatActivity {
                 Table.getInstance().getPlayer1().getHand().add(passMe);
             }
 
-            System.out.println("New Player 1 hand is: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
-            System.out.println("New Player 2 hand is: " + Arrays.toString(Table.getInstance().getPlayer2().getHand().toArray()));
-
             Overlord.getInstance().setPassing(false);
             passButton.setVisibility(View.INVISIBLE);
 
             cardsReceivedPopUp(computerCardsToPlayer);
         }
-    }
+
+   }
 
     private void cardsReceivedPopUp(ArrayList<Card> computerCardsToPlayer) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -603,8 +600,8 @@ public class MainActivity extends AppCompatActivity {
                 for (int j = 0; j < 13; j++) {
                     removeCardFromView(j);
                 }
-                fixTransparentImages();
                 displayImages();
+                fixTransparentImages();
                 createListeners();
                 beginRound();
             }
