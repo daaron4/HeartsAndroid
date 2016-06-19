@@ -6,8 +6,6 @@
     android:background="#277714"
     tools:context=".activities.MainActivity">
 
-    <!--add textviews to capture player names to prevent crashing and continue to the next level.-->
-
     <Button
         android:id="@+id/pass_cards_button"
         android:layout_width="wrap_content"
@@ -20,7 +18,7 @@
         android:textStyle="bold"
         android:visibility="invisible" />
 
-    <!--Community Cards and Suit Indicator-->
+    <!--Community Cards, Player Names, and Suit Indicator-->
 
     <RelativeLayout
         android:layout_width="250dp"
@@ -115,12 +113,7 @@
             android:src="@drawable/derpycard"/>
     </RelativeLayout>
 
-    <!--Player Hand and Resources-->
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+    <!--Player Hand-->
 
     <ImageView
         android:id="@+id/card_1"
