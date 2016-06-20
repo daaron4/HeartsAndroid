@@ -2,9 +2,12 @@ package com.companyname.hearts.activities;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -43,6 +46,20 @@ public class MainActivity extends AppCompatActivity {
         setUpGame();
         displayImages();
         beginRound();
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent myIntent = new Intent(MainActivity.this, ShuffleAnimationActivity.class);
+                MainActivity.this.startActivity(myIntent);
+
+
+
+            }
+        });
+
     }
 
     private void initializeViews() {
@@ -67,8 +84,14 @@ public class MainActivity extends AppCompatActivity {
         b12 = (ImageButton) findViewById(R.id.card_12);
         b13 = (ImageButton) findViewById(R.id.card_13);
 
-        Intent currentIntent = getIntent();
-        String[] playerNames = currentIntent.getStringArrayExtra("playerNames");
+//        Intent currentIntent = getIntent();
+//        String[] playerNames = currentIntent.getStringArrayExtra("playerNames");
+        SharedPreferences pref = this.getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE);
+
+        String sharedPrefString =pref.getString("playernames","");
+
+        String[] playerNames = sharedPrefString.split(",");
+
         playerName.setText(playerNames[0]);
         computer1Name.setText(playerNames[1]);
         computer2Name.setText(playerNames[2]);

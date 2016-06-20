@@ -1,6 +1,8 @@
 package com.companyname.hearts.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -54,6 +56,21 @@ public class NameActivity extends AppCompatActivity {
         playerNames[1] = computer1Default;
         playerNames[2] = computer2Default;
         playerNames[3] = computer3Default;
+
+        //String Builder to save shared prefs
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < playerNames.length; i++) {
+            sb.append(playerNames[i]).append(",");
+        }
+        //TODO: Change sharedPrefs name?
+
+        //store value string in shared prefs
+        SharedPreferences sharedpreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString("playernames", sb.toString());
+        editor.commit();
 
         Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
         mainIntent.putExtra("playerNames", playerNames);
