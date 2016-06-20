@@ -181,7 +181,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void displayScorePopUp() {
-        // ToDo: remove old cards if desired first:
         Overlord.getInstance().calculatePoints();
         Overlord.getInstance().updatePlaying();
         Overlord.getInstance().reset();
