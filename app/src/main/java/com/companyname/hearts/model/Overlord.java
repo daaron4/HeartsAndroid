@@ -10,7 +10,7 @@ public class Overlord {
     private int roundsPlayed;
     private int handsPlayed;
     private Player leadingPlayer;
-    private String scoreTracker;
+    private String scoreTracker = "";
 
     private static Overlord instance = null;
 

@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
         setUpGame();
         displayImages();
         beginRound();
-
     }
 
     private void initializeViews() {
@@ -73,13 +72,9 @@ public class MainActivity extends AppCompatActivity {
         b12 = (ImageView) findViewById(R.id.card_12);
         b13 = (ImageView) findViewById(R.id.card_13);
 
-
         SharedPreferences pref = this.getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE);
-
         String sharedPrefString = pref.getString("playernames","");
-
         String[] playerNames = sharedPrefString.split(",");
-
 
         playerCard = (ImageView) findViewById(R.id.player_card);
         computer1Card = (ImageView) findViewById(R.id.computer1_card);
@@ -117,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
                 Table.getInstance().getPlayer3(), Table.getInstance().getPlayer4());
         Overlord.getInstance().setPlayerWithTheTwoOfClubs();
         Table.getInstance().getPlayer1().organizeHand();
-        // ToDo: decide if computer hands should be sorted as well
         Table.getInstance().getPlayer2().organizeHand();
         Table.getInstance().getPlayer3().organizeHand();
         Table.getInstance().getPlayer4().organizeHand();
@@ -202,10 +196,6 @@ public class MainActivity extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle("Hearts");
             builder.setMessage(Overlord.getInstance().getScoreTracker());
-//            builder.setMessage(Table.getInstance().getPlayer1().getName() + " : " + Table.getInstance().getPlayer1().getPoints() + "\n" +
-//                    Table.getInstance().getPlayer2().getName() + " : " + Table.getInstance().getPlayer2().getPoints() + "\n" +
-//                    Table.getInstance().getPlayer3().getName() + " : " + Table.getInstance().getPlayer3().getPoints() + "\n" +
-//                    Table.getInstance().getPlayer4().getName() + " : " + Table.getInstance().getPlayer4().getPoints() + "\n");
             builder.setIcon(R.mipmap.ic_launcher);
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
@@ -342,141 +332,94 @@ public class MainActivity extends AppCompatActivity {
         switch (i) {
             case 0:
                 if (Table.getInstance().getPlayer1().getHand().get(0).isSelected()) {
-
                     b1.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
                 }
                 else {
                     b1.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
-
                 }
                 break;
             case 1:
                 if (Table.getInstance().getPlayer1().getHand().get(1).isSelected()) {
                     b2.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
-
-//                    b2.setAlpha((float) 0.5);
                 } else {
                     b2.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
-
-//                    b2.setAlpha((float) 1);
                 }
                 break;
             case 2:
                 if (Table.getInstance().getPlayer1().getHand().get(2).isSelected()) {
                     b3.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
-
-//                    b3.setAlpha((float) 0.5);
                 } else {
                     b3.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
-
-//                    b3.setAlpha((float) 1);
                 }
                 break;
             case 3:
                 if (Table.getInstance().getPlayer1().getHand().get(3).isSelected()) {
                     b4.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
-
-                    //b4.setAlpha((float) 0.5);
                 } else {
                     b4.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
-
-                   // b4.setAlpha((float) 1);
                 }
                 break;
             case 4:
                 if (Table.getInstance().getPlayer1().getHand().get(4).isSelected()) {
                     b5.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
-
-                   // b5.setAlpha((float) 0.5);
                 } else {
                     b5.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
-                    // b5.setAlpha((float) 1);
                 }
                 break;
             case 5:
                 if (Table.getInstance().getPlayer1().getHand().get(5).isSelected()) {
                     b6.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
-
-                    //b6.setAlpha((float) 0.5);
                 } else {
                     b6.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
-
-                    // b6.setAlpha((float) 1);
                 }
                 break;
             case 6:
                 if (Table.getInstance().getPlayer1().getHand().get(6).isSelected()) {
                     b7.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
-                    //b7.setAlpha((float) 0.5);
                 } else {
                     b7.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
-
-                   // b7.setAlpha((float) 1);
                 }
                 break;
             case 7:
                 if (Table.getInstance().getPlayer1().getHand().get(7).isSelected()) {
                     b8.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
-
-                    //b8.setAlpha((float) 0.5);
                 } else {
                     b8.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
-
-                   // b8.setAlpha((float) 1);
                 }
                 break;
             case 8:
                 if (Table.getInstance().getPlayer1().getHand().get(8).isSelected()) {
                     b9.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
-
-                  //  b9.setAlpha((float) 0.5);
                 } else {
                     b9.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
-
-                    //b9.setAlpha((float) 1);
                 }
                 break;
             case 9:
                 if (Table.getInstance().getPlayer1().getHand().get(9).isSelected()) {
                     b10.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
-
-                    //b10.setAlpha((float) 0.5);
                 } else {
                     b10.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
-
-                    //b10.setAlpha((float) 1);
                 }
                 break;
             case 10:
                 if (Table.getInstance().getPlayer1().getHand().get(10).isSelected()) {
                     b11.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
-
-                    //b11.setAlpha((float) 0.5);
                 } else {
                     b11.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
-
-                    //b11.setAlpha((float) 1);
                 }
                 break;
             case 11:
                 if (Table.getInstance().getPlayer1().getHand().get(11).isSelected()) {
                     b12.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
-
-//                    b12.setAlpha((float) 0.5);
                 } else {
                     b12.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
-
-                    //b12.setAlpha((float) 1);
                 }
                 break;
             case 12:
                 if (Table.getInstance().getPlayer1().getHand().get(12).isSelected()) {
                     b13.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
-
-                    //b13.setAlpha((float) 0.5);
                 } else {
                     b13.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
-                    //b13.setAlpha((float) 1);
                 }
                 break;
         }
@@ -677,9 +620,6 @@ public class MainActivity extends AppCompatActivity {
 
                     computerSelection = HAL9000.computer1MakesMove();
                     Table.getInstance().getBoard().add(computerSelection);
-
-//                    testView.setText(testView.getText() + Table.getInstance().getPlayer2().getName()
-//                            + " played: " + computerSelection.toString() + "\n");
                     computer1Card.setImageResource(computerSelection.getResId());
 
                     computerSelection = Terminator.computer2MakesMove();
@@ -759,9 +699,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             }
-
             // ToDo: make computer selections better:
-
             ArrayList<Card> computerCardsToPlayer = new ArrayList<>();
             switch (Overlord.getInstance().passingDirection()) {
                 case LEFT:
@@ -843,7 +781,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void cardsReceivedPopUp(ArrayList<Card> computerCardsToPlayer){
+    private void cardsReceivedPopUp(ArrayList<Card> computerCardsToPlayer) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Hearts");
         builder.setMessage("You received: " + Arrays.toString(computerCardsToPlayer.toArray()));
@@ -874,13 +812,10 @@ public class MainActivity extends AppCompatActivity {
     ImageView.OnClickListener onCardClick = new ImageView.OnClickListener() {
         @Override
         public void onClick(View view) {
-
-            //TODO: Something here? JOHN
             int id = view.getId();
             switch (id) {
                 case R.id.card_1:
                     clickedCard(0);
-
                     break;
                 case R.id.card_2:
                     clickedCard(1);
@@ -923,6 +858,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
-
 
 }
