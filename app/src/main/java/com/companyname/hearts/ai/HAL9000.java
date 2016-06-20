@@ -87,7 +87,6 @@ public class HAL9000 {
                     }
                 }
             }
-        } else {
             if (numOfDiamondsComp1 != 0) {
                 String highestDiamond = arrayOfDiamondsComp1.get(arrayOfDiamondsComp1.size() - 1).toString();
                 for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
@@ -126,10 +125,10 @@ public class HAL9000 {
 
         //----------This is the beginning of round 2---------\\
 
-        if (Overlord.getInstance().getRoundsPlayed() >1 && (Overlord.getInstance().amITheLeadingPlayer(Table.getInstance().getPlayer2()))) {
+        if (Overlord.getInstance().getRoundsPlayed() > 1 && (Overlord.getInstance().amITheLeadingPlayer(Table.getInstance().getPlayer2()))) {
             //this line determines that this computer player is leading the 2nd round
 
-            if (numOfClubsComp1 >= numOfDiamondsComp1 && numOfClubsComp1 > numOfSpadesComp1) {
+            if (numOfClubsComp1 >= numOfDiamondsComp1 && numOfClubsComp1 >= numOfSpadesComp1) {
                 //this here plays the lowest club
                 String lowestClub = arrayOfClubsComp1.get(0).toString();
                 for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
@@ -142,7 +141,7 @@ public class HAL9000 {
                     }
                 }
             }
-            else if (numOfDiamondsComp1 > numOfClubsComp1 && numOfDiamondsComp1 > numOfSpadesComp1) {
+            else if (numOfDiamondsComp1 > numOfClubsComp1 && numOfDiamondsComp1 >= numOfSpadesComp1) {
                 //in here play lowest diamond
                 String lowestDiamond = arrayOfDiamondsComp1.get(0).toString();
                 for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
