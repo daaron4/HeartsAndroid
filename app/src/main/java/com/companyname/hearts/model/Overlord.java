@@ -283,6 +283,24 @@ public class Overlord {
         return "No passing";
     }
 
+    public Direction passingDirection() {
+        // Pass Cards Direction:
+        if (handsPlayed % 4 == 0) {
+            passing = true;
+            return Direction.LEFT;
+        }
+        if (handsPlayed % 4 == 1) {
+            passing = true;
+            return Direction.RIGHT;
+        }
+        if (handsPlayed % 4 == 2) {
+            passing = true;
+            return  Direction.ACROSS;
+        }
+        passing = false;
+        return Direction.NO_PASSING;
+    }
+
     public boolean canPlayCard(Card userCard, Player whosPlaying) {
         if (getRoundsPlayed() == 1) {
             if (getLeadingPlayer() == whosPlaying) {

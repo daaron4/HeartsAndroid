@@ -324,8 +324,7 @@ public class MainActivity extends AppCompatActivity {
             case 0:
                 if (Table.getInstance().getPlayer1().getHand().get(0).isSelected()) {
                     b1.setAlpha((float) 0.5);
-                }
-                else {
+                } else {
                     b1.setAlpha((float) 1);
                 }
                 break;
@@ -566,13 +565,11 @@ public class MainActivity extends AppCompatActivity {
             if (Table.getInstance().getPlayer1().getHand().get(i).isSelected()) {
                 Table.getInstance().getPlayer1().getHand().get(i).setSelected(false);
                 passCardSelector(i);
-            }
-            else {
+            } else {
                 if (Table.getInstance().getPlayer1().getNumberOfSelectedCards() != 3) {
                     Table.getInstance().getPlayer1().getHand().get(i).setSelected(true);
                     passCardSelector(i);
-                }
-                else {
+                } else {
                     Toast.makeText(MainActivity.this, "You can't pass more than three cards", Toast.LENGTH_LONG).show();
                 }
             }
@@ -584,22 +581,78 @@ public class MainActivity extends AppCompatActivity {
         if (Table.getInstance().getPlayer1().getNumberOfSelectedCards() != 3) {
             Toast.makeText(MainActivity.this, "You must pass three cards", Toast.LENGTH_LONG).show();
         } else {
-            for (int i = 0; i < Table.getInstance().getPlayer1().getHand().size(); i++) {
-                if (Table.getInstance().getPlayer1().getHand().get(i).isSelected()) {
-                    Table.getInstance().getPlayer1().getHand().get(i).setSelected(false);
-                    Table.getInstance().getPlayer2().getHand().add(Table.getInstance().getPlayer1().getHand().get(i));
-                    Table.getInstance().getPlayer1().getHand().remove(i);
-                    i--;
-                }
-            }
-
-            // ToDo: make computer selections better:
             ArrayList<Card> computerCardsToPlayer = new ArrayList<>();
-            for (int i = 0; i < 3; i++) {
-                Card passMe = Table.getInstance().getPlayer2().getHand().get(i);
-                computerCardsToPlayer.add(passMe);
-                Table.getInstance().getPlayer2().getHand().remove(i);
-                Table.getInstance().getPlayer1().getHand().add(passMe);
+            switch (Overlord.getInstance().passingDirection()) {
+                case LEFT:
+                    System.out.println("Starting P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
+                    System.out.println("Starting P2 hand: " + Arrays.toString(Table.getInstance().getPlayer2().getHand().toArray()));
+
+                    for (int i = 0; i < Table.getInstance().getPlayer1().getHand().size(); i++) {
+                        if (Table.getInstance().getPlayer1().getHand().get(i).isSelected()) {
+                            Table.getInstance().getPlayer1().getHand().get(i).setSelected(false);
+                            Table.getInstance().getPlayer2().getHand().add(Table.getInstance().getPlayer1().getHand().get(i));
+                            Table.getInstance().getPlayer1().getHand().remove(i);
+                            i--;
+                        }
+                    }
+                    // ToDo: make computer selections better:
+                    computerCardsToPlayer = new ArrayList<>();
+                    for (int i = 0; i < 3; i++) {
+                        Card passMe = Table.getInstance().getPlayer2().getHand().get(i);
+                        computerCardsToPlayer.add(passMe);
+                        Table.getInstance().getPlayer2().getHand().remove(i);
+                        Table.getInstance().getPlayer1().getHand().add(passMe);
+                    }
+
+                    System.out.println("Starting P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
+                    System.out.println("Starting P2 hand: " + Arrays.toString(Table.getInstance().getPlayer2().getHand().toArray()));
+                    break;
+                case RIGHT:
+                    System.out.println("Starting P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
+                    System.out.println("Starting P4 hand: " + Arrays.toString(Table.getInstance().getPlayer4().getHand().toArray()));
+                    for (int i = 0; i < Table.getInstance().getPlayer1().getHand().size(); i++) {
+                        if (Table.getInstance().getPlayer1().getHand().get(i).isSelected()) {
+                            Table.getInstance().getPlayer1().getHand().get(i).setSelected(false);
+                            Table.getInstance().getPlayer4().getHand().add(Table.getInstance().getPlayer1().getHand().get(i));
+                            Table.getInstance().getPlayer1().getHand().remove(i);
+                            i--;
+                        }
+                    }
+                    // ToDo: make computer selections better:
+                    computerCardsToPlayer = new ArrayList<>();
+                    for (int i = 0; i < 3; i++) {
+                        Card passMe = Table.getInstance().getPlayer2().getHand().get(i);
+                        computerCardsToPlayer.add(passMe);
+                        Table.getInstance().getPlayer4().getHand().remove(i);
+                        Table.getInstance().getPlayer1().getHand().add(passMe);
+                    }
+                    System.out.println("Starting P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
+                    System.out.println("Starting P4 hand: " + Arrays.toString(Table.getInstance().getPlayer4().getHand().toArray()));
+                    break;
+                case ACROSS:
+                    System.out.println("Starting P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
+                    System.out.println("Starting P3 hand: " + Arrays.toString(Table.getInstance().getPlayer3().getHand().toArray()));
+                    for (int i = 0; i < Table.getInstance().getPlayer1().getHand().size(); i++) {
+                        if (Table.getInstance().getPlayer1().getHand().get(i).isSelected()) {
+                            Table.getInstance().getPlayer1().getHand().get(i).setSelected(false);
+                            Table.getInstance().getPlayer3().getHand().add(Table.getInstance().getPlayer1().getHand().get(i));
+                            Table.getInstance().getPlayer1().getHand().remove(i);
+                            i--;
+                        }
+                    }
+                    // ToDo: make computer selections better:
+                    computerCardsToPlayer = new ArrayList<>();
+                    for (int i = 0; i < 3; i++) {
+                        Card passMe = Table.getInstance().getPlayer2().getHand().get(i);
+                        computerCardsToPlayer.add(passMe);
+                        Table.getInstance().getPlayer3().getHand().remove(i);
+                        Table.getInstance().getPlayer1().getHand().add(passMe);
+                    }
+                    System.out.println("Starting P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
+                    System.out.println("Starting P3 hand: " + Arrays.toString(Table.getInstance().getPlayer3().getHand().toArray()));
+                    break;
+                case NO_PASSING:
+                    break;
             }
 
             Overlord.getInstance().setPassing(false);
@@ -608,7 +661,7 @@ public class MainActivity extends AppCompatActivity {
             cardsReceivedPopUp(computerCardsToPlayer);
         }
 
-   }
+    }
 
     private void cardsReceivedPopUp(ArrayList<Card> computerCardsToPlayer) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
