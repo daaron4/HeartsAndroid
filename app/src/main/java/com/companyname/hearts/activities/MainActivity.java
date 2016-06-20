@@ -169,7 +169,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (Overlord.getInstance().getRoundsPlayed() == 14) {
-                    // ToDo: display old cards if desired first:
                     displayScorePopUp();
                 } else {
                     beginRound();
@@ -184,16 +183,18 @@ public class MainActivity extends AppCompatActivity {
         Overlord.getInstance().calculatePoints();
         Overlord.getInstance().updatePlaying();
         Overlord.getInstance().reset();
+        Overlord.getInstance().updateScoreTracker();
 
         if (!Overlord.getInstance().getPlaying()) {
             playAgainPopUp();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle("Hearts");
-            builder.setMessage(Table.getInstance().getPlayer1().getName() + " : " + Table.getInstance().getPlayer1().getPoints() + "\n" +
-                    Table.getInstance().getPlayer2().getName() + " : " + Table.getInstance().getPlayer2().getPoints() + "\n" +
-                    Table.getInstance().getPlayer3().getName() + " : " + Table.getInstance().getPlayer3().getPoints() + "\n" +
-                    Table.getInstance().getPlayer4().getName() + " : " + Table.getInstance().getPlayer4().getPoints() + "\n");
+            builder.setMessage(Overlord.getInstance().getScoreTracker());
+//            builder.setMessage(Table.getInstance().getPlayer1().getName() + " : " + Table.getInstance().getPlayer1().getPoints() + "\n" +
+//                    Table.getInstance().getPlayer2().getName() + " : " + Table.getInstance().getPlayer2().getPoints() + "\n" +
+//                    Table.getInstance().getPlayer3().getName() + " : " + Table.getInstance().getPlayer3().getPoints() + "\n" +
+//                    Table.getInstance().getPlayer4().getName() + " : " + Table.getInstance().getPlayer4().getPoints() + "\n");
             builder.setIcon(R.mipmap.ic_launcher);
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
@@ -709,7 +710,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 Overlord.getInstance().setPlayerWithTheTwoOfClubs();
                 Table.getInstance().getPlayer1().organizeHand();
-                // ToDo: decide if computer hands should be sorted as well
                 Table.getInstance().getPlayer2().organizeHand();
                 Table.getInstance().getPlayer3().organizeHand();
                 Table.getInstance().getPlayer4().organizeHand();
