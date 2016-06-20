@@ -10,6 +10,7 @@ public class Overlord {
     private int roundsPlayed;
     private int handsPlayed;
     private Player leadingPlayer;
+    private String scoreTracker;
 
     private static Overlord instance = null;
 
@@ -20,6 +21,8 @@ public class Overlord {
         passing = true;
         roundsPlayed = 1;
         handsPlayed = 0;
+        scoreTracker += Table.getInstance().getPlayer1().getName() + " " + Table.getInstance().getPlayer2().getName() +
+                " " + Table.getInstance().getPlayer3().getName() + " " + Table.getInstance().getPlayer4().getName() + "\n";
     }
 
     public static Overlord getInstance() {
@@ -123,7 +126,7 @@ public class Overlord {
         for (int i = 0; i < Table.getInstance().getBoard().size(); i++) {
             getLeadingPlayer().getOldCards().add(Table.getInstance().getBoard().get(i));
         }
-        Table.getInstance().getBoard().clear();
+
     }
 
     public void reset() {
@@ -151,6 +154,15 @@ public class Overlord {
         Table.getInstance().getPlayer2().setPoints(0);
         Table.getInstance().getPlayer3().setPoints(0);
         Table.getInstance().getPlayer4().setPoints(0);
+    }
+
+    public void updateScoreTracker() {
+        scoreTracker += Table.getInstance().getPlayer1().getPoints() + " " + Table.getInstance().getPlayer2().getPoints() +
+                " " + Table.getInstance().getPlayer3().getPoints() + " " + Table.getInstance().getPlayer4().getPoints() + "\n";
+    }
+
+    public String getScoreTracker() {
+        return scoreTracker;
     }
 
     public void updatePlaying() {
@@ -280,6 +292,24 @@ public class Overlord {
         }
         passing = false;
         return "No passing";
+    }
+
+    public Direction passingDirection() {
+        // Pass Cards Direction:
+        if (handsPlayed % 4 == 0) {
+            passing = true;
+            return Direction.LEFT;
+        }
+        if (handsPlayed % 4 == 1) {
+            passing = true;
+            return Direction.RIGHT;
+        }
+        if (handsPlayed % 4 == 2) {
+            passing = true;
+            return  Direction.ACROSS;
+        }
+        passing = false;
+        return Direction.NO_PASSING;
     }
 
     public boolean canPlayCard(Card userCard, Player whosPlaying) {
