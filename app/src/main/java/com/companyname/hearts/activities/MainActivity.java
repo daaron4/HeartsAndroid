@@ -1,6 +1,5 @@
 package com.companyname.hearts.activities;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -237,7 +236,6 @@ public class MainActivity extends AppCompatActivity {
         builder.show();
     }
 
-    @SuppressLint("SetTextI18n")
     private void beginRound() {
         if (!Overlord.getInstance().getPassing()) {
             Card computerSelection;
@@ -459,7 +457,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @SuppressLint("SetTextI18n")
     private void clickedCard(int i) {
         if (!Overlord.getInstance().getPassing()) {
             Card computerSelection;
@@ -604,8 +601,8 @@ public class MainActivity extends AppCompatActivity {
                         Table.getInstance().getPlayer1().getHand().add(passMe);
                     }
 
-                    System.out.println("Starting P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
-                    System.out.println("Starting P2 hand: " + Arrays.toString(Table.getInstance().getPlayer2().getHand().toArray()));
+                    System.out.println("Ending P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
+                    System.out.println("Ending P2 hand: " + Arrays.toString(Table.getInstance().getPlayer2().getHand().toArray()));
                     break;
                 case RIGHT:
                     System.out.println("Starting P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
@@ -626,8 +623,8 @@ public class MainActivity extends AppCompatActivity {
                         Table.getInstance().getPlayer4().getHand().remove(i);
                         Table.getInstance().getPlayer1().getHand().add(passMe);
                     }
-                    System.out.println("Starting P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
-                    System.out.println("Starting P4 hand: " + Arrays.toString(Table.getInstance().getPlayer4().getHand().toArray()));
+                    System.out.println("Ending P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
+                    System.out.println("Ending P4 hand: " + Arrays.toString(Table.getInstance().getPlayer4().getHand().toArray()));
                     break;
                 case ACROSS:
                     System.out.println("Starting P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
@@ -648,8 +645,8 @@ public class MainActivity extends AppCompatActivity {
                         Table.getInstance().getPlayer3().getHand().remove(i);
                         Table.getInstance().getPlayer1().getHand().add(passMe);
                     }
-                    System.out.println("Starting P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
-                    System.out.println("Starting P3 hand: " + Arrays.toString(Table.getInstance().getPlayer3().getHand().toArray()));
+                    System.out.println("Ending P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
+                    System.out.println("Ending P3 hand: " + Arrays.toString(Table.getInstance().getPlayer3().getHand().toArray()));
                     break;
                 case NO_PASSING:
                     break;
