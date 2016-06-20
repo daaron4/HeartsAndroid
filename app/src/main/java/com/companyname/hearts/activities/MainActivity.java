@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private Button passButton;
     private ImageView b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13;
     private ImageView playerCard, computer1Card, computer2Card, computer3Card;
+    private ImageView suitPlayed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
         computer1Card = (ImageView) findViewById(R.id.computer1_card);
         computer2Card = (ImageView) findViewById(R.id.computer2_card);
         computer3Card = (ImageView) findViewById(R.id.computer3_card);
+
+        suitPlayed = (ImageView) findViewById(R.id.played_suit);
 
         Intent currentIntent = getIntent();
         String[] playerNames = currentIntent.getStringArrayExtra("playerNames");
@@ -242,6 +245,7 @@ public class MainActivity extends AppCompatActivity {
                 computerSelection = HAL9000.computer1MakesMove();
                 Table.getInstance().getBoard().add(computerSelection);
                 computer1Card.setImageResource(computerSelection.getResId());
+                setSuitImage();
 
                 computerSelection = Terminator.computer2MakesMove();
                 Table.getInstance().getBoard().add(computerSelection);
@@ -255,6 +259,7 @@ public class MainActivity extends AppCompatActivity {
                 computerSelection = Terminator.computer2MakesMove();
                 Table.getInstance().getBoard().add(computerSelection);
                 computer2Card.setImageResource(computerSelection.getResId());
+                setSuitImage();
 
                 computerSelection = Zombocom.computer3MakesMove();
                 Table.getInstance().getBoard().add(computerSelection);
@@ -264,12 +269,32 @@ public class MainActivity extends AppCompatActivity {
                 computerSelection = Zombocom.computer3MakesMove();
                 Table.getInstance().getBoard().add(computerSelection);
                 computer3Card.setImageResource(computerSelection.getResId());
+                setSuitImage();
             }
         } else {
             passButton.setText(Overlord.getInstance().getPassingDirection());
             passButton.setVisibility(View.VISIBLE);
         }
 
+    }
+
+
+    private void setSuitImage() {
+        Suit suit = Table.getInstance().getBoard().get(0).getSuit();
+        switch (suit) {
+            case Hearts:
+                suitPlayed.setImageResource(R.drawable.heart);
+                break;
+            case Spades:
+                suitPlayed.setImageResource(R.drawable.spade);
+                break;
+            case Diamonds:
+                suitPlayed.setImageResource(R.drawable.diamond);
+                break;
+            case Clubs:
+                suitPlayed.setImageResource(R.drawable.club);
+                break;
+        }
     }
 
     private void fixTransparentImages() {
@@ -437,6 +462,7 @@ public class MainActivity extends AppCompatActivity {
                 if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1())) {
                     Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
                     playerCard.setImageResource(Table.getInstance().getPlayer1().getHand().get(i).getResId());
+                    setSuitImage();
                     // ToDo: deal with issue with removing cards:
                     Table.getInstance().getPlayer1().getHand().remove(i);
                     Table.getInstance().getPlayer1().getHand().add(i, new Card(Rank.Joker, Suit.Joker, R.drawable.derpycard));
@@ -452,6 +478,7 @@ public class MainActivity extends AppCompatActivity {
                 if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1())) {
                     Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
                     playerCard.setImageResource(Table.getInstance().getPlayer1().getHand().get(i).getResId());
+                    setSuitImage();
                     // ToDo: deal with issue with removing cards:
                     Table.getInstance().getPlayer1().getHand().remove(i);
                     Table.getInstance().getPlayer1().getHand().add(i, new Card(Rank.Joker, Suit.Joker, R.drawable.derpycard));
