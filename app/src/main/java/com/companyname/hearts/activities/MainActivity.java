@@ -1,11 +1,14 @@
 package com.companyname.hearts.activities;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,6 +20,7 @@ import com.companyname.hearts.ai.Terminator;
 import com.companyname.hearts.ai.Zombocom;
 import com.companyname.hearts.model.Card;
 import com.companyname.hearts.model.Dealer;
+import com.companyname.hearts.model.Direction;
 import com.companyname.hearts.model.Overlord;
 import com.companyname.hearts.model.Rank;
 import com.companyname.hearts.model.Suit;
@@ -68,6 +72,10 @@ public class MainActivity extends AppCompatActivity {
         b12 = (ImageView) findViewById(R.id.card_12);
         b13 = (ImageView) findViewById(R.id.card_13);
 
+        SharedPreferences pref = this.getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE);
+        String sharedPrefString = pref.getString("playernames","");
+        String[] playerNames = sharedPrefString.split(",");
+
         playerCard = (ImageView) findViewById(R.id.player_card);
         computer1Card = (ImageView) findViewById(R.id.computer1_card);
         computer2Card = (ImageView) findViewById(R.id.computer2_card);
@@ -75,8 +83,6 @@ public class MainActivity extends AppCompatActivity {
 
         suitPlayed = (ImageView) findViewById(R.id.played_suit);
 
-        Intent currentIntent = getIntent();
-        String[] playerNames = currentIntent.getStringArrayExtra("playerNames");
         playerName.setText(playerNames[0]);
         computer1Name.setText(playerNames[1]);
         computer2Name.setText(playerNames[2]);
@@ -106,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
                 Table.getInstance().getPlayer3(), Table.getInstance().getPlayer4());
         Overlord.getInstance().setPlayerWithTheTwoOfClubs();
         Table.getInstance().getPlayer1().organizeHand();
-        // ToDo: decide if computer hands should be sorted as well
         Table.getInstance().getPlayer2().organizeHand();
         Table.getInstance().getPlayer3().organizeHand();
         Table.getInstance().getPlayer4().organizeHand();
@@ -191,10 +196,6 @@ public class MainActivity extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle("Hearts");
             builder.setMessage(Overlord.getInstance().getScoreTracker());
-//            builder.setMessage(Table.getInstance().getPlayer1().getName() + " : " + Table.getInstance().getPlayer1().getPoints() + "\n" +
-//                    Table.getInstance().getPlayer2().getName() + " : " + Table.getInstance().getPlayer2().getPoints() + "\n" +
-//                    Table.getInstance().getPlayer3().getName() + " : " + Table.getInstance().getPlayer3().getPoints() + "\n" +
-//                    Table.getInstance().getPlayer4().getName() + " : " + Table.getInstance().getPlayer4().getPoints() + "\n");
             builder.setIcon(R.mipmap.ic_launcher);
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
@@ -311,112 +312,184 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fixTransparentImages() {
-        b1.setAlpha((float) 1);
-        b2.setAlpha((float) 1);
-        b3.setAlpha((float) 1);
-        b4.setAlpha((float) 1);
-        b5.setAlpha((float) 1);
-        b6.setAlpha((float) 1);
-        b7.setAlpha((float) 1);
-        b8.setAlpha((float) 1);
-        b9.setAlpha((float) 1);
-        b10.setAlpha((float) 1);
-        b12.setAlpha((float) 1);
-        b12.setAlpha((float) 1);
-        b13.setAlpha((float) 1);
+        b1.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
+        b2.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
+        b3.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
+        b4.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
+        b5.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
+        b6.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
+        b7.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
+        b8.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
+        b9.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
+        b10.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
+        b11.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
+        b12.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
+        b13.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
+
     }
 
     private void passCardSelector(int i) {
         switch (i) {
             case 0:
                 if (Table.getInstance().getPlayer1().getHand().get(0).isSelected()) {
-                    b1.setAlpha((float) 0.5);
-                } else {
-                    b1.setAlpha((float) 1);
+                    b1.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
+                }
+                else {
+                    b1.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
                 }
                 break;
             case 1:
                 if (Table.getInstance().getPlayer1().getHand().get(1).isSelected()) {
-                    b2.setAlpha((float) 0.5);
+                    b2.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
                 } else {
-                    b2.setAlpha((float) 1);
+                    b2.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
                 }
                 break;
             case 2:
                 if (Table.getInstance().getPlayer1().getHand().get(2).isSelected()) {
-                    b3.setAlpha((float) 0.5);
+                    b3.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
                 } else {
-                    b3.setAlpha((float) 1);
+                    b3.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
                 }
                 break;
             case 3:
                 if (Table.getInstance().getPlayer1().getHand().get(3).isSelected()) {
-                    b4.setAlpha((float) 0.5);
+                    b4.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
                 } else {
-                    b4.setAlpha((float) 1);
+                    b4.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
                 }
                 break;
             case 4:
                 if (Table.getInstance().getPlayer1().getHand().get(4).isSelected()) {
-                    b5.setAlpha((float) 0.5);
+                    b5.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
                 } else {
-                    b5.setAlpha((float) 1);
+                    b5.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
                 }
                 break;
             case 5:
                 if (Table.getInstance().getPlayer1().getHand().get(5).isSelected()) {
-                    b6.setAlpha((float) 0.5);
+                    b6.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
                 } else {
-                    b6.setAlpha((float) 1);
+                    b6.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
                 }
                 break;
             case 6:
                 if (Table.getInstance().getPlayer1().getHand().get(6).isSelected()) {
-                    b7.setAlpha((float) 0.5);
+                    b7.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
                 } else {
-                    b7.setAlpha((float) 1);
+                    b7.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
                 }
                 break;
             case 7:
                 if (Table.getInstance().getPlayer1().getHand().get(7).isSelected()) {
-                    b8.setAlpha((float) 0.5);
+                    b8.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
                 } else {
-                    b8.setAlpha((float) 1);
+                    b8.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
                 }
                 break;
             case 8:
                 if (Table.getInstance().getPlayer1().getHand().get(8).isSelected()) {
-                    b9.setAlpha((float) 0.5);
+                    b9.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
                 } else {
-                    b9.setAlpha((float) 1);
+                    b9.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
                 }
                 break;
             case 9:
                 if (Table.getInstance().getPlayer1().getHand().get(9).isSelected()) {
-                    b10.setAlpha((float) 0.5);
+                    b10.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
                 } else {
-                    b10.setAlpha((float) 1);
+                    b10.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
                 }
                 break;
             case 10:
                 if (Table.getInstance().getPlayer1().getHand().get(10).isSelected()) {
-                    b11.setAlpha((float) 0.5);
+                    b11.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
                 } else {
-                    b11.setAlpha((float) 1);
+                    b11.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
                 }
                 break;
             case 11:
                 if (Table.getInstance().getPlayer1().getHand().get(11).isSelected()) {
-                    b12.setAlpha((float) 0.5);
+                    b12.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
                 } else {
-                    b12.setAlpha((float) 1);
+                    b12.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
                 }
                 break;
             case 12:
                 if (Table.getInstance().getPlayer1().getHand().get(12).isSelected()) {
-                    b13.setAlpha((float) 0.5);
+                    b13.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
                 } else {
-                    b13.setAlpha((float) 1);
+                    b13.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
+                }
+                break;
+        }
+    }
+
+    private void passShit(int i) {
+        switch (i) {
+            case 0:
+                if (Table.getInstance().getPlayer1().getHand().get(0).isSelected()) {
+                    b1.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pass));
+                }
+                break;
+            case 1:
+                if (Table.getInstance().getPlayer1().getHand().get(1).isSelected()) {
+                    b2.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pass));
+                }
+                break;
+            case 2:
+                if (Table.getInstance().getPlayer1().getHand().get(2).isSelected()) {
+                    b3.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pass));
+                }
+                break;
+            case 3:
+                if (Table.getInstance().getPlayer1().getHand().get(3).isSelected()) {
+                    b4.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pass));
+                }
+                break;
+            case 4:
+                if (Table.getInstance().getPlayer1().getHand().get(4).isSelected()) {
+                    b5.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pass));
+                }
+                break;
+            case 5:
+                if (Table.getInstance().getPlayer1().getHand().get(5).isSelected()) {
+                    b6.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pass));
+                }
+                break;
+            case 6:
+                if (Table.getInstance().getPlayer1().getHand().get(6).isSelected()) {
+                    b7.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pass));
+                }
+                break;
+            case 7:
+                if (Table.getInstance().getPlayer1().getHand().get(7).isSelected()) {
+                    b8.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pass));
+                }
+                break;
+            case 8:
+                if (Table.getInstance().getPlayer1().getHand().get(8).isSelected()) {
+                    b9.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pass));
+                }
+                break;
+            case 9:
+                if (Table.getInstance().getPlayer1().getHand().get(9).isSelected()) {
+                    b10.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pass));
+                }
+                break;
+            case 10:
+                if (Table.getInstance().getPlayer1().getHand().get(10).isSelected()) {
+                    b11.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pass));
+                }
+                break;
+            case 11:
+                if (Table.getInstance().getPlayer1().getHand().get(11).isSelected()) {
+                    b12.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pass));
+                }
+                break;
+            case 12:
+                if (Table.getInstance().getPlayer1().getHand().get(12).isSelected()) {
+                    b13.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pass));
                 }
                 break;
         }
@@ -618,6 +691,15 @@ public class MainActivity extends AppCompatActivity {
         if (Table.getInstance().getPlayer1().getNumberOfSelectedCards() != 3) {
             Toast.makeText(MainActivity.this, "You must pass three cards", Toast.LENGTH_LONG).show();
         } else {
+            if(Overlord.getInstance().passingDirection() == Direction.LEFT)
+            for (int x = 0; x < 13; x++){
+                if (Table.getInstance().getPlayer1().getHand().get(x).isSelected()) {
+                    Log.e("BALLS", Integer.toString(x));
+                                    passShit(x);
+
+                }
+            }
+            // ToDo: make computer selections better:
             ArrayList<Card> computerCardsToPlayer = new ArrayList<>();
             switch (Overlord.getInstance().passingDirection()) {
                 case LEFT:
@@ -694,7 +776,6 @@ public class MainActivity extends AppCompatActivity {
 
             Overlord.getInstance().setPassing(false);
             passButton.setVisibility(View.INVISIBLE);
-
             cardsReceivedPopUp(computerCardsToPlayer);
         }
 

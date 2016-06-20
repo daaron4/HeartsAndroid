@@ -14,6 +14,7 @@ import java.util.List;
 /**
  * Created by EmployYeezy on 6/17/16.
  */
+
 public class HAL9000 {
     public static Card computer1MakesMove() {
         System.out.println("Computer 1 hand: " + Arrays.toString(Table.getInstance().getPlayer2().getHand().toArray()));
