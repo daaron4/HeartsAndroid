@@ -124,6 +124,7 @@ public class Overlord {
             getLeadingPlayer().getOldCards().add(Table.getInstance().getBoard().get(i));
         }
         Table.getInstance().getBoard().clear();
+
     }
 
     public void reset() {

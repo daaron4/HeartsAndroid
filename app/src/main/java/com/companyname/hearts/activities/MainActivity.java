@@ -278,7 +278,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     private void setSuitImage() {
         Suit suit = Table.getInstance().getBoard().get(0).getSuit();
         switch (suit) {
@@ -295,6 +294,13 @@ public class MainActivity extends AppCompatActivity {
                 suitPlayed.setImageResource(R.drawable.club);
                 break;
         }
+    }
+
+    private void resetPlayedCards() {
+        playerCard.setImageResource(0);
+        computer1Card.setImageResource(0);
+        computer2Card.setImageResource(0);
+        computer3Card.setImageResource(0);
     }
 
     private void fixTransparentImages() {
@@ -468,6 +474,7 @@ public class MainActivity extends AppCompatActivity {
                     Table.getInstance().getPlayer1().getHand().add(i, new Card(Rank.Joker, Suit.Joker, R.drawable.derpycard));
 
                     Overlord.getInstance().determineTrickWinner();
+                    resetPlayedCards();
                     displayTrickWinnerPopUp();
                     removeCardFromView(i);
                     Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
@@ -488,6 +495,7 @@ public class MainActivity extends AppCompatActivity {
                     computer1Card.setImageResource(computerSelection.getResId());
 
                     Overlord.getInstance().determineTrickWinner();
+                    resetPlayedCards();
                     displayTrickWinnerPopUp();
                     removeCardFromView(i);
                     Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
@@ -511,6 +519,7 @@ public class MainActivity extends AppCompatActivity {
                     computer2Card.setImageResource(computerSelection.getResId());
 
                     Overlord.getInstance().determineTrickWinner();
+                    resetPlayedCards();
                     displayTrickWinnerPopUp();
                     removeCardFromView(i);
                     Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
@@ -538,6 +547,7 @@ public class MainActivity extends AppCompatActivity {
                     computer3Card.setImageResource(computerSelection.getResId());
 
                     Overlord.getInstance().determineTrickWinner();
+                    resetPlayedCards();
                     displayTrickWinnerPopUp();
                     removeCardFromView(i);
 
