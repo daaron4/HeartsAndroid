@@ -127,7 +127,52 @@ public class Terminator {
             }
         }
 
-        //Original Crap
+        //----This is the beginning of round 2----\\
+
+        if (Overlord.getInstance().getRoundsPlayed() == 2) {
+            //if I am the leading player(true)
+
+            if (numOfClubsComp2 >= numOfDiamondsComp2 && numOfClubsComp2 > numOfSpadesComp2) {
+                //in here play lowest club
+                String lowestClub = arrayOfClubsComp2.get(0).toString();
+                for (int i = 0; i < Table.getInstance().getPlayer3().getHand().size(); i++) {
+                    computerSelection = Table.getInstance().getPlayer3().getHand().get(i);
+                    if (computerSelection.toString().equals(lowestClub)) {
+                        System.out.println("Computer 2 played: " + Table.getInstance().getPlayer3().getHand().get(i).toString());
+                        computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
+                        Table.getInstance().getPlayer3().getHand().remove(i);
+                        return computerSelection;
+                    }
+                }
+            } else if (numOfDiamondsComp2 > numOfClubsComp2 && numOfDiamondsComp2 > numOfSpadesComp2) {
+                //in here play lowest diamond
+                String lowestDiamond = arrayOfDiamondsComp2.get(0).toString();
+                for (int i = 0; i < Table.getInstance().getPlayer3().getHand().size(); i++) {
+                    computerSelection = Table.getInstance().getPlayer3().getHand().get(i);
+                    if (computerSelection.toString().equals(lowestDiamond)) {
+                        System.out.println("Computer 2 played: " + Table.getInstance().getPlayer3().getHand().get(i).toString());
+                        computerSelection = Table.getInstance().getPlayer3().getHand().get(i);
+                        Table.getInstance().getPlayer2().getHand().remove(i);
+                        return computerSelection;
+                    }
+                }
+            } else {
+                //in here begins bleed of spades.
+                String lowestSpade = arrayOfSpadesComp2.get(0).toString();
+                for (int i = 0; i < Table.getInstance().getPlayer3().getHand().size(); i++) {
+                    computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
+                    if (computerSelection.toString().equals(lowestSpade)) {
+                        System.out.println("Computer 2 played: " + Table.getInstance().getPlayer3().getHand().get(i).toString());
+                        computerSelection = Table.getInstance().getPlayer3().getHand().get(i);
+                        Table.getInstance().getPlayer2().getHand().remove(i);
+                        return computerSelection;
+                    }
+                }
+            }
+        }
+
+
+        //----------"Original Crap" THIS MUST REMAIN @ THE END OF THE CLASS------just trust me on this-------\\
         for (int i = 0; i < Table.getInstance().getPlayer3().getHand().size(); i++) {
             computerSelection = Table.getInstance().getPlayer3().getHand().get(i);
             if (Overlord.getInstance().canPlayCard(computerSelection, Table.getInstance().getPlayer3())) {
