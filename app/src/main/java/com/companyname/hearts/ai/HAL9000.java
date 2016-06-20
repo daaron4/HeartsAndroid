@@ -17,15 +17,15 @@ public class HAL9000 {
     public static Card computer1MakesMove() {
         System.out.println("Computer 1 hand: " + Arrays.toString(Table.getInstance().getPlayer2().getHand().toArray()));
         int handValueComp1 = 0;
+        int numOfClubsComp1 = 0;
         int numOfHeartsComp1 = 0;
         int numOfSpadesComp1 = 0;
         int numOfDiamondsComp1 = 0;
-        int numOfClubsComp1 = 0;
         List<Card> arrayOfWhatsOnTable;
+        List<Card> arrayOfClubsComp1 = new ArrayList<>();
         List<Card> arrayOfHeartsComp1 = new ArrayList<>();
         List<Card> arrayOfSpadesComp1 = new ArrayList<>();
         List<Card> arrayOfDiamondsComp1 = new ArrayList<>();
-        List<Card> arrayOfClubsComp1 = new ArrayList<>();
 
         Card computerSelection = null;
         for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {

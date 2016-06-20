@@ -20,15 +20,15 @@ public class Zombocom {
 
         //mm Comp3 variables
         int handValueComp3 = 0;
+        int numOfClubsComp3 = 0;
         int numOfHeartsComp3 = 0;
         int numOfSpadesComp3 = 0;
         int numOfDiamondsComp3 = 0;
-        int numOfClubsComp3 = 0;
         List<Card> arrayOfWhatsOnTable;
+        List<Card> arrayOfClubsComp3 = new ArrayList<>();
         List<Card> arrayOfHeartsComp3 = new ArrayList<>();
         List<Card> arrayOfSpadesComp3 = new ArrayList<>();
         List<Card> arrayOfDiamondsComp3 = new ArrayList<>();
-        List<Card> arrayOfClubsComp3 = new ArrayList<>();
 
         Card computerSelection = null;
         for (int i = 0; i < Table.getInstance().getPlayer4().getHand().size(); i++) {
