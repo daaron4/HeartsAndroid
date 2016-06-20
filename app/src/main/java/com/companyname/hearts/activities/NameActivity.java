@@ -72,9 +72,9 @@ public class NameActivity extends AppCompatActivity {
         editor.putString("playernames", sb.toString());
         editor.commit();
 
-        Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
-        mainIntent.putExtra("playerNames", playerNames);
-        startActivity(mainIntent);
+        Intent shuffleIntent = new Intent(getApplicationContext(), ShuffleAnimationActivity.class);
+//        shuffleIntent.putExtra("playerNames", playerNames);
+        startActivity(shuffleIntent);
     }
 
 }

@@ -13,9 +13,9 @@ import processing.core.PImage;
 
 public class Shuffle extends PApplet {
 
-    int start1 = 420;
+    int start1 = 920;
     int start2 = 420;
-    int start3 = 420;
+    int start3 = 920;
     int start4 = 420;
     int counter = 0;
 
@@ -38,19 +38,19 @@ public class Shuffle extends PApplet {
     }
 
     public void doThing(){
-        int dx1 = 115;
-        int dy1 = 115;
-        int dx2 = 115;
-        int dy2 = 115;
+        int dx1 = 260;
+        int dy1 = 260;
+        int dx2 = 260;
+        int dy2 = 260;
 
-        image(img, 420, 420, 160, 200);
+        image(img, 920, 420, 160, 200);
 
         if(counter <6){
             image(img, start1 += dx1, 420, 160, 200);
             rowSet();
 
-            if (start1 >= 900){
-                image(img, 420, start2 -= dy1, 160, 200);
+            if (start1 >= 1900){
+                image(img, 920, start2 -= dy1, 160, 200);
 //                rect(420, start2 -= dy1, 160, 200, 6);
             }
             if(start2 <= 100){
@@ -58,14 +58,14 @@ public class Shuffle extends PApplet {
 //                rect(start3 -= dx2, 420, 160, 200, 6);
             }
             if(start3 <=100 ){
-                image(img,420, start4 += dy2, 160, 200);
+                image(img,920, start4 += dy2, 160, 200);
 
 //                rect(420, start4 += dy2, 160, 200, 6);
             }
-            if(start4 >=900){
-                start1 = 420;
+            if(start4 >=1900){
+                start1 = 920;
                 start2 = 420;
-                start3 = 420;
+                start3 = 920;
                 start4 = 420;
                 counter++;
             }
@@ -79,17 +79,17 @@ public class Shuffle extends PApplet {
 
         for(int i = 1; i<counter +2; i++) {
             //right row
-            image(img, 900, 350 + (i*40), 200, 120);
+            image(img, 1900, 350 + (i*40), 200, 120);
             //top row
-            image(img, 300 + (i*40), -100, 120, 200);
+            image(img, 920 + (i*40), -100, 120, 200);
             //left row
             image(img, -100 , 350 + (i*40), 200, 120);
             // bottom row
-            image(img, 300 + (i*40), 900 , 120, 200);
+            image(img, 920 + (i*40), 900 , 120, 200);
 
         }
     }
-    public void settings() {  size(1000,1000);  smooth(); }
+    public void settings() {  size(2000,1000);  smooth(); }
     static public void main(String[] passedArgs) {
         String[] appletArgs = new String[] { "Shuffle" };
         if (passedArgs != null) {
