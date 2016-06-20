@@ -31,30 +31,27 @@ public class HAL9000 {
 
 
         Card computerSelection = null;
+        //This function gets all the cards for the hand, then sorts them in a hand, and by suit
         for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
             computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
+            arrayOfWholeHandComp1.add(computerSelection);
 
-            //mm Begin logic of playing comp1
             handValueComp1 += computerSelection.getRank().getValue();
             if (computerSelection.getSuit() == Suit.Hearts) {
                 numOfHeartsComp1++;
                 arrayOfHeartsComp1.add(computerSelection);
-                arrayOfWholeHandComp1.add(computerSelection);
             }
             if (computerSelection.getSuit() == Suit.Spades) {
                 numOfSpadesComp1++;
                 arrayOfSpadesComp1.add(computerSelection);
-                arrayOfWholeHandComp1.add(computerSelection);
             }
             if (computerSelection.getSuit() == Suit.Diamonds) {
                 numOfDiamondsComp1++;
                 arrayOfDiamondsComp1.add(computerSelection);
-                arrayOfWholeHandComp1.add(computerSelection);
             }
             if (computerSelection.getSuit() == Suit.Clubs) {
                 numOfClubsComp1++;
                 arrayOfClubsComp1.add(computerSelection);
-                arrayOfWholeHandComp1.add(computerSelection);
             }
         }
 
@@ -245,10 +242,10 @@ public class HAL9000 {
                 }
                 else {
                     //This Drops the highest non-heart and not the Queen of Spades
-                    String highestCard = arrayOfWholeHandComp1.get(arrayOfWholeHandComp1.size() - 1).toString();
+                    String highestCardInHand = arrayOfWholeHandComp1.get(arrayOfWholeHandComp1.size() - 1).toString();
                     for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
                         computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
-                        if (computerSelection.toString().equals(highestCard)) {
+                        if (computerSelection.toString().equals(highestCardInHand)) {
                             System.out.println("Computer 1 played: " + Table.getInstance().getPlayer2().getHand().get(i).toString());
                             computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
                             Table.getInstance().getPlayer2().getHand().remove(i);
