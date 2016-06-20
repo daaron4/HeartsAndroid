@@ -20,6 +20,7 @@ import com.companyname.hearts.ai.Terminator;
 import com.companyname.hearts.ai.Zombocom;
 import com.companyname.hearts.model.Card;
 import com.companyname.hearts.model.Dealer;
+import com.companyname.hearts.model.Direction;
 import com.companyname.hearts.model.Overlord;
 import com.companyname.hearts.model.Rank;
 import com.companyname.hearts.model.Suit;
@@ -746,29 +747,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void clickedPassCards(View view) throws InterruptedException {
+    public void clickedPassCards(View view) {
         if (Table.getInstance().getPlayer1().getNumberOfSelectedCards() != 3) {
             Toast.makeText(MainActivity.this, "You must pass three cards", Toast.LENGTH_LONG).show();
         } else {
-            for (int x = 0; x < 13; x++) {
+            if(Overlord.getInstance().passingDirection() == Direction.LEFT)
+            for (int x = 0; x < 13; x++){
                 if (Table.getInstance().getPlayer1().getHand().get(x).isSelected()) {
                     Log.e("BALLS", Integer.toString(x));
                                     passShit(x);
 
                 }
-
             }
 
-
-
-            for (int i = 0; i < Table.getInstance().getPlayer1().getHand().size(); i++) {
-                if (Table.getInstance().getPlayer1().getHand().get(i).isSelected()) {
-                    Table.getInstance().getPlayer1().getHand().get(i).setSelected(false);
-                    Table.getInstance().getPlayer2().getHand().add(Table.getInstance().getPlayer1().getHand().get(i));
-                    Table.getInstance().getPlayer1().getHand().remove(i);
-                    i--;
-                }
-            }
             // ToDo: make computer selections better:
 
             ArrayList<Card> computerCardsToPlayer = new ArrayList<>();
@@ -852,7 +843,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void cardsReceivedPopUp(ArrayList<Card> computerCardsToPlayer) throws InterruptedException {
+    private void cardsReceivedPopUp(ArrayList<Card> computerCardsToPlayer){
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Hearts");
         builder.setMessage("You received: " + Arrays.toString(computerCardsToPlayer.toArray()));
