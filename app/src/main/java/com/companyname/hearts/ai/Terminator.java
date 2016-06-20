@@ -20,14 +20,16 @@ public class Terminator {
 
         //mm Comp2 variables
         int handValueComp2 = 0;
+        int numOfClubsComp2 = 0;
         int numOfHeartsComp2 = 0;
         int numOfSpadesComp2 = 0;
         int numOfDiamondsComp2 = 0;
-        int numOfClubsComp2 = 0;
+
+        List<Card> arrayOfWhatsOnTable;
+        List<Card> arrayOfClubsComp2 = new ArrayList<>();
         List<Card> arrayOfHeartsComp2 = new ArrayList<>();
         List<Card> arrayOfSpadesComp2 = new ArrayList<>();
         List<Card> arrayOfDiamondsComp2 = new ArrayList<>();
-        List<Card> arrayOfClubsComp2 = new ArrayList<>();
 
         Card computerSelection = null;
         for (int i = 0; i < Table.getInstance().getPlayer3().getHand().size(); i++) {
@@ -129,7 +131,7 @@ public class Terminator {
 
         //----This is the beginning of round 2----\\
 
-        if (Overlord.getInstance().getRoundsPlayed() == 2) {
+        if (Overlord.getInstance().getRoundsPlayed() == 2 && (Overlord.getInstance().amITheLeadingPlayer(Table.getInstance().getPlayer3()))) {
             //if I am the leading player(true)
 
             if (numOfClubsComp2 >= numOfDiamondsComp2 && numOfClubsComp2 > numOfSpadesComp2) {
@@ -144,7 +146,8 @@ public class Terminator {
                         return computerSelection;
                     }
                 }
-            } else if (numOfDiamondsComp2 > numOfClubsComp2 && numOfDiamondsComp2 > numOfSpadesComp2) {
+            }
+            else if (numOfDiamondsComp2 > numOfClubsComp2 && numOfDiamondsComp2 > numOfSpadesComp2) {
                 //in here play lowest diamond
                 String lowestDiamond = arrayOfDiamondsComp2.get(0).toString();
                 for (int i = 0; i < Table.getInstance().getPlayer3().getHand().size(); i++) {
@@ -156,7 +159,8 @@ public class Terminator {
                         return computerSelection;
                     }
                 }
-            } else {
+            }
+            else {
                 //in here begins bleed of spades.
                 String lowestSpade = arrayOfSpadesComp2.get(0).toString();
                 for (int i = 0; i < Table.getInstance().getPlayer3().getHand().size(); i++) {
@@ -169,6 +173,57 @@ public class Terminator {
                     }
                 }
             }
+        }
+
+        else if (Overlord.getInstance().getRoundsPlayed() == 2){
+            //This is what the computer will do if it is round two, but NOT the leading player
+            arrayOfWhatsOnTable = Table.getInstance().getBoard();
+            Suit suitOfFirstCardPlayed = arrayOfWhatsOnTable.get(0).getSuit();
+
+            if (suitOfFirstCardPlayed == Suit.Clubs && numOfClubsComp2 != 0) {
+                //This plays lowest club if clubs was played led
+                String lowestClub = arrayOfClubsComp2.get(0).toString();
+                for (int i = 0; i < Table.getInstance().getPlayer3().getHand().size(); i++) {
+                    computerSelection = Table.getInstance().getPlayer3().getHand().get(i);
+                    if (computerSelection.toString().equals(lowestClub)) {
+                        System.out.println("Computer 2 played: " + Table.getInstance().getPlayer3().getHand().get(i).toString());
+                        computerSelection = Table.getInstance().getPlayer3().getHand().get(i);
+                        Table.getInstance().getPlayer3().getHand().remove(i);
+                        return computerSelection;
+                    }
+                }
+            }
+            else if(suitOfFirstCardPlayed == Suit.Diamonds && numOfDiamondsComp2 != 0) {
+                //This plays lowest diamond if diamonds were led
+                String lowestDiamond = arrayOfDiamondsComp2.get(0).toString();
+                for (int i = 0; i < Table.getInstance().getPlayer3().getHand().size(); i++) {
+                    computerSelection = Table.getInstance().getPlayer3().getHand().get(i);
+                    if (computerSelection.toString().equals(lowestDiamond)) {
+                        System.out.println("Computer 2 played: " + Table.getInstance().getPlayer3().getHand().get(i).toString());
+                        computerSelection = Table.getInstance().getPlayer3().getHand().get(i);
+                        Table.getInstance().getPlayer3().getHand().remove(i);
+                        return computerSelection;
+                    }
+                }
+            }
+            else if(suitOfFirstCardPlayed == Suit.Spades && numOfSpadesComp2 !=0) {
+                //This plays the lowest spade if spades were led
+                String lowestSpade = arrayOfSpadesComp2.get(0).toString();
+                for (int i = 0; i < Table.getInstance().getPlayer3().getHand().size(); i++) {
+                    computerSelection = Table.getInstance().getPlayer3().getHand().get(i);
+                    if (computerSelection.toString().equals(lowestSpade)) {
+                        System.out.println("Computer 2 played: " + Table.getInstance().getPlayer3().getHand().get(i).toString());
+                        computerSelection = Table.getInstance().getPlayer3().getHand().get(i);
+                        Table.getInstance().getPlayer3().getHand().remove(i);
+                        return computerSelection;
+                    }
+                }
+            }
+            //doesnt have to follow suit
+            else {
+
+            }
+
         }
 
 

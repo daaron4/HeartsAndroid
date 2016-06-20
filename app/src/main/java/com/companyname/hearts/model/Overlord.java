@@ -29,6 +29,15 @@ public class Overlord {
         return instance;
     }
 
+    public boolean amITheLeadingPlayer(Player player) {
+        if (player == leadingPlayer) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     public void setPlayerWithTheTwoOfClubs() {
         for (int i = 0; i < 13; i++) {
             if (Table.getInstance().getPlayer1().getHand().get(i).getRank().getValue() == 2
