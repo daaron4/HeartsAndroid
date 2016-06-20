@@ -123,7 +123,6 @@ public class Overlord {
         for (int i = 0; i < Table.getInstance().getBoard().size(); i++) {
             getLeadingPlayer().getOldCards().add(Table.getInstance().getBoard().get(i));
         }
-        Table.getInstance().getBoard().clear();
 
     }
 

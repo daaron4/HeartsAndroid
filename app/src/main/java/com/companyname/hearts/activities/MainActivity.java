@@ -1,6 +1,5 @@
 package com.companyname.hearts.activities;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -163,7 +162,8 @@ public class MainActivity extends AppCompatActivity {
     private void displayTrickWinnerPopUp() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Hearts");
-        builder.setMessage(Overlord.getInstance().getLeadingPlayer().getName() + " wins the trick.");
+        builder.setMessage(Overlord.getInstance().getLeadingPlayer().getName() + " wins the trick." + "\n" +
+            "The board was: " + Arrays.toString(Table.getInstance().getBoard().toArray()));
         builder.setIcon(R.mipmap.ic_launcher);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -199,6 +199,7 @@ public class MainActivity extends AppCompatActivity {
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
+                    removeCenterIcon();
                     setUpGame();
                     displayImages();
                     createListeners();
@@ -208,6 +209,10 @@ public class MainActivity extends AppCompatActivity {
             builder.setCancelable(false);
             builder.show();
         }
+    }
+
+    private void removeCenterIcon() {
+        suitPlayed.setImageResource(0);
     }
 
     private void playAgainPopUp() {
@@ -222,6 +227,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Overlord.getInstance().prepareForNextGame();
+                removeCenterIcon();
                 setUpGame();
                 displayImages();
                 createListeners();
@@ -239,7 +245,6 @@ public class MainActivity extends AppCompatActivity {
         builder.show();
     }
 
-    @SuppressLint("SetTextI18n")
     private void beginRound() {
         if (!Overlord.getInstance().getPassing()) {
             Card computerSelection;
@@ -489,8 +494,6 @@ public class MainActivity extends AppCompatActivity {
         b13.setVisibility(View.VISIBLE);
     }
 
-
-    @SuppressLint("SetTextI18n")
     private void clickedCard(int i) {
         if (!Overlord.getInstance().getPassing()) {
             Card computerSelection;
@@ -507,6 +510,7 @@ public class MainActivity extends AppCompatActivity {
                     resetPlayedCards();
                     displayTrickWinnerPopUp();
                     removeCardFromView(i);
+                    Table.getInstance().getBoard().clear();
                     Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
                 } else {
                     cantPlayThatPopUp();
@@ -528,6 +532,7 @@ public class MainActivity extends AppCompatActivity {
                     resetPlayedCards();
                     displayTrickWinnerPopUp();
                     removeCardFromView(i);
+                    Table.getInstance().getBoard().clear();
                     Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
                 } else {
                     cantPlayThatPopUp();
@@ -552,6 +557,7 @@ public class MainActivity extends AppCompatActivity {
                     resetPlayedCards();
                     displayTrickWinnerPopUp();
                     removeCardFromView(i);
+                    Table.getInstance().getBoard().clear();
                     Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
                 } else {
                     cantPlayThatPopUp();
@@ -580,7 +586,7 @@ public class MainActivity extends AppCompatActivity {
                     resetPlayedCards();
                     displayTrickWinnerPopUp();
                     removeCardFromView(i);
-
+                    Table.getInstance().getBoard().clear();
                     Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
                 } else {
                     cantPlayThatPopUp();
@@ -635,8 +641,8 @@ public class MainActivity extends AppCompatActivity {
                         Table.getInstance().getPlayer1().getHand().add(passMe);
                     }
 
-                    System.out.println("Starting P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
-                    System.out.println("Starting P2 hand: " + Arrays.toString(Table.getInstance().getPlayer2().getHand().toArray()));
+                    System.out.println("Ending P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
+                    System.out.println("Ending P2 hand: " + Arrays.toString(Table.getInstance().getPlayer2().getHand().toArray()));
                     break;
                 case RIGHT:
                     System.out.println("Starting P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
@@ -657,8 +663,8 @@ public class MainActivity extends AppCompatActivity {
                         Table.getInstance().getPlayer4().getHand().remove(i);
                         Table.getInstance().getPlayer1().getHand().add(passMe);
                     }
-                    System.out.println("Starting P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
-                    System.out.println("Starting P4 hand: " + Arrays.toString(Table.getInstance().getPlayer4().getHand().toArray()));
+                    System.out.println("Ending P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
+                    System.out.println("Ending P4 hand: " + Arrays.toString(Table.getInstance().getPlayer4().getHand().toArray()));
                     break;
                 case ACROSS:
                     System.out.println("Starting P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
@@ -679,8 +685,8 @@ public class MainActivity extends AppCompatActivity {
                         Table.getInstance().getPlayer3().getHand().remove(i);
                         Table.getInstance().getPlayer1().getHand().add(passMe);
                     }
-                    System.out.println("Starting P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
-                    System.out.println("Starting P3 hand: " + Arrays.toString(Table.getInstance().getPlayer3().getHand().toArray()));
+                    System.out.println("Ending P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
+                    System.out.println("Ending P3 hand: " + Arrays.toString(Table.getInstance().getPlayer3().getHand().toArray()));
                     break;
                 case NO_PASSING:
                     break;
