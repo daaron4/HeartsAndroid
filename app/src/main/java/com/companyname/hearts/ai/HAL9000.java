@@ -124,9 +124,9 @@ public class HAL9000 {
             }
         }
 
-        //----This is the beginning of round 2----\\
+        //----------This is the beginning of round 2---------\\
 
-        if (Overlord.getInstance().getRoundsPlayed() == 2 && (Overlord.getInstance().amITheLeadingPlayer(Table.getInstance().getPlayer2()))) {
+        if (Overlord.getInstance().getRoundsPlayed() >1 && (Overlord.getInstance().amITheLeadingPlayer(Table.getInstance().getPlayer2()))) {
             //this line determines that this computer player is leading the 2nd round
 
             if (numOfClubsComp1 >= numOfDiamondsComp1 && numOfClubsComp1 > numOfSpadesComp1) {
@@ -155,7 +155,7 @@ public class HAL9000 {
                     }
                 }
             }
-            else {
+            else if (numOfSpadesComp1 > numOfClubsComp1 && numOfSpadesComp1 > numOfDiamondsComp1) {
                 //in here begins bleed of spades.
                 String lowestSpade = arrayOfSpadesComp1.get(0).toString();
                 for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
@@ -168,10 +168,20 @@ public class HAL9000 {
                     }
                 }
             }
+            else {
+                String lowestHeart = arrayOfHeartsComp1.get(0).toString();
+                for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
+                    computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
+                    if (computerSelection.toString().equals(lowestHeart)) {
+                        System.out.println("Computer 1 played: " + Table.getInstance().getPlayer2().getHand().get(i).toString());
+                        computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
+                        Table.getInstance().getPlayer2().getHand().remove(i);
+                        return computerSelection;
+                    }
+                }
+            }
         }
-
-
-        else if (Overlord.getInstance().getRoundsPlayed() == 2){
+        else if (Overlord.getInstance().getRoundsPlayed() > 1){
             //This is what the computer will do if it is round two, but NOT the leading player
             arrayOfWhatsOnTable = Table.getInstance().getBoard();
             Suit suitOfFirstCardPlayed = arrayOfWhatsOnTable.get(0).getSuit();
