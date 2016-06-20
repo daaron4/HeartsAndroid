@@ -160,7 +160,8 @@ public class MainActivity extends AppCompatActivity {
     private void displayTrickWinnerPopUp() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Hearts");
-        builder.setMessage(Overlord.getInstance().getLeadingPlayer().getName() + " wins the trick.");
+        builder.setMessage(Overlord.getInstance().getLeadingPlayer().getName() + " wins the trick." + "\n" +
+            "The board was: " + Arrays.toString(Table.getInstance().getBoard().toArray()));
         builder.setIcon(R.mipmap.ic_launcher);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -196,6 +197,7 @@ public class MainActivity extends AppCompatActivity {
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
+                    removeCenterIcon();
                     setUpGame();
                     displayImages();
                     createListeners();
@@ -205,6 +207,10 @@ public class MainActivity extends AppCompatActivity {
             builder.setCancelable(false);
             builder.show();
         }
+    }
+
+    private void removeCenterIcon() {
+        suitPlayed.setImageResource(0);
     }
 
     private void playAgainPopUp() {
@@ -219,6 +225,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Overlord.getInstance().prepareForNextGame();
+                removeCenterIcon();
                 setUpGame();
                 displayImages();
                 createListeners();
@@ -473,6 +480,7 @@ public class MainActivity extends AppCompatActivity {
                     resetPlayedCards();
                     displayTrickWinnerPopUp();
                     removeCardFromView(i);
+                    Table.getInstance().getBoard().clear();
                     Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
                 } else {
                     cantPlayThatPopUp();
@@ -494,6 +502,7 @@ public class MainActivity extends AppCompatActivity {
                     resetPlayedCards();
                     displayTrickWinnerPopUp();
                     removeCardFromView(i);
+                    Table.getInstance().getBoard().clear();
                     Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
                 } else {
                     cantPlayThatPopUp();
@@ -518,6 +527,7 @@ public class MainActivity extends AppCompatActivity {
                     resetPlayedCards();
                     displayTrickWinnerPopUp();
                     removeCardFromView(i);
+                    Table.getInstance().getBoard().clear();
                     Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
                 } else {
                     cantPlayThatPopUp();
@@ -546,7 +556,7 @@ public class MainActivity extends AppCompatActivity {
                     resetPlayedCards();
                     displayTrickWinnerPopUp();
                     removeCardFromView(i);
-
+                    Table.getInstance().getBoard().clear();
                     Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
                 } else {
                     cantPlayThatPopUp();
