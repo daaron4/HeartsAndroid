@@ -141,6 +141,8 @@ public class MainActivity extends AppCompatActivity {
         b11.setImageResource(c11.getResId());
         b12.setImageResource(c12.getResId());
         b13.setImageResource(c13.getResId());
+
+        remakeVisible();
     }
 
     private void cantPlayThatPopUp() {
@@ -419,45 +421,74 @@ public class MainActivity extends AppCompatActivity {
         if (i == 0) {
             b1.setImageResource(0);
             b1.setOnClickListener(null);
+            b1.setVisibility(View.GONE);
         } else if (i == 1) {
             b2.setImageResource(0);
             b2.setOnClickListener(null);
+            b2.setVisibility(View.GONE);
         } else if (i == 2) {
             b3.setImageResource(0);
             b3.setOnClickListener(null);
+            b3.setVisibility(View.GONE);
         } else if (i == 3) {
             b4.setImageResource(0);
             b4.setOnClickListener(null);
+            b4.setVisibility(View.GONE);
         } else if (i == 4) {
             b5.setImageResource(0);
             b5.setOnClickListener(null);
+            b5.setVisibility(View.GONE);
         } else if (i == 5) {
             b6.setImageResource(0);
             b6.setOnClickListener(null);
+            b6.setVisibility(View.GONE);
         } else if (i == 6) {
             b7.setImageResource(0);
             b7.setOnClickListener(null);
+            b7.setVisibility(View.GONE);
         } else if (i == 7) {
             b8.setImageResource(0);
             b8.setOnClickListener(null);
+            b8.setVisibility(View.GONE);
         } else if (i == 8) {
             b9.setImageResource(0);
             b9.setOnClickListener(null);
+            b9.setVisibility(View.GONE);
         } else if (i == 9) {
             b10.setImageResource(0);
             b10.setOnClickListener(null);
+            b10.setVisibility(View.GONE);
         } else if (i == 10) {
             b11.setImageResource(0);
             b11.setOnClickListener(null);
+            b11.setVisibility(View.GONE);
         } else if (i == 11) {
             b12.setImageResource(0);
             b12.setOnClickListener(null);
+            b12.setVisibility(View.GONE);
         } else if (i == 12) {
             b13.setImageResource(0);
             b13.setOnClickListener(null);
+            b13.setVisibility(View.GONE);
         }
-
     }
+
+    private void remakeVisible() {
+        b1.setVisibility(View.VISIBLE);
+        b2.setVisibility(View.VISIBLE);
+        b3.setVisibility(View.VISIBLE);
+        b4.setVisibility(View.VISIBLE);
+        b5.setVisibility(View.VISIBLE);
+        b6.setVisibility(View.VISIBLE);
+        b7.setVisibility(View.VISIBLE);
+        b8.setVisibility(View.VISIBLE);
+        b9.setVisibility(View.VISIBLE);
+        b10.setVisibility(View.VISIBLE);
+        b11.setVisibility(View.VISIBLE);
+        b12.setVisibility(View.VISIBLE);
+        b13.setVisibility(View.VISIBLE);
+    }
+
 
     @SuppressLint("SetTextI18n")
     private void clickedCard(int i) {
@@ -679,6 +710,8 @@ public class MainActivity extends AppCompatActivity {
                 Table.getInstance().getPlayer4().organizeHand();
                 for (int j = 0; j < 13; j++) {
                     removeCardFromView(j);
+                    b1.setVisibility(View.VISIBLE);
+
                 }
                 displayImages();
                 fixTransparentImages();
