@@ -17,7 +17,6 @@ import java.util.Random;
 public class Zombocom {
 
     public static Card computer3MakesMove() {
-        System.out.println("Computer 3 hand: " + Arrays.toString(Table.getInstance().getPlayer4().getHand().toArray()));
         if (Table.getInstance().getPlayer4().getHand().size() <= 1) {
             Card computerSelection = Table.getInstance().getPlayer4().getHand().get(0);
             Table.getInstance().getPlayer4().getHand().remove(0);
@@ -44,6 +43,7 @@ public class Zombocom {
             times++;
         }
 
+        System.out.println("Computer 3 hand: " + Arrays.toString(Table.getInstance().getPlayer4().getHand().toArray()));
         int randIndex = rand.nextInt(Table.getInstance().getPlayer4().getHand().size());
         Card computerSelection = Table.getInstance().getPlayer4().getHand().get(randIndex);
         while (!Overlord.getInstance().canPlayCard(computerSelection, Table.getInstance().getPlayer4())) {
