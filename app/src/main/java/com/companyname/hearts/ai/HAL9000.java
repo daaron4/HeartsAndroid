@@ -277,7 +277,7 @@ public class HAL9000 {
     public static ArrayList<Card> cardsToPassComp1() {
         //------This is a card passer for HAL9000 that emphasizes self preservation-----\\
 
-        int x = 0;
+        int indexOfQueen = 0;
         Card computerSelection = null;
         Boolean foundQueen = false;
         List<Card> arrayOfWholeHandComp1 = new ArrayList<>();
@@ -289,43 +289,65 @@ public class HAL9000 {
 
             if (computerSelection.toString().equals("Queen of Spades")) {
                 foundQueen = true;
-                arrayOfCardsToPass.add(computerSelection);
-                arrayOfWholeHandComp1.remove(computerSelection);
-                Table.getInstance().getPlayer2().getHand().remove(computerSelection);
+                indexOfQueen = i;
             }
         }
 
-        Collections.sort(arrayOfWholeHandComp1);
 
         if (foundQueen) {
+            System.out.println("I FOUND THE QUEEENNNN!");
+            arrayOfCardsToPass.add(Table.getInstance().getPlayer2().getHand().get(indexOfQueen));
+            Table.getInstance().getPlayer2().getHand().remove(indexOfQueen);
 
-            for (int i = 0; i < 4; i++) {
-                arrayOfCardsToPass.add(arrayOfWholeHandComp1.get(arrayOfWholeHandComp1.size() - 1));
-                arrayOfWholeHandComp1.remove(arrayOfWholeHandComp1.get(arrayOfWholeHandComp1.size() - 1));
+            for (int i = 0; i < 2; i++) {
+                int current = 0;
+                int highest = Table.getInstance().getPlayer2().getHand().get(0).getRank().getValue();
+                int index = 0;
                 for (int j = 0; j < Table.getInstance().getPlayer2().getHand().size(); j++) {
-                    computerSelection = Table.getInstance().getPlayer2().getHand().get(j);
-                    if (computerSelection.toString().equals(arrayOfCardsToPass)) {
-                        System.out.println("Computer 1 passed: " + Table.getInstance().getPlayer2().getHand().get(j).toString());
-                        Table.getInstance().getPlayer2().getHand().remove(j);
+                    current = Table.getInstance().getPlayer2().getHand().get(j).getRank().getValue();
+                    if (current > highest) {
+                        highest = current;
+                        index = j;
                     }
                 }
+
+                arrayOfCardsToPass.add(Table.getInstance().getPlayer2().getHand().get(index));
+                System.out.println("Computer 1 passed: " + Table.getInstance().getPlayer2().getHand().get(index).toString());
+                Table.getInstance().getPlayer2().getHand().remove(index);
             }
 
         } else {
 
-            for (int i = 0; i < 4; i++) {
-                arrayOfCardsToPass.add(arrayOfWholeHandComp1.get(arrayOfWholeHandComp1.size() - 1));
-                arrayOfWholeHandComp1.remove(arrayOfWholeHandComp1.get(arrayOfWholeHandComp1.size() - 1));
+            for (int i = 0; i < 3; i++) {
+                int current = 0;
+                int highest = Table.getInstance().getPlayer2().getHand().get(0).getRank().getValue();
+                int index = 0;
                 for (int j = 0; j < Table.getInstance().getPlayer2().getHand().size(); j++) {
-                    computerSelection = Table.getInstance().getPlayer2().getHand().get(j);
-                    if (computerSelection.toString().equals(arrayOfCardsToPass)) {
-                        System.out.println("Computer 1 passed: " + Table.getInstance().getPlayer2().getHand().get(j).toString());
-                        Table.getInstance().getPlayer2().getHand().remove(j);
+                    current = Table.getInstance().getPlayer2().getHand().get(j).getRank().getValue();
+                    if (current > highest) {
+                        highest = current;
+                        index = j;
                     }
                 }
+
+                arrayOfCardsToPass.add(Table.getInstance().getPlayer2().getHand().get(index));
+                System.out.println("Computer 1 passed: " + Table.getInstance().getPlayer2().getHand().get(index).toString());
+                Table.getInstance().getPlayer2().getHand().remove(index);
             }
+//                arrayOfCardsToPass.add(arrayOfWholeHandComp1.get(arrayOfWholeHandComp1.size() - 1));
+//                arrayOfWholeHandComp1.remove(arrayOfWholeHandComp1.get(arrayOfWholeHandComp1.size() - 1));
+//                for (int j = 0; j < Table.getInstance().getPlayer2().getHand().size(); j++) {
+//                    computerSelection = Table.getInstance().getPlayer2().getHand().get(j);
+//                    if (computerSelection.toString().equals(arrayOfCardsToPass.get(i).toString())) {
+//                        System.out.println("Computer 1 passed: " + Table.getInstance().getPlayer2().getHand().get(j).toString());
+//                        Table.getInstance().getPlayer2().getHand().remove(j);
+//                    }
+//                }
+//            }
+//        }
         }
         return arrayOfCardsToPass;
+
     }
 }
 
