@@ -34,9 +34,10 @@ public class Terminator {
         Card computerSelection = null;
         for (int i = 0; i < Table.getInstance().getPlayer3().getHand().size(); i++) {
             computerSelection = Table.getInstance().getPlayer3().getHand().get(i);
+            handValueComp2 += computerSelection.getRank().getValue();
+            arrayOfHeartsComp2.add(computerSelection);
 
             //mm Begin logic of playing comp2
-            handValueComp2 += computerSelection.getRank().getValue();
             if (computerSelection.getSuit() == Suit.Hearts) {
                 numOfHeartsComp2++;
                 arrayOfHeartsComp2.add(computerSelection);
@@ -85,7 +86,6 @@ public class Terminator {
                             return computerSelection;
                         }
                     }
-
                 }
             }
         }
@@ -101,7 +101,6 @@ public class Terminator {
                         return computerSelection;
                     }
                 }
-
             }
             else if (numOfSpadesComp2 != 0) {
                 String highestSpade = arrayOfSpadesComp2.get(arrayOfSpadesComp2.size() - 1).toString();

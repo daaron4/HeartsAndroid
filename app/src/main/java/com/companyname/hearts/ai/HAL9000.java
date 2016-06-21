@@ -30,14 +30,13 @@ public class HAL9000 {
         List<Card> arrayOfDiamondsComp1 = new ArrayList<>();
         List<Card> arrayOfWholeHandComp1 = new ArrayList<>();
 
-
         Card computerSelection = null;
         //This function gets all the cards for the hand, then sorts them in a hand, and by suit
         for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
             computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
             arrayOfWholeHandComp1.add(computerSelection);
-
             handValueComp1 += computerSelection.getRank().getValue();
+
             if (computerSelection.getSuit() == Suit.Hearts) {
                 numOfHeartsComp1++;
                 arrayOfHeartsComp1.add(computerSelection);
@@ -124,7 +123,7 @@ public class HAL9000 {
             }
         }
 
-        //----------This is the beginning of round 2---------\\
+        //----------This is the beginning of round 2 and beyond---------\\
 
         if (Overlord.getInstance().getRoundsPlayed() > 1 && (Overlord.getInstance().amITheLeadingPlayer(Table.getInstance().getPlayer2()))) {
             //this line determines that this computer player is leading the 2nd round
@@ -156,7 +155,7 @@ public class HAL9000 {
                 }
             }
             else if (numOfSpadesComp1 > numOfClubsComp1 && numOfSpadesComp1 > numOfDiamondsComp1) {
-                //in here begins bleed of spades.
+                //in here begins bleed of spades
                 String lowestSpade = arrayOfSpadesComp1.get(0).toString();
                 for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
                     computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
@@ -169,6 +168,7 @@ public class HAL9000 {
                 }
             }
             else {
+                //this is basically a catch case in the off chance that the computer has all hearts
                 String lowestHeart = arrayOfHeartsComp1.get(0).toString();
                 for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
                     computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
