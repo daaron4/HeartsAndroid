@@ -26,6 +26,11 @@ import com.companyname.hearts.model.Rank;
 import com.companyname.hearts.model.Suit;
 import com.companyname.hearts.model.Table;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -40,15 +45,37 @@ public class MainActivity extends AppCompatActivity {
     private ImageView playerCard, computer1Card, computer2Card, computer3Card;
     private ImageView suitPlayed;
 
+    private boolean loadGame = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initializeViews();
-        createListeners();
-        setUpGame();
-        displayImages();
-        beginRound();
+        if (loadGame) {
+            initializeSavedGame();
+            createListeners();
+            displayImages();
+            //beginRound();
+            System.out.println("BOARD IS: " + Arrays.toString(Table.getInstance().getBoard().toArray()));
+        }
+        else {
+            initializeViews();
+            createListeners();
+            setUpGame();
+            displayImages();
+            beginRound();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(getApplicationContext(), "There is no going back in Hearts!!!!", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        saveGame();
     }
 
     private void initializeViews() {
@@ -88,6 +115,42 @@ public class MainActivity extends AppCompatActivity {
         computer2Name.setText(playerNames[2]);
         computer3Name.setText(playerNames[3]);
         Table.getInstance().initializeTable(playerNames[0], playerNames[1], playerNames[2], playerNames[3]);
+    }
+
+    private void initializeSavedGame() {
+        playerName = (TextView) findViewById(R.id.player_name);
+        computer1Name = (TextView) findViewById(R.id.computer1_name);
+        computer2Name = (TextView) findViewById(R.id.computer2_name);
+        computer3Name = (TextView) findViewById(R.id.computer3_name);
+        passButton = (Button) findViewById(R.id.pass_cards_button);
+
+        b1 = (ImageView) findViewById(R.id.card_1);
+        b2 = (ImageView) findViewById(R.id.card_2);
+        b3 = (ImageView) findViewById(R.id.card_3);
+        b4 = (ImageView) findViewById(R.id.card_4);
+        b5 = (ImageView) findViewById(R.id.card_5);
+        b6 = (ImageView) findViewById(R.id.card_6);
+        b7 = (ImageView) findViewById(R.id.card_7);
+        b8 = (ImageView) findViewById(R.id.card_8);
+        b9 = (ImageView) findViewById(R.id.card_9);
+        b10 = (ImageView) findViewById(R.id.card_10);
+        b11 = (ImageView) findViewById(R.id.card_11);
+        b12 = (ImageView) findViewById(R.id.card_12);
+        b13 = (ImageView) findViewById(R.id.card_13);
+
+        playerCard = (ImageView) findViewById(R.id.player_card);
+        computer1Card = (ImageView) findViewById(R.id.computer1_card);
+        computer2Card = (ImageView) findViewById(R.id.computer2_card);
+        computer3Card = (ImageView) findViewById(R.id.computer3_card);
+
+        suitPlayed = (ImageView) findViewById(R.id.played_suit);
+
+        loadGame();
+
+        playerName.setText(Table.getInstance().getPlayer1().getName());
+        computer1Name.setText(Table.getInstance().getPlayer2().getName());
+        computer2Name.setText(Table.getInstance().getPlayer3().getName());
+        computer3Name.setText(Table.getInstance().getPlayer4().getName());
     }
 
     private void createListeners() {
@@ -820,6 +883,16 @@ public class MainActivity extends AppCompatActivity {
         });
         builder.setCancelable(false);
         builder.show();
+    }
+
+    private void saveGame() {
+        Table.saveTable(getApplicationContext());
+        Overlord.saveOverlord(getApplicationContext());
+    }
+
+    private void loadGame() {
+        Table.loadTable(getApplicationContext());
+        Overlord.loadOverlord(getApplicationContext());
     }
 
     ImageView.OnClickListener onCardClick = new ImageView.OnClickListener() {

@@ -1,6 +1,8 @@
 package com.companyname.hearts.model;
 
-public class Card implements Comparable<Card> {
+import java.io.Serializable;
+
+public class Card implements Comparable<Card>, Serializable {
 
 	private Rank rank;
 	private Suit suit;

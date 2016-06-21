@@ -1,8 +1,16 @@
 package com.companyname.hearts.model;
 
+import android.content.Context;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class Overlord {
+public class Overlord implements Serializable {
 
     private boolean playing;
     private boolean heartsBroken;
@@ -29,6 +37,37 @@ public class Overlord {
             instance = new Overlord();
         }
         return instance;
+    }
+
+    public static void putInstance(Overlord newInstance) {
+        instance = newInstance;
+    }
+
+    public static void saveOverlord(Context context) {
+        try {
+            FileOutputStream fos = context.openFileOutput("overlord_data", Context.MODE_PRIVATE);
+            ObjectOutputStream os = new ObjectOutputStream(fos);
+            os.writeObject(Overlord.getInstance());
+            os.close();
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void loadOverlord(Context context) {
+        try {
+            FileInputStream fis = context.openFileInput("overlord_data");
+            ObjectInputStream is = new ObjectInputStream(fis);
+            Overlord overlord = (Overlord) is.readObject();
+            Overlord.putInstance(overlord);
+            is.close();
+            fis.close();
+        } catch (IOException e) {
+            System.out.println("File not found");
+        } catch (ClassNotFoundException e) {
+            System.out.println("Issue with class");
+        }
     }
 
     public void setPlayerWithTheTwoOfClubs() {

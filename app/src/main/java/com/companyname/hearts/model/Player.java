@@ -1,9 +1,10 @@
 package com.companyname.hearts.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Player {
+public class Player implements Serializable {
 	private String name;
 	private int points;
 	private ArrayList<Card> hand;
