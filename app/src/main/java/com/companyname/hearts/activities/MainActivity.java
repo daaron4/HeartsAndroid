@@ -198,6 +198,7 @@ public class MainActivity extends AppCompatActivity {
                     " | " + Table.getInstance().getPlayer3().getName() + " | " + Table.getInstance().getPlayer4().getName());
             builder.setMessage(String.format("%20s%19s%18s%17s", Table.getInstance().getPlayer1().getPoints(), Table.getInstance().getPlayer2().getPoints(),
                     Table.getInstance().getPlayer3().getPoints(),Table.getInstance().getPlayer4().getPoints()));
+
             builder.setIcon(R.mipmap.ic_launcher);
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override

@@ -159,6 +159,7 @@ public class Overlord {
         passing = true;
         roundsPlayed = 1;
         handsPlayed = 0;
+        scoreTracker = "";
         Table.getInstance().getPlayer1().setPoints(0);
         Table.getInstance().getPlayer2().setPoints(0);
         Table.getInstance().getPlayer3().setPoints(0);
