@@ -55,4 +55,16 @@ public class Zombocom {
         System.out.println("Computer 3 played: " + computerSelection.toString());
         return computerSelection;
     }
+
+    public static ArrayList<Card> cardsToPassComp3() {
+        ArrayList<Card> arrayOfCardsToPass = new ArrayList<>();
+        Random rand = new Random();
+        for (int i = 0; i < 3; i++) {
+            int randIndex = rand.nextInt(Table.getInstance().getPlayer4().getHand().size());
+            arrayOfCardsToPass.add(Table.getInstance().getPlayer4().getHand().get(randIndex));
+            Table.getInstance().getPlayer4().getHand().remove(randIndex);
+        }
+        return arrayOfCardsToPass;
+    }
+
 }
