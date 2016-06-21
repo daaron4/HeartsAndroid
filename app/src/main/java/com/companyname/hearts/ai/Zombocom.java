@@ -2,13 +2,10 @@ package com.companyname.hearts.ai;
 
 import com.companyname.hearts.model.Card;
 import com.companyname.hearts.model.Overlord;
-import com.companyname.hearts.model.Suit;
 import com.companyname.hearts.model.Table;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -55,4 +52,16 @@ public class Zombocom {
         System.out.println("Computer 3 played: " + computerSelection.toString());
         return computerSelection;
     }
+
+    public static ArrayList<Card> cardsToPassComp3() {
+        ArrayList<Card> arrayOfCardsToPass = new ArrayList<>();
+        Random rand = new Random();
+        for (int i = 0; i < 3; i++) {
+            int randIndex = rand.nextInt(Table.getInstance().getPlayer4().getHand().size());
+            arrayOfCardsToPass.add(Table.getInstance().getPlayer4().getHand().get(randIndex));
+            Table.getInstance().getPlayer4().getHand().remove(randIndex);
+        }
+        return arrayOfCardsToPass;
+    }
+
 }
