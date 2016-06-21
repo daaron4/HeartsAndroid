@@ -2,13 +2,10 @@ package com.companyname.hearts.ai;
 
 import com.companyname.hearts.model.Card;
 import com.companyname.hearts.model.Overlord;
-import com.companyname.hearts.model.Suit;
 import com.companyname.hearts.model.Table;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 
 /**
