@@ -646,7 +646,7 @@ public class MainActivity extends AppCompatActivity {
     private void clickedCard(int i) {
         if (!Overlord.getInstance().getPassing()) {
             Card computerSelection;
-            if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer2()) {
+            if (Overlord.getInstance().getLeadingPlayer().getName().equals(Table.getInstance().getPlayer2().getName())) {
                 if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1())) {
                     Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
                     playerCard.setImageResource(Table.getInstance().getPlayer1().getHand().get(i).getResId());
@@ -664,7 +664,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     cantPlayThatPopUp();
                 }
-            } else if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer3()) {
+            } else if (Overlord.getInstance().getLeadingPlayer().getName().equals(Table.getInstance().getPlayer3().getName())) {
                 if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1())) {
                     Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
                     playerCard.setImageResource(Table.getInstance().getPlayer1().getHand().get(i).getResId());
@@ -686,7 +686,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     cantPlayThatPopUp();
                 }
-            } else if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer4()) {
+            } else if (Overlord.getInstance().getLeadingPlayer().getName().equals(Table.getInstance().getPlayer4().getName())) {
                 if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1())) {
                     Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
                     playerCard.setImageResource(Table.getInstance().getPlayer1().getHand().get(i).getResId());

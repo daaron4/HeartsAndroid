@@ -103,8 +103,9 @@ public class Overlord implements Serializable {
             }
         }
 
+        // ToDo: bug is probably here:
         // Leading player wins hand:
-        if (getLeadingPlayer() == Table.getInstance().getPlayer1()) {
+        if (getLeadingPlayer().getName().equals(Table.getInstance().getPlayer1().getName())) {
             if (winnerPosition == 0) {
 
             }
@@ -118,7 +119,7 @@ public class Overlord implements Serializable {
                 setLeadingPlayer(Table.getInstance().getPlayer4());
             }
         }
-        else if (getLeadingPlayer() == Table.getInstance().getPlayer2()) {
+        else if (getLeadingPlayer().getName().equals(Table.getInstance().getPlayer2().getName())) {
             if (winnerPosition == 0) {
 
             }
@@ -132,7 +133,7 @@ public class Overlord implements Serializable {
                 setLeadingPlayer(Table.getInstance().getPlayer1());
             }
         }
-        else if (getLeadingPlayer() == Table.getInstance().getPlayer3()) {
+        else if (getLeadingPlayer().getName().equals(Table.getInstance().getPlayer3().getName())) {
             if (winnerPosition == 0) {
 
             }
