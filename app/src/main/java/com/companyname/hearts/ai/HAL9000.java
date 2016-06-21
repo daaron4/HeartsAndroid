@@ -284,6 +284,7 @@ public class HAL9000 {
         ArrayList<Card> arrayOfCardsToPass = new ArrayList<>();
 
         for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
+            //Searches the computers hand for the index of the queen of Spade
             computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
             arrayOfWholeHandComp1.add(computerSelection);
 
@@ -293,9 +294,9 @@ public class HAL9000 {
             }
         }
 
-
         if (foundQueen) {
-            System.out.println("I FOUND THE QUEEENNNN!");
+            //if the queen exists in HAL's hand he will automatically pass it & the two highest cards.
+            System.out.println("I FOUND THE QUEEEEEENNNN!");
             arrayOfCardsToPass.add(Table.getInstance().getPlayer2().getHand().get(indexOfQueen));
             Table.getInstance().getPlayer2().getHand().remove(indexOfQueen);
 
@@ -310,14 +311,13 @@ public class HAL9000 {
                         index = j;
                     }
                 }
-
                 arrayOfCardsToPass.add(Table.getInstance().getPlayer2().getHand().get(index));
                 System.out.println("Computer 1 passed: " + Table.getInstance().getPlayer2().getHand().get(index).toString());
                 Table.getInstance().getPlayer2().getHand().remove(index);
             }
 
         } else {
-
+            //if no Queen of spades esists, then HAL just passes the three highest cards in his hand.
             for (int i = 0; i < 3; i++) {
                 int current = 0;
                 int highest = Table.getInstance().getPlayer2().getHand().get(0).getRank().getValue();
@@ -329,25 +329,12 @@ public class HAL9000 {
                         index = j;
                     }
                 }
-
                 arrayOfCardsToPass.add(Table.getInstance().getPlayer2().getHand().get(index));
                 System.out.println("Computer 1 passed: " + Table.getInstance().getPlayer2().getHand().get(index).toString());
                 Table.getInstance().getPlayer2().getHand().remove(index);
             }
-//                arrayOfCardsToPass.add(arrayOfWholeHandComp1.get(arrayOfWholeHandComp1.size() - 1));
-//                arrayOfWholeHandComp1.remove(arrayOfWholeHandComp1.get(arrayOfWholeHandComp1.size() - 1));
-//                for (int j = 0; j < Table.getInstance().getPlayer2().getHand().size(); j++) {
-//                    computerSelection = Table.getInstance().getPlayer2().getHand().get(j);
-//                    if (computerSelection.toString().equals(arrayOfCardsToPass.get(i).toString())) {
-//                        System.out.println("Computer 1 passed: " + Table.getInstance().getPlayer2().getHand().get(j).toString());
-//                        Table.getInstance().getPlayer2().getHand().remove(j);
-//                    }
-//                }
-//            }
-//        }
         }
         return arrayOfCardsToPass;
-
     }
 }
 
