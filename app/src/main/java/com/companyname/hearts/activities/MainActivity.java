@@ -153,9 +153,9 @@ public class MainActivity extends AppCompatActivity {
     private void cantPlayThatPopUp() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle(R.string.app_name);
-        builder.setMessage("You can't play that!");
+        builder.setMessage(R.string.illegal_move);
         builder.setIcon(R.mipmap.ic_launcher);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 // does nothing
@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setMessage(Overlord.getInstance().getLeadingPlayer().getName() + " wins the trick." + "\n" +
                 "The board was: " + Arrays.toString(Table.getInstance().getBoard().toArray()));
         builder.setIcon(R.mipmap.ic_launcher);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (Overlord.getInstance().getRoundsPlayed() == 14) {
@@ -197,11 +197,11 @@ public class MainActivity extends AppCompatActivity {
             playAgainPopUp();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Current Game Score");
+            builder.setTitle(R.string.score_alert);
             LayoutInflater alertLayout = this.getLayoutInflater();
             View alertView = alertLayout.inflate(R.layout.alert_scores, null);
             builder.setView(alertView);
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     removeCenterIcon();
@@ -257,10 +257,10 @@ public class MainActivity extends AppCompatActivity {
                 beginRound();
             }
         });
-        builder.setNegativeButton("Quit", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.quit, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(MainActivity.this, "Bye", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, R.string.bye, Toast.LENGTH_LONG).show();
                 finish();
             }
         });
@@ -713,7 +713,7 @@ public class MainActivity extends AppCompatActivity {
                     Table.getInstance().getPlayer1().getHand().get(i).setSelected(true);
                     passCardSelector(i);
                 } else {
-                    Toast.makeText(MainActivity.this, "You can't pass more than three cards", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, R.string.three_cards_max, Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -722,7 +722,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void clickedPassCards(View view) {
         if (Table.getInstance().getPlayer1().getNumberOfSelectedCards() != 3) {
-            Toast.makeText(MainActivity.this, "You must pass three cards", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, R.string.must_pass_three, Toast.LENGTH_LONG).show();
         } else {
             if (Overlord.getInstance().passingDirection() == Direction.LEFT)
                 for (int x = 0; x < 13; x++) {
@@ -816,7 +816,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void cardsReceivedPopUp(ArrayList<Card> computerCardsToPlayer) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Hearts");
+        builder.setTitle(R.string.app_name);
         builder.setMessage("You received: " + Arrays.toString(computerCardsToPlayer.toArray()));
         builder.setIcon(R.mipmap.ic_launcher);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {

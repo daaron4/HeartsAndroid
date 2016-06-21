@@ -1,8 +1,13 @@
 <resources>
     <string name="app_name">Hearts</string>
 
-    <string name="score_alert">Current Score</string>
-
+    <string name="score_alert">Current Game Score</string>
+    <string name="three_cards_max">You cannot pass more than three cards</string>
+    <string name="must_pass_three">You must pass three cards</string>
+    <string name="quit">Quit!</string>
+    <string name="bye">Bye!</string>
+    <string name="ok">OK!</string>
+    <string name="illegal_move">Illegal move, please try another card!</string>
 
     <string name="title_activity_main">MainActivity</string>
 
