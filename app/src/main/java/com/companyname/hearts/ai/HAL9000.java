@@ -16,6 +16,7 @@ import java.util.List;
  */
 
 public class HAL9000 {
+
     public static Card computer1MakesMove() {
         System.out.println("Computer 1 hand: " + Arrays.toString(Table.getInstance().getPlayer2().getHand().toArray()));
         int handValueComp1 = 0;
@@ -61,7 +62,7 @@ public class HAL9000 {
         Collections.sort(arrayOfClubsComp1);
         Collections.sort(arrayOfWholeHandComp1);
 
-        //this is has clubs either Deuce or otherwise, and plays first trick.
+        //this is haz clubs either Deuce or otherwise, and plays first trick.
         if (Overlord.getInstance().getRoundsPlayed() == 1) {
             if (numOfClubsComp1 != 0) {
                 if (arrayOfClubsComp1.get(0).toString().equals("Deuce of Clubs")) {
@@ -140,8 +141,7 @@ public class HAL9000 {
                         return computerSelection;
                     }
                 }
-            }
-            else if (numOfDiamondsComp1 > numOfClubsComp1 && numOfDiamondsComp1 >= numOfSpadesComp1) {
+            } else if (numOfDiamondsComp1 > numOfClubsComp1 && numOfDiamondsComp1 >= numOfSpadesComp1) {
                 //in here play lowest diamond
                 String lowestDiamond = arrayOfDiamondsComp1.get(0).toString();
                 for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
@@ -153,8 +153,7 @@ public class HAL9000 {
                         return computerSelection;
                     }
                 }
-            }
-            else if (numOfSpadesComp1 > numOfClubsComp1 && numOfSpadesComp1 > numOfDiamondsComp1) {
+            } else if (numOfSpadesComp1 > numOfClubsComp1 && numOfSpadesComp1 > numOfDiamondsComp1) {
                 //in here begins bleed of spades
                 String lowestSpade = arrayOfSpadesComp1.get(0).toString();
                 for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
@@ -166,8 +165,7 @@ public class HAL9000 {
                         return computerSelection;
                     }
                 }
-            }
-            else {
+            } else {
                 //this is basically a catch case in the off chance that the computer has all hearts
                 String lowestHeart = arrayOfHeartsComp1.get(0).toString();
                 for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
@@ -180,8 +178,7 @@ public class HAL9000 {
                     }
                 }
             }
-        }
-        else if (Overlord.getInstance().getRoundsPlayed() > 1){
+        } else if (Overlord.getInstance().getRoundsPlayed() > 1) {
             //This is what the computer will do if it is round two, but NOT the leading player
             arrayOfWhatsOnTable = Table.getInstance().getBoard();
             Suit suitOfFirstCardPlayed = arrayOfWhatsOnTable.get(0).getSuit();
@@ -198,8 +195,7 @@ public class HAL9000 {
                         return computerSelection;
                     }
                 }
-            }
-            else if(suitOfFirstCardPlayed == Suit.Diamonds && numOfDiamondsComp1 != 0) {
+            } else if (suitOfFirstCardPlayed == Suit.Diamonds && numOfDiamondsComp1 != 0) {
                 //This plays lowest diamond if diamonds were led
                 String lowestDiamond = arrayOfDiamondsComp1.get(0).toString();
                 for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
@@ -211,8 +207,7 @@ public class HAL9000 {
                         return computerSelection;
                     }
                 }
-            }
-            else if(suitOfFirstCardPlayed == Suit.Spades && numOfSpadesComp1 !=0) {
+            } else if (suitOfFirstCardPlayed == Suit.Spades && numOfSpadesComp1 != 0) {
                 //This plays the lowest spade if spades were led
                 String lowestSpade = arrayOfSpadesComp1.get(0).toString();
                 for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
@@ -230,7 +225,7 @@ public class HAL9000 {
                 for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
                     //This Drops the queen of Spades like it's hot
                     computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
-                    if (computerSelection.getSuit() == Suit.Spades && computerSelection.getRank() == Rank.Queen){
+                    if (computerSelection.getSuit() == Suit.Spades && computerSelection.getRank() == Rank.Queen) {
                         System.out.println("Computer 1 played: " + Table.getInstance().getPlayer2().getHand().get(i).toString());
                         computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
                         Table.getInstance().getPlayer2().getHand().remove(i);
@@ -249,8 +244,7 @@ public class HAL9000 {
                             return computerSelection;
                         }
                     }
-                }
-                else {
+                } else {
                     //This Drops the highest non-heart and not the Queen of Spades
                     String highestCardInHand = arrayOfWholeHandComp1.get(arrayOfWholeHandComp1.size() - 1).toString();
                     for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
@@ -279,6 +273,61 @@ public class HAL9000 {
         return computerSelection;
 
     }
+
+    public static ArrayList<Card> cardsToPassComp1() {
+
+        int x = 0;
+        Card computerSelection = null;
+        Boolean foundQueen = false;
+        List<Card> arrayOfWholeHandComp1 = new ArrayList<>();
+        ArrayList<Card> arrayOfCardsToPass = new ArrayList<>();
+
+        for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
+            computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
+            arrayOfWholeHandComp1.add(computerSelection);
+
+            if (computerSelection.toString().equals("Queen of Spades")) {
+                foundQueen = true;
+                arrayOfCardsToPass.add(computerSelection);
+                arrayOfWholeHandComp1.remove(computerSelection);
+                Table.getInstance().getPlayer2().getHand().remove(computerSelection);
+            }
+        }
+
+        Collections.sort(arrayOfWholeHandComp1);
+
+        if (foundQueen) {
+
+            while (x < 3) {
+                arrayOfCardsToPass.add(arrayOfWholeHandComp1.get(arrayOfWholeHandComp1.size() - 1));
+                arrayOfWholeHandComp1.remove(arrayOfWholeHandComp1.size() - 1);
+                for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
+                    computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
+                    if (computerSelection.toString().equals(arrayOfCardsToPass)) {
+                        System.out.println("Computer 1 passed: " + Table.getInstance().getPlayer2().getHand().get(i).toString());
+                        Table.getInstance().getPlayer2().getHand().remove(i);
+                        x++;
+                    }
+                }
+            }
+        } else {
+
+            while (x < 4) {
+                arrayOfCardsToPass.add(arrayOfWholeHandComp1.get(arrayOfWholeHandComp1.size() - 1));
+                arrayOfWholeHandComp1.remove(arrayOfWholeHandComp1.size() - 1);
+                for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
+                    computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
+                    if (computerSelection.toString().equals(arrayOfCardsToPass)) {
+                        System.out.println("Computer 1 passed: " + Table.getInstance().getPlayer2().getHand().get(i).toString());
+                        Table.getInstance().getPlayer2().getHand().remove(i);
+                        x++;
+                    }
+                }
+            }
+        }
+        return arrayOfCardsToPass;
+    }
 }
+
 
 
