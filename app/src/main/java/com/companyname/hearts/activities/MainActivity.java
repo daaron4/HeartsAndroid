@@ -168,8 +168,8 @@ public class MainActivity extends AppCompatActivity {
     private void displayTrickWinnerPopUp() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle(R.string.app_name);
-        builder.setMessage(Overlord.getInstance().getLeadingPlayer().getName() + " wins the trick." + "\n" +
-                "The board was: " + Arrays.toString(Table.getInstance().getBoard().toArray()));
+        builder.setMessage(Overlord.getInstance().getLeadingPlayer().getName() + R.string.trick_winner + "\n" +
+                R.string.board_contains + Arrays.toString(Table.getInstance().getBoard().toArray()));
         builder.setIcon(R.mipmap.ic_launcher);
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
@@ -196,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
         if (!Overlord.getInstance().getPlaying()) {
             playAgainPopUp();
         } else {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle(R.string.score_alert);
             LayoutInflater alertLayout = this.getLayoutInflater();
             View alertView = alertLayout.inflate(R.layout.alert_scores, null);
@@ -235,18 +235,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void playAgainPopUp() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle(Overlord.getInstance().getWinningPlayer().getName() + " wins the game!");
-        builder.setMessage(
-                String.format("%5s%10s", Table.getInstance().getPlayer1().getName() + ": ",
-                Table.getInstance().getPlayer1().getPoints()) + "\n" +
-                String.format("%5s%10s", Table.getInstance().getPlayer2().getName() + ": ",
-                Table.getInstance().getPlayer2().getPoints()) + "\n" +
-                String.format("%5s%10s", Table.getInstance().getPlayer3().getName() + ": ",
-                Table.getInstance().getPlayer3().getPoints()) + "\n" +
-                String.format("%5s%10s", Table.getInstance().getPlayer4().getName() + ": ",
-                Table.getInstance().getPlayer4().getPoints()));
-        builder.setIcon(R.mipmap.ic_launcher);
-        builder.setPositiveButton("Play Again?", new DialogInterface.OnClickListener() {
+        builder.setTitle(Overlord.getInstance().getWinningPlayer().getName() + R.string.game_winner);
+        LayoutInflater alertLayout = this.getLayoutInflater();
+        View alertView = alertLayout.inflate(R.layout.alert_scores, null);
+        builder.setView(alertView);
+        builder.setPositiveButton(R.string.play_again, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Overlord.getInstance().prepareForNextGame();
@@ -264,8 +257,21 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+        builder.setIcon(R.mipmap.ic_launcher);
         builder.setCancelable(false);
         builder.show();
+        TextView alertNames = (TextView) alertView.findViewById(R.id.alert_score_names);
+        TextView alertScores = (TextView) alertView.findViewById(R.id.alert_score_scores);
+        String nameHolder = Table.getInstance().getPlayer1().getName() + "\n" +
+                Table.getInstance().getPlayer2().getName() + "\n" +
+                Table.getInstance().getPlayer3().getName() + "\n" +
+                Table.getInstance().getPlayer4().getName() + "\n";
+        String scoreHolder = Table.getInstance().getPlayer1().getPoints() + "\n" +
+                Table.getInstance().getPlayer2().getPoints() + "\n" +
+                Table.getInstance().getPlayer3().getPoints() + "\n" +
+                Table.getInstance().getPlayer4().getPoints() + "\n";
+        alertNames.setText(nameHolder);
+        alertScores.setText(scoreHolder);
     }
 
     private void beginRound() {
@@ -817,9 +823,9 @@ public class MainActivity extends AppCompatActivity {
     private void cardsReceivedPopUp(ArrayList<Card> computerCardsToPlayer) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle(R.string.app_name);
-        builder.setMessage("You received: " + Arrays.toString(computerCardsToPlayer.toArray()));
+        builder.setMessage(R.string.cards_received + Arrays.toString(computerCardsToPlayer.toArray()));
         builder.setIcon(R.mipmap.ic_launcher);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Overlord.getInstance().setPlayerWithTheTwoOfClubs();
