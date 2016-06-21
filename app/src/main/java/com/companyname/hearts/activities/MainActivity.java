@@ -194,8 +194,10 @@ public class MainActivity extends AppCompatActivity {
             playAgainPopUp();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setTitle("Hearts");
-            builder.setMessage(Overlord.getInstance().getScoreTracker());
+            builder.setTitle(Table.getInstance().getPlayer1().getName() + " | " + Table.getInstance().getPlayer2().getName() +
+                    " | " + Table.getInstance().getPlayer3().getName() + " | " + Table.getInstance().getPlayer4().getName());
+            builder.setMessage(String.format("%20s%19s%18s%17s", Table.getInstance().getPlayer1().getPoints(), Table.getInstance().getPlayer2().getPoints(),
+                    Table.getInstance().getPlayer3().getPoints(),Table.getInstance().getPlayer4().getPoints()));
             builder.setIcon(R.mipmap.ic_launcher);
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
@@ -325,7 +327,6 @@ public class MainActivity extends AppCompatActivity {
         b11.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
         b12.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
         b13.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
-
     }
 
     private void passCardSelector(int i) {
@@ -499,54 +500,67 @@ public class MainActivity extends AppCompatActivity {
         if (i == 0) {
             b1.setImageResource(0);
             b1.setOnClickListener(null);
+            b1.clearAnimation();
             b1.setVisibility(View.GONE);
         } else if (i == 1) {
             b2.setImageResource(0);
             b2.setOnClickListener(null);
+            b2.clearAnimation();
             b2.setVisibility(View.GONE);
         } else if (i == 2) {
             b3.setImageResource(0);
             b3.setOnClickListener(null);
+            b3.clearAnimation();
             b3.setVisibility(View.GONE);
         } else if (i == 3) {
             b4.setImageResource(0);
             b4.setOnClickListener(null);
+            b4.clearAnimation();
             b4.setVisibility(View.GONE);
         } else if (i == 4) {
             b5.setImageResource(0);
             b5.setOnClickListener(null);
+            b5.clearAnimation();
             b5.setVisibility(View.GONE);
         } else if (i == 5) {
             b6.setImageResource(0);
             b6.setOnClickListener(null);
+            b6.clearAnimation();
             b6.setVisibility(View.GONE);
         } else if (i == 6) {
             b7.setImageResource(0);
             b7.setOnClickListener(null);
+            b7.clearAnimation();
             b7.setVisibility(View.GONE);
         } else if (i == 7) {
             b8.setImageResource(0);
             b8.setOnClickListener(null);
+            b8.clearAnimation();
             b8.setVisibility(View.GONE);
         } else if (i == 8) {
             b9.setImageResource(0);
             b9.setOnClickListener(null);
+            b9.clearAnimation();
             b9.setVisibility(View.GONE);
         } else if (i == 9) {
             b10.setImageResource(0);
             b10.setOnClickListener(null);
+            b10.clearAnimation();
             b10.setVisibility(View.GONE);
         } else if (i == 10) {
             b11.setImageResource(0);
             b11.setOnClickListener(null);
+            b11.clearAnimation();
             b11.setVisibility(View.GONE);
         } else if (i == 11) {
             b12.setImageResource(0);
             b12.setOnClickListener(null);
+            b12.clearAnimation();
             b12.setVisibility(View.GONE);
         } else if (i == 12) {
             b13.setImageResource(0);
             b13.setOnClickListener(null);
+            b13.clearAnimation();
             b13.setVisibility(View.GONE);
         }
     }
