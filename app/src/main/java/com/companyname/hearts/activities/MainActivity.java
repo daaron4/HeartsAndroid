@@ -51,6 +51,11 @@ public class MainActivity extends AppCompatActivity {
         beginRound();
     }
 
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(MainActivity.this, "There is no back in Hearts!!!!!!", Toast.LENGTH_LONG).show();
+    }
+
     private void initializeViews() {
         playerName = (TextView) findViewById(R.id.player_name);
         computer1Name = (TextView) findViewById(R.id.computer1_name);
