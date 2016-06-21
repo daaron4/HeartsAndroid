@@ -21,8 +21,8 @@ public class Overlord {
         passing = true;
         roundsPlayed = 1;
         handsPlayed = 0;
-        scoreTracker += Table.getInstance().getPlayer1().getName() + " " + Table.getInstance().getPlayer2().getName() +
-                " " + Table.getInstance().getPlayer3().getName() + " " + Table.getInstance().getPlayer4().getName() + "\n";
+        scoreTracker += Table.getInstance().getPlayer1().getName() + " | " + Table.getInstance().getPlayer2().getName() +
+                " | " + Table.getInstance().getPlayer3().getName() + " | " + Table.getInstance().getPlayer4().getName() + "\n";
     }
 
     public static Overlord getInstance() {
@@ -166,8 +166,8 @@ public class Overlord {
     }
 
     public void updateScoreTracker() {
-        scoreTracker += Table.getInstance().getPlayer1().getPoints() + " " + Table.getInstance().getPlayer2().getPoints() +
-                " " + Table.getInstance().getPlayer3().getPoints() + " " + Table.getInstance().getPlayer4().getPoints() + "\n";
+        scoreTracker += Table.getInstance().getPlayer1().getPoints() + " | " + Table.getInstance().getPlayer2().getPoints() +
+                " | " + Table.getInstance().getPlayer3().getPoints() + " | " + Table.getInstance().getPlayer4().getPoints() + "\n";
     }
 
     public String getScoreTracker() {
