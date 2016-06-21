@@ -720,6 +720,12 @@ public class MainActivity extends AppCompatActivity {
                     System.out.println("Starting P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
                     System.out.println("Starting P2 hand: " + Arrays.toString(Table.getInstance().getPlayer2().getHand().toArray()));
 
+                    // ToDo: make computer selections better:
+                    computerCardsToPlayer = HAL9000.cardsToPassComp1();
+                    for (int i = 0; i < 3; i++) {
+                        Table.getInstance().getPlayer1().getHand().add(computerCardsToPlayer.get(i));
+                    }
+
                     for (int i = 0; i < Table.getInstance().getPlayer1().getHand().size(); i++) {
                         if (Table.getInstance().getPlayer1().getHand().get(i).isSelected()) {
                             Table.getInstance().getPlayer1().getHand().get(i).setSelected(false);
@@ -727,14 +733,6 @@ public class MainActivity extends AppCompatActivity {
                             Table.getInstance().getPlayer1().getHand().remove(i);
                             i--;
                         }
-                    }
-                    // ToDo: make computer selections better:
-                    computerCardsToPlayer = new ArrayList<>();
-                    for (int i = 0; i < 3; i++) {
-                        Card passMe = Table.getInstance().getPlayer2().getHand().get(i);
-                        computerCardsToPlayer.add(passMe);
-                        Table.getInstance().getPlayer2().getHand().remove(i);
-                        Table.getInstance().getPlayer1().getHand().add(passMe);
                     }
 
                     System.out.println("Ending P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
