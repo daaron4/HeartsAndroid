@@ -1615,6 +1615,7 @@ public class MainActivity extends AppCompatActivity {
                             i--;
                         }
                     }
+                    passAcrossWait(computerCardsToPlayer);
 
                     System.out.println("Ending P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
                     System.out.println("Ending P3 hand: " + Arrays.toString(Table.getInstance().getPlayer3().getHand().toArray()));
