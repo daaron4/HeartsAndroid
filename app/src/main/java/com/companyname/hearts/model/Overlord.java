@@ -40,6 +40,15 @@ public class Overlord implements Serializable {
         return instance;
     }
 
+    public boolean amITheLeadingPlayer(Player player) {
+        if (player == leadingPlayer) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     public static void putInstance(Overlord newInstance) {
         instance = newInstance;
     }
@@ -104,7 +113,6 @@ public class Overlord implements Serializable {
             }
         }
 
-        // ToDo: bug is probably here:
         // Leading player wins hand:
         if (getLeadingPlayer().getName().equals(Table.getInstance().getPlayer1().getName())) {
             if (winnerPosition == 0) {
@@ -353,6 +361,7 @@ public class Overlord implements Serializable {
         return Direction.NO_PASSING;
     }
 
+    // ToDo: jokers are fucking up can play card, when the user must break hearts:
     public boolean canPlayCard(Card userCard, Player whosPlaying) {
         if (getRoundsPlayed() == 1) {
             if (getLeadingPlayer() == whosPlaying) {
