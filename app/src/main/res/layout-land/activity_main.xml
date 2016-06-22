@@ -8,7 +8,7 @@
 
     <Button
         android:id="@+id/pass_cards_button"
-        android:layout_width="90dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:padding="15dp"
