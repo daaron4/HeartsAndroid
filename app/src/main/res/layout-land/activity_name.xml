@@ -76,6 +76,17 @@
         android:layout_below="@+id/computer2_input"/>
 
     <Button
+        android:id="@+id/continue_hearts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:onClick="clickedContinueHearts"
+        android:text="Continue Previous Game!"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"/>
+
+    <Button
         android:id="@+id/start_hearts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

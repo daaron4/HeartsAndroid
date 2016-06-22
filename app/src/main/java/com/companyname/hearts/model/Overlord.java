@@ -1,8 +1,16 @@
 package com.companyname.hearts.model;
 
+import android.content.Context;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class Overlord {
+public class Overlord implements Serializable {
 
     private boolean playing;
     private boolean heartsBroken;
@@ -41,6 +49,37 @@ public class Overlord {
         }
     }
 
+    public static void putInstance(Overlord newInstance) {
+        instance = newInstance;
+    }
+
+    public static void saveOverlord(Context context) {
+        try {
+            FileOutputStream fos = context.openFileOutput("overlord_data", Context.MODE_PRIVATE);
+            ObjectOutputStream os = new ObjectOutputStream(fos);
+            os.writeObject(Overlord.getInstance());
+            os.close();
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void loadOverlord(Context context) {
+        try {
+            FileInputStream fis = context.openFileInput("overlord_data");
+            ObjectInputStream is = new ObjectInputStream(fis);
+            Overlord overlord = (Overlord) is.readObject();
+            Overlord.putInstance(overlord);
+            is.close();
+            fis.close();
+        } catch (IOException e) {
+            System.out.println("File not found");
+        } catch (ClassNotFoundException e) {
+            System.out.println("Issue with class");
+        }
+    }
+
     public void setPlayerWithTheTwoOfClubs() {
         for (int i = 0; i < 13; i++) {
             if (Table.getInstance().getPlayer1().getHand().get(i).getRank().getValue() == 2
@@ -75,7 +114,7 @@ public class Overlord {
         }
 
         // Leading player wins hand:
-        if (getLeadingPlayer() == Table.getInstance().getPlayer1()) {
+        if (getLeadingPlayer().getName().equals(Table.getInstance().getPlayer1().getName())) {
             if (winnerPosition == 0) {
 
             }
@@ -89,7 +128,7 @@ public class Overlord {
                 setLeadingPlayer(Table.getInstance().getPlayer4());
             }
         }
-        else if (getLeadingPlayer() == Table.getInstance().getPlayer2()) {
+        else if (getLeadingPlayer().getName().equals(Table.getInstance().getPlayer2().getName())) {
             if (winnerPosition == 0) {
 
             }
@@ -103,7 +142,7 @@ public class Overlord {
                 setLeadingPlayer(Table.getInstance().getPlayer1());
             }
         }
-        else if (getLeadingPlayer() == Table.getInstance().getPlayer3()) {
+        else if (getLeadingPlayer().getName().equals(Table.getInstance().getPlayer3().getName())) {
             if (winnerPosition == 0) {
 
             }
@@ -322,6 +361,7 @@ public class Overlord {
         return Direction.NO_PASSING;
     }
 
+    // ToDo: jokers are fucking up can play card, when the user must break hearts:
     public boolean canPlayCard(Card userCard, Player whosPlaying) {
         if (getRoundsPlayed() == 1) {
             if (getLeadingPlayer() == whosPlaying) {
