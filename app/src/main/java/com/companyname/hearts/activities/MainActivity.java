@@ -136,6 +136,24 @@ public class MainActivity extends AppCompatActivity {
         computer3Name = (TextView) findViewById(R.id.computer3_name);
         passButton = (Button) findViewById(R.id.pass_cards_button);
 
+        passLeftAnimation = AnimationUtils.loadAnimation(this, R.anim.passleft);
+        passRightAnimation = AnimationUtils.loadAnimation(this, R.anim.passright);
+        passAcrossAnimation = AnimationUtils.loadAnimation(this, R.anim.passacross);
+
+        middle1 = AnimationUtils.loadAnimation(this, R.anim.middle1);
+        middle2 = AnimationUtils.loadAnimation(this, R.anim.middle2);
+        middle3 = AnimationUtils.loadAnimation(this, R.anim.middle3);
+        middle4 = AnimationUtils.loadAnimation(this, R.anim.middle4);
+        middle5 = AnimationUtils.loadAnimation(this, R.anim.middle5);
+        middle6 = AnimationUtils.loadAnimation(this, R.anim.middle6);
+        middle7 = AnimationUtils.loadAnimation(this, R.anim.middle7);
+        middle8 = AnimationUtils.loadAnimation(this, R.anim.middle8);
+        middle9 = AnimationUtils.loadAnimation(this, R.anim.middle9);
+        middle10 = AnimationUtils.loadAnimation(this, R.anim.middle10);
+        middle11 = AnimationUtils.loadAnimation(this, R.anim.middle11);
+        middle12 = AnimationUtils.loadAnimation(this, R.anim.middle12);
+        middle13 = AnimationUtils.loadAnimation(this, R.anim.middle13);
+
         b1 = (ImageView) findViewById(R.id.card_1);
         b2 = (ImageView) findViewById(R.id.card_2);
         b3 = (ImageView) findViewById(R.id.card_3);
