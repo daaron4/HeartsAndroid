@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -423,7 +422,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void displayTrickWinnerPopUp() {
-        Log.e("TEST", "displayTrick");
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle(getString(R.string.app_name));
         builder.setMessage(Overlord.getInstance().getLeadingPlayer().getName() + " " + getString(R.string.trick_winner) + "\n" +
@@ -1109,10 +1107,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void middleWait(final int i) {
-        Log.e("TEST", Integer.toString(i));
         wtfBool = true;
         if (i == 0) {
-            Log.e("TEST", Integer.toString(i) + "in loop");
 
             middle1.setAnimationListener(new Animation.AnimationListener() {
 
@@ -1406,7 +1402,6 @@ public class MainActivity extends AppCompatActivity {
             });
         }
         if (i == 12) {
-            Log.e("TEST", Integer.toString(i) + "in loop");
 
             middle13.setAnimationListener(new Animation.AnimationListener() {
 
@@ -1439,7 +1434,6 @@ public class MainActivity extends AppCompatActivity {
             Card computerSelection;
             if (Overlord.getInstance().getLeadingPlayer().getName().equals(Table.getInstance().getPlayer2().getName())) {
                 if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1())) {
-                    Log.e("TEST", "IF1");
                     Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
                     playerCard.setImageResource(Table.getInstance().getPlayer1().getHand().get(i).getResId());
                     setSuitImage();
@@ -1460,7 +1454,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             } else if (Overlord.getInstance().getLeadingPlayer().getName().equals(Table.getInstance().getPlayer3().getName())) {
                 if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1())) {
-                    Log.e("TEST", "ELSEIF1");
 
                     Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
                     playerCard.setImageResource(Table.getInstance().getPlayer1().getHand().get(i).getResId());
@@ -1486,7 +1479,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             } else if (Overlord.getInstance().getLeadingPlayer().getName().equals(Table.getInstance().getPlayer4().getName())) {
                 if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1())) {
-                    Log.e("TEST", "ELSEIF2");
                     Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
                     playerCard.setImageResource(Table.getInstance().getPlayer1().getHand().get(i).getResId());
 
@@ -1514,7 +1506,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             } else {
                 if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1())) {
-                    Log.e("TEST", "ELSE");
                     Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
                     playerCard.setImageResource(Table.getInstance().getPlayer1().getHand().get(i).getResId());
                     // ToDo: deal with issue with removing cards:
