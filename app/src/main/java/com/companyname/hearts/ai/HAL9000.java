@@ -141,7 +141,7 @@ public class HAL9000 {
                         return computerSelection;
                     }
                 }
-            } else if (numOfDiamondsComp1 !=0 && numOfDiamondsComp1 > numOfClubsComp1 && numOfDiamondsComp1 >= numOfSpadesComp1) {
+            } else if (numOfDiamondsComp1 != 0 && numOfDiamondsComp1 > numOfClubsComp1 && numOfDiamondsComp1 >= numOfSpadesComp1) {
                 //in here play lowest diamond
                 String lowestDiamond = arrayOfDiamondsComp1.get(0).toString();
                 for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
@@ -209,14 +209,37 @@ public class HAL9000 {
                 }
             } else if (suitOfFirstCardPlayed == Suit.Spades && numOfSpadesComp1 != 0) {
                 //This plays the lowest spade if spades were led
-                String lowestSpade = arrayOfSpadesComp1.get(0).toString();
+                boolean foundQueen = false;
+                int indexOfQueen = -1;
                 for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
+                    //Searches the computers hand for the index of the queen of Spade
                     computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
-                    if (computerSelection.toString().equals(lowestSpade)) {
-                        System.out.println("Computer 1 played: " + Table.getInstance().getPlayer2().getHand().get(i).toString());
-                        computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
-                        Table.getInstance().getPlayer2().getHand().remove(i);
-                        return computerSelection;
+                    if (computerSelection.toString().equals("Queen of Spades")) {
+                        foundQueen = true;
+                        indexOfQueen = i;
+                    }
+                }
+                Card currentCard = null;
+                for (int j = 0; j < arrayOfWhatsOnTable.size(); j++) {
+                    currentCard = arrayOfWhatsOnTable.get(j);
+                    if (foundQueen) {
+                        if (currentCard.toString().equals("King of Spades") || currentCard.toString().equals("Ace of Spades")) {
+                            System.out.println("Time to drop the queen!");
+                            computerSelection = Table.getInstance().getPlayer2().getHand().get(indexOfQueen);
+                            Table.getInstance().getPlayer2().getHand().remove(indexOfQueen);
+                            return computerSelection;
+                        }
+                    } else {
+                        String lowestSpade = arrayOfSpadesComp1.get(0).toString();
+                        for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
+                            computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
+                            if (computerSelection.toString().equals(lowestSpade)) {
+                                System.out.println("Computer 1 played: " + Table.getInstance().getPlayer2().getHand().get(i).toString());
+                                computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
+                                Table.getInstance().getPlayer2().getHand().remove(i);
+                                return computerSelection;
+                            }
+                        }
                     }
                 }
             }
