@@ -19,12 +19,22 @@
         android:visibility="invisible"
         android:background="@drawable/roundedcorners"/>
 
+    <ImageButton
+        android:id="@+id/info_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="clickInfoAlert"
+        android:background="@drawable/circleimagebutton"
+        android:src="@android:drawable/ic_dialog_info"
+        />
+
     <!--Community Cards, Player Names, and Suit Indicator-->
 
     <RelativeLayout
-        android:layout_width="250dp"
+        android:layout_width="380dp"
         android:layout_height="250dp"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp">
 
         <TextView
             android:id="@+id/player_name"
@@ -37,16 +47,39 @@
             android:text="Player"
             />
 
-        <TextView
-            android:id="@+id/computer1_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/hal_player_icon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
-            android:rotation="90"
-            android:layout_marginLeft="-10dp"
+            android:rotation="-45"
+            android:background="@drawable/hearts_hal_cyber"
+            android:onClick="HalClicker"/>
+
+        <TextView
+            android:id="@+id/computer1_name"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:rotation="-45"
+            android:layout_marginLeft="-5dp"
             android:textSize="16sp"
             android:text="Comp 1"
+            android:background="@drawable/hearts_hal_cyber"
+            android:visibility="gone"
+            />
+
+        <ImageView
+            android:id="@+id/terminator_player_icon"
+            android:layout_centerInParent="true"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/computer2_card"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/hearts_hal_cyber"
+            android:onClick="TerminatorClicker"
             />
 
         <TextView
@@ -57,6 +90,18 @@
             android:layout_centerInParent="true"
             android:textSize="16sp"
             android:text="Comp 2"
+            android:visibility="gone"
+            />
+
+        <ImageView
+            android:id="@+id/zombo_player_icon"
+            android:layout_centerInParent="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/hearts_hal_cyber"
+            android:rotation="45"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:onClick="ZomboClicker"
             />
 
         <TextView
@@ -65,10 +110,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
-            android:rotation="270"
-            android:layout_marginRight="-10dp"
+            android:rotation="45"
+            android:layout_marginRight="5dp"
             android:textSize="16sp"
             android:text="Comp 3"
+            android:visibility="gone"
             />
 
         <ImageView
