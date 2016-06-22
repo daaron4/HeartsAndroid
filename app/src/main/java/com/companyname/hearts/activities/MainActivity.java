@@ -331,6 +331,8 @@ public class MainActivity extends AppCompatActivity {
             computer3Card.setImageResource(Table.getInstance().getBoard().get(0).getResId());
         }
 
+        // ToDo: if card is selected, need to display its animated form:
+
     }
 
     private void cantPlayThatPopUp() {
