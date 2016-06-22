@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     private ImageView playerCard, computer1Card, computer2Card, computer3Card;
     private ImageView suitPlayed;
     private Animation passLeftAnimation, passRightAnimation, passAcrossAnimation, middle1, middle2, middle3, middle4, middle5, middle6, middle7,middle8, middle9, middle10, middle11, middle12, middle13;
-    private int x;
 
 
     @Override
@@ -175,7 +174,6 @@ public class MainActivity extends AppCompatActivity {
     private void createListeners() {
 
 
-//        passAnimation.setAnimationListener();
         b1.setOnClickListener(onCardClick);
         b2.setOnClickListener(onCardClick);
         b3.setOnClickListener(onCardClick);
