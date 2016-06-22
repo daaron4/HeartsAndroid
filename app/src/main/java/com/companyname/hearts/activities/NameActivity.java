@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.companyname.hearts.R;
 
@@ -72,9 +73,12 @@ public class NameActivity extends AppCompatActivity {
         editor.putString("playernames", sb.toString());
         editor.commit();
 
-        Intent shuffleIntent = new Intent(getApplicationContext(), ShuffleAnimationActivity.class);
-//        shuffleIntent.putExtra("playerNames", playerNames);
-        startActivity(shuffleIntent);
+        try {
+            Intent shuffleIntent = new Intent(getApplicationContext(), ShuffleAnimationActivity.class);
+            startActivity(shuffleIntent);
+        }catch(Error e){
+            Toast.makeText(NameActivity.this, "Try Again", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

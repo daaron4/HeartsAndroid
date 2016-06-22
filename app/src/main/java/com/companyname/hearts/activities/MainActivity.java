@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -39,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
     private ImageView b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13;
     private ImageView playerCard, computer1Card, computer2Card, computer3Card;
     private ImageView suitPlayed;
+    private Animation passAnimation, middle1, middle2, middle3, middle4, middle5, middle6, middle7,middle8, middle9, middle10, middle11, middle12, middle13;
+    private int x;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +62,24 @@ public class MainActivity extends AppCompatActivity {
         computer3Name = (TextView) findViewById(R.id.computer3_name);
         passButton = (Button) findViewById(R.id.pass_cards_button);
 
+
+        passAnimation = AnimationUtils.loadAnimation(this, R.anim.pass);
+        middle1 = AnimationUtils.loadAnimation(this, R.anim.middle1);
+        middle2 = AnimationUtils.loadAnimation(this, R.anim.middle2);
+        middle3 = AnimationUtils.loadAnimation(this, R.anim.middle3);
+        middle4 = AnimationUtils.loadAnimation(this, R.anim.middle4);
+        middle5 = AnimationUtils.loadAnimation(this, R.anim.middle5);
+        middle6 = AnimationUtils.loadAnimation(this, R.anim.middle6);
+        middle7 = AnimationUtils.loadAnimation(this, R.anim.middle7);
+        middle8 = AnimationUtils.loadAnimation(this, R.anim.middle8);
+        middle9 = AnimationUtils.loadAnimation(this, R.anim.middle9);
+        middle10 = AnimationUtils.loadAnimation(this, R.anim.middle10);
+        middle11 = AnimationUtils.loadAnimation(this, R.anim.middle11);
+        middle12 = AnimationUtils.loadAnimation(this, R.anim.middle12);
+        middle13 = AnimationUtils.loadAnimation(this, R.anim.middle13);
+
+
+
         b1 = (ImageView) findViewById(R.id.card_1);
         b2 = (ImageView) findViewById(R.id.card_2);
         b3 = (ImageView) findViewById(R.id.card_3);
@@ -73,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         b13 = (ImageView) findViewById(R.id.card_13);
 
         SharedPreferences pref = this.getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE);
-        String sharedPrefString = pref.getString("playernames","");
+        String sharedPrefString = pref.getString("playernames", "");
         String[] playerNames = sharedPrefString.split(",");
 
         playerCard = (ImageView) findViewById(R.id.player_card);
@@ -91,6 +113,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createListeners() {
+
+
+//        passAnimation.setAnimationListener();
         b1.setOnClickListener(onCardClick);
         b2.setOnClickListener(onCardClick);
         b3.setOnClickListener(onCardClick);
@@ -168,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Hearts");
         builder.setMessage(Overlord.getInstance().getLeadingPlayer().getName() + " wins the trick." + "\n" +
-            "The board was: " + Arrays.toString(Table.getInstance().getBoard().toArray()));
+                "The board was: " + Arrays.toString(Table.getInstance().getBoard().toArray()));
         builder.setIcon(R.mipmap.ic_launcher);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -328,13 +353,138 @@ public class MainActivity extends AppCompatActivity {
         b13.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
     }
 
+
+    private void passShit(int i) {
+        switch (i) {
+            case 0:
+                if (Table.getInstance().getPlayer1().getHand().get(0).isSelected()) {
+                    b1.startAnimation(passAnimation);
+                }
+                break;
+            case 1:
+                if (Table.getInstance().getPlayer1().getHand().get(1).isSelected()) {
+                    b2.startAnimation(passAnimation);
+                }
+                break;
+            case 2:
+                if (Table.getInstance().getPlayer1().getHand().get(2).isSelected()) {
+                    b3.startAnimation(passAnimation);
+                }
+                break;
+            case 3:
+                if (Table.getInstance().getPlayer1().getHand().get(3).isSelected()) {
+                    b4.startAnimation(passAnimation);
+                }
+                break;
+            case 4:
+                if (Table.getInstance().getPlayer1().getHand().get(4).isSelected()) {
+                    b5.startAnimation(passAnimation);
+                }
+                break;
+            case 5:
+                if (Table.getInstance().getPlayer1().getHand().get(5).isSelected()) {
+                    b6.startAnimation(passAnimation);
+                }
+                break;
+            case 6:
+                if (Table.getInstance().getPlayer1().getHand().get(6).isSelected()) {
+                    b7.startAnimation(passAnimation);
+                }
+                break;
+            case 7:
+                if (Table.getInstance().getPlayer1().getHand().get(7).isSelected()) {
+                    b8.startAnimation(passAnimation);
+                }
+                break;
+            case 8:
+                if (Table.getInstance().getPlayer1().getHand().get(8).isSelected()) {
+                    b9.startAnimation(passAnimation);
+                }
+                break;
+            case 9:
+                if (Table.getInstance().getPlayer1().getHand().get(9).isSelected()) {
+                    b10.startAnimation(passAnimation);
+                }
+                break;
+            case 10:
+                if (Table.getInstance().getPlayer1().getHand().get(10).isSelected()) {
+                    b11.startAnimation(passAnimation);
+                }
+                break;
+            case 11:
+                if (Table.getInstance().getPlayer1().getHand().get(11).isSelected()) {
+                    b12.startAnimation(passAnimation);
+                }
+                break;
+            case 12:
+                if (Table.getInstance().getPlayer1().getHand().get(12).isSelected()) {
+                    b13.startAnimation(passAnimation);
+                }
+                break;
+        }
+    }
+
+    private void passMiddle(int i) {
+        switch (i) {
+            case 0:
+                b1.startAnimation(middle1);
+
+                break;
+            case 1:
+                b2.startAnimation(middle2);
+                break;
+            case 2:
+                b3.startAnimation(middle3);
+
+                break;
+            case 3:
+                b4.startAnimation(middle4);
+
+                break;
+            case 4:
+                b5.startAnimation(middle5);
+
+                break;
+            case 5:
+                b6.startAnimation(middle6);
+
+                break;
+            case 6:
+                b7.startAnimation(middle7);
+
+                break;
+            case 7:
+                b8.startAnimation(middle8);
+
+                break;
+            case 8:
+                b9.startAnimation(middle9);
+
+                break;
+            case 9:
+                b10.startAnimation(middle10);
+
+                break;
+            case 10:
+                b11.startAnimation(middle11);
+                break;
+            case 11:
+                b12.startAnimation(middle12);
+                break;
+            case 12:
+                b13.startAnimation(middle13);
+                break;
+        }
+
+    }
+
     private void passCardSelector(int i) {
+
         switch (i) {
             case 0:
                 if (Table.getInstance().getPlayer1().getHand().get(0).isSelected()) {
                     b1.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
-                }
-                else {
+                } else {
                     b1.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
                 }
                 break;
@@ -425,144 +575,74 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void passShit(int i) {
-        switch (i) {
-            case 0:
-                if (Table.getInstance().getPlayer1().getHand().get(0).isSelected()) {
-                    b1.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pass));
+    private void removeCardFromView(final int i) {
+                if (i == 0) {
+                    b1.setImageResource(0);
+                    b1.setOnClickListener(null);
+                    b1.clearAnimation();
+                    b1.setVisibility(View.GONE);
+                } else if (i == 1) {
+                    b2.setImageResource(0);
+                    b2.setOnClickListener(null);
+                    b2.clearAnimation();
+                    b2.setVisibility(View.GONE);
+                } else if (i == 2) {
+                    b3.setImageResource(0);
+                    b3.setOnClickListener(null);
+                    b3.clearAnimation();
+                    b3.setVisibility(View.GONE);
+                } else if (i == 3) {
+                    b4.setImageResource(0);
+                    b4.setOnClickListener(null);
+                    b4.clearAnimation();
+                    b4.setVisibility(View.GONE);
+                } else if (i == 4) {
+                    b5.setImageResource(0);
+                    b5.setOnClickListener(null);
+                    b5.clearAnimation();
+                    b5.setVisibility(View.GONE);
+                } else if (i == 5) {
+                    b6.setImageResource(0);
+                    b6.setOnClickListener(null);
+                    b6.clearAnimation();
+                    b6.setVisibility(View.GONE);
+                } else if (i == 6) {
+                    b7.setImageResource(0);
+                    b7.setOnClickListener(null);
+                    b7.clearAnimation();
+                    b7.setVisibility(View.GONE);
+                } else if (i == 7) {
+                    b8.setImageResource(0);
+                    b8.setOnClickListener(null);
+                    b8.clearAnimation();
+                    b8.setVisibility(View.GONE);
+                } else if (i == 8) {
+                    b9.setImageResource(0);
+                    b9.setOnClickListener(null);
+                    b9.clearAnimation();
+                    b9.setVisibility(View.GONE);
+                } else if (i == 9) {
+                    b10.setImageResource(0);
+                    b10.setOnClickListener(null);
+                    b10.clearAnimation();
+                    b10.setVisibility(View.GONE);
+                } else if (i == 10) {
+                    b11.setImageResource(0);
+                    b11.setOnClickListener(null);
+                    b11.clearAnimation();
+                    b11.setVisibility(View.GONE);
+                } else if (i == 11) {
+                    b12.setImageResource(0);
+                    b12.setOnClickListener(null);
+                    b12.clearAnimation();
+                    b12.setVisibility(View.GONE);
+                } else if (i == 12) {
+                    b13.setImageResource(0);
+                    b13.setOnClickListener(null);
+                    b13.clearAnimation();
+                    b13.setVisibility(View.GONE);
                 }
-                break;
-            case 1:
-                if (Table.getInstance().getPlayer1().getHand().get(1).isSelected()) {
-                    b2.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pass));
-                }
-                break;
-            case 2:
-                if (Table.getInstance().getPlayer1().getHand().get(2).isSelected()) {
-                    b3.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pass));
-                }
-                break;
-            case 3:
-                if (Table.getInstance().getPlayer1().getHand().get(3).isSelected()) {
-                    b4.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pass));
-                }
-                break;
-            case 4:
-                if (Table.getInstance().getPlayer1().getHand().get(4).isSelected()) {
-                    b5.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pass));
-                }
-                break;
-            case 5:
-                if (Table.getInstance().getPlayer1().getHand().get(5).isSelected()) {
-                    b6.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pass));
-                }
-                break;
-            case 6:
-                if (Table.getInstance().getPlayer1().getHand().get(6).isSelected()) {
-                    b7.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pass));
-                }
-                break;
-            case 7:
-                if (Table.getInstance().getPlayer1().getHand().get(7).isSelected()) {
-                    b8.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pass));
-                }
-                break;
-            case 8:
-                if (Table.getInstance().getPlayer1().getHand().get(8).isSelected()) {
-                    b9.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pass));
-                }
-                break;
-            case 9:
-                if (Table.getInstance().getPlayer1().getHand().get(9).isSelected()) {
-                    b10.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pass));
-                }
-                break;
-            case 10:
-                if (Table.getInstance().getPlayer1().getHand().get(10).isSelected()) {
-                    b11.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pass));
-                }
-                break;
-            case 11:
-                if (Table.getInstance().getPlayer1().getHand().get(11).isSelected()) {
-                    b12.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pass));
-                }
-                break;
-            case 12:
-                if (Table.getInstance().getPlayer1().getHand().get(12).isSelected()) {
-                    b13.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pass));
-                }
-                break;
-        }
-    }
-
-    private void removeCardFromView(int i) {
-        if (i == 0) {
-            b1.setImageResource(0);
-            b1.setOnClickListener(null);
-            b1.clearAnimation();
-            b1.setVisibility(View.GONE);
-        } else if (i == 1) {
-            b2.setImageResource(0);
-            b2.setOnClickListener(null);
-            b2.clearAnimation();
-            b2.setVisibility(View.GONE);
-        } else if (i == 2) {
-            b3.setImageResource(0);
-            b3.setOnClickListener(null);
-            b3.clearAnimation();
-            b3.setVisibility(View.GONE);
-        } else if (i == 3) {
-            b4.setImageResource(0);
-            b4.setOnClickListener(null);
-            b4.clearAnimation();
-            b4.setVisibility(View.GONE);
-        } else if (i == 4) {
-            b5.setImageResource(0);
-            b5.setOnClickListener(null);
-            b5.clearAnimation();
-            b5.setVisibility(View.GONE);
-        } else if (i == 5) {
-            b6.setImageResource(0);
-            b6.setOnClickListener(null);
-            b6.clearAnimation();
-            b6.setVisibility(View.GONE);
-        } else if (i == 6) {
-            b7.setImageResource(0);
-            b7.setOnClickListener(null);
-            b7.clearAnimation();
-            b7.setVisibility(View.GONE);
-        } else if (i == 7) {
-            b8.setImageResource(0);
-            b8.setOnClickListener(null);
-            b8.clearAnimation();
-            b8.setVisibility(View.GONE);
-        } else if (i == 8) {
-            b9.setImageResource(0);
-            b9.setOnClickListener(null);
-            b9.clearAnimation();
-            b9.setVisibility(View.GONE);
-        } else if (i == 9) {
-            b10.setImageResource(0);
-            b10.setOnClickListener(null);
-            b10.clearAnimation();
-            b10.setVisibility(View.GONE);
-        } else if (i == 10) {
-            b11.setImageResource(0);
-            b11.setOnClickListener(null);
-            b11.clearAnimation();
-            b11.setVisibility(View.GONE);
-        } else if (i == 11) {
-            b12.setImageResource(0);
-            b12.setOnClickListener(null);
-            b12.clearAnimation();
-            b12.setVisibility(View.GONE);
-        } else if (i == 12) {
-            b13.setImageResource(0);
-            b13.setOnClickListener(null);
-            b13.clearAnimation();
-            b13.setVisibility(View.GONE);
-        }
-    }
+            }
 
     private void remakeVisible() {
         b1.setVisibility(View.VISIBLE);
@@ -579,45 +659,360 @@ public class MainActivity extends AppCompatActivity {
         b12.setVisibility(View.VISIBLE);
         b13.setVisibility(View.VISIBLE);
     }
+private void passWait(final ArrayList<Card> computerCardsToPlayer) {
+
+    passAnimation.setAnimationListener(new Animation.AnimationListener() {
+
+        @Override
+        public void onAnimationStart(Animation animation) {
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+        }
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            cardsReceivedPopUp(computerCardsToPlayer);
+
+        }
+
+    });
+}
+
+    private void middleWait(final int i) {
+        if(i==0) {
+            middle1.setAnimationListener(new Animation.AnimationListener() {
+
+                @Override
+                public void onAnimationStart(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    Log.e("WAIT", "Waiting");
+//                    Overlord.getInstance().determineTrickWinner();
+                    resetPlayedCards();
+                    displayTrickWinnerPopUp();
+                    removeCardFromView(i);
+                }
+
+            });
+        }
+        if(i==1) {
+            middle2.setAnimationListener(new Animation.AnimationListener() {
+
+                @Override
+                public void onAnimationStart(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    Log.e("WAIT", "Waiting");
+//                    Overlord.getInstance().determineTrickWinner();
+                    resetPlayedCards();
+                    displayTrickWinnerPopUp();
+                    removeCardFromView(i);
+                }
+
+            });
+        }        if(i==2) {
+                middle3.setAnimationListener(new Animation.AnimationListener() {
+
+                @Override
+                public void onAnimationStart(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    Log.e("WAIT", "Waiting");
+//                    Overlord.getInstance().determineTrickWinner();
+                    resetPlayedCards();
+                    displayTrickWinnerPopUp();
+                    removeCardFromView(i);
+
+                }
+
+            });
+        }        if(i==3) {
+            middle4.setAnimationListener(new Animation.AnimationListener() {
+
+                @Override
+                public void onAnimationStart(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    Log.e("WAIT", "Waiting");
+//                    Overlord.getInstance().determineTrickWinner();
+                    resetPlayedCards();
+                    displayTrickWinnerPopUp();
+                    removeCardFromView(i);
+
+                }
+
+            });
+        }        if(i==4) {
+            middle5.setAnimationListener(new Animation.AnimationListener() {
+
+                @Override
+                public void onAnimationStart(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    Log.e("WAIT", "Waiting");
+//                    Overlord.getInstance().determineTrickWinner();
+                    resetPlayedCards();
+                    displayTrickWinnerPopUp();
+                    removeCardFromView(i);
+
+                }
+
+            });
+        }        if(i==5) {
+            middle6.setAnimationListener(new Animation.AnimationListener() {
+
+                @Override
+                public void onAnimationStart(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    Log.e("WAIT", "Waiting");
+//                    Overlord.getInstance().determineTrickWinner();
+                    resetPlayedCards();
+                    displayTrickWinnerPopUp();
+                    removeCardFromView(i);
+                }
+
+            });
+        }        if(i==6) {
+            middle7.setAnimationListener(new Animation.AnimationListener() {
+
+                @Override
+                public void onAnimationStart(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    Log.e("WAIT", "Waiting");
+//                    Overlord.getInstance().determineTrickWinner();
+                    resetPlayedCards();
+                    displayTrickWinnerPopUp();
+                    removeCardFromView(i);
+
+                }
+
+            });
+        }        if(i==7) {
+            middle8.setAnimationListener(new Animation.AnimationListener() {
+
+                @Override
+                public void onAnimationStart(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    Log.e("WAIT", "Waiting");
+//                    Overlord.getInstance().determineTrickWinner();
+                    resetPlayedCards();
+                    displayTrickWinnerPopUp();
+                    removeCardFromView(i);
+
+                }
+
+            });
+        }        if(i==8) {
+            middle9.setAnimationListener(new Animation.AnimationListener() {
+
+                @Override
+                public void onAnimationStart(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    Log.e("WAIT", "Waiting");
+//                    Overlord.getInstance().determineTrickWinner();
+                    resetPlayedCards();
+                    displayTrickWinnerPopUp();
+                    removeCardFromView(i);
+
+                }
+
+            });
+        }        if(i==9) {
+            middle10.setAnimationListener(new Animation.AnimationListener() {
+
+                @Override
+                public void onAnimationStart(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    Log.e("WAIT", "Waiting");
+//                    Overlord.getInstance().determineTrickWinner();
+                    resetPlayedCards();
+                    displayTrickWinnerPopUp();
+                    removeCardFromView(i);
+
+                }
+
+            });
+        }        if(i==10) {
+            middle11.setAnimationListener(new Animation.AnimationListener() {
+
+                @Override
+                public void onAnimationStart(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    Log.e("WAIT", "Waiting");
+//                    Overlord.getInstance().determineTrickWinner();
+                    resetPlayedCards();
+                    displayTrickWinnerPopUp();
+                    removeCardFromView(i);
+                }
+
+            });
+        }        if(i==11) {
+            middle12.setAnimationListener(new Animation.AnimationListener() {
+
+                @Override
+                public void onAnimationStart(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    Log.e("WAIT", "Waiting");
+//                    Overlord.getInstance().determineTrickWinner();
+                    resetPlayedCards();
+                    displayTrickWinnerPopUp();
+                    removeCardFromView(i);
+
+                }
+
+            });
+        }        if(i==12) {
+            middle13.setAnimationListener(new Animation.AnimationListener() {
+
+                @Override
+                public void onAnimationStart(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    Log.e("WAIT", "Waiting");
+
+//                    Overlord.getInstance().determineTrickWinner();
+                    resetPlayedCards();
+                    displayTrickWinnerPopUp();
+                    removeCardFromView(i);
+                }
+
+            });
+        }
+
+    }
 
     private void clickedCard(int i) {
         if (!Overlord.getInstance().getPassing()) {
             Card computerSelection;
             if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer2()) {
                 if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1())) {
+
+                    passMiddle(i);
+                    Log.e("WTF", Integer.toString(i));
+
                     Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
                     playerCard.setImageResource(Table.getInstance().getPlayer1().getHand().get(i).getResId());
                     setSuitImage();
-                    // ToDo: deal with issue with removing cards:
                     Table.getInstance().getPlayer1().getHand().remove(i);
                     Table.getInstance().getPlayer1().getHand().add(i, new Card(Rank.Joker, Suit.Joker, R.drawable.derpycard));
-
                     Overlord.getInstance().determineTrickWinner();
-                    resetPlayedCards();
-                    displayTrickWinnerPopUp();
-                    removeCardFromView(i);
+                    middleWait(i);
+
+//                    resetPlayedCards();
+//                    displayTrickWinnerPopUp();
+//                    removeCardFromView(i);
                     Table.getInstance().getBoard().clear();
                     Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
                 } else {
-                    cantPlayThatPopUp();
                 }
             } else if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer3()) {
                 if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1())) {
+
+                    passMiddle(i);
+                    Log.e("WTF", Integer.toString(i));
+
                     Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
                     playerCard.setImageResource(Table.getInstance().getPlayer1().getHand().get(i).getResId());
                     setSuitImage();
-                    // ToDo: deal with issue with removing cards:
                     Table.getInstance().getPlayer1().getHand().remove(i);
                     Table.getInstance().getPlayer1().getHand().add(i, new Card(Rank.Joker, Suit.Joker, R.drawable.derpycard));
-
                     computerSelection = HAL9000.computer1MakesMove();
                     Table.getInstance().getBoard().add(computerSelection);
                     computer1Card.setImageResource(computerSelection.getResId());
 
                     Overlord.getInstance().determineTrickWinner();
-                    resetPlayedCards();
-                    displayTrickWinnerPopUp();
-                    removeCardFromView(i);
+                    middleWait(i);
+
+//                    resetPlayedCards();
+//                    displayTrickWinnerPopUp();
+//                    removeCardFromView(i);
                     Table.getInstance().getBoard().clear();
                     Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
                 } else {
@@ -625,9 +1020,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             } else if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer4()) {
                 if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1())) {
+
+
+                    passMiddle(i);
+                    Log.e("WTF", Integer.toString(i));
+
                     Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
                     playerCard.setImageResource(Table.getInstance().getPlayer1().getHand().get(i).getResId());
-                    // ToDo: deal with issue with removing cards:
+
                     Table.getInstance().getPlayer1().getHand().remove(i);
                     Table.getInstance().getPlayer1().getHand().add(i, new Card(Rank.Joker, Suit.Joker, R.drawable.derpycard));
 
@@ -640,9 +1040,11 @@ public class MainActivity extends AppCompatActivity {
                     computer2Card.setImageResource(computerSelection.getResId());
 
                     Overlord.getInstance().determineTrickWinner();
-                    resetPlayedCards();
-                    displayTrickWinnerPopUp();
-                    removeCardFromView(i);
+                    middleWait(i);
+
+//                    resetPlayedCards();
+//                    displayTrickWinnerPopUp();
+//                    removeCardFromView(i);
                     Table.getInstance().getBoard().clear();
                     Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
                 } else {
@@ -650,6 +1052,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             } else {
                 if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1())) {
+
+                    passMiddle(i);
+                    Log.e("WTF", Integer.toString(i));
+
                     Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
                     playerCard.setImageResource(Table.getInstance().getPlayer1().getHand().get(i).getResId());
                     // ToDo: deal with issue with removing cards:
@@ -669,15 +1075,16 @@ public class MainActivity extends AppCompatActivity {
                     computer3Card.setImageResource(computerSelection.getResId());
 
                     Overlord.getInstance().determineTrickWinner();
-                    resetPlayedCards();
-                    displayTrickWinnerPopUp();
-                    removeCardFromView(i);
+                    middleWait(i);
+
+//                    resetPlayedCards();
+//                    displayTrickWinnerPopUp();
+//                    removeCardFromView(i);
                     Table.getInstance().getBoard().clear();
                     Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
                 } else {
                     cantPlayThatPopUp();
                 }
-
             }
         }
         // We are passing here:
@@ -693,7 +1100,7 @@ public class MainActivity extends AppCompatActivity {
                     Table.getInstance().getPlayer1().getHand().get(i).setSelected(true);
                     passCardSelector(i);
                 } else {
-                    Toast.makeText(MainActivity.this, "You can't pass more than three cards", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(MainActivity.this, getString(R.string.three_cards_max), Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -704,14 +1111,13 @@ public class MainActivity extends AppCompatActivity {
         if (Table.getInstance().getPlayer1().getNumberOfSelectedCards() != 3) {
             Toast.makeText(MainActivity.this, "You must pass three cards", Toast.LENGTH_LONG).show();
         } else {
-            if(Overlord.getInstance().passingDirection() == Direction.LEFT)
-            for (int x = 0; x < 13; x++){
-                if (Table.getInstance().getPlayer1().getHand().get(x).isSelected()) {
-                    Log.e("BALLS", Integer.toString(x));
-                                    passShit(x);
-
+            if (Overlord.getInstance().passingDirection() == Direction.LEFT)
+                for (int x = 0; x < 13; x++) {
+                    if (Table.getInstance().getPlayer1().getHand().get(x).isSelected()) {
+                        Log.e("BALLS", Integer.toString(x));
+                        passShit(x);
+                    }
                 }
-            }
             // ToDo: make computer selections better:
             ArrayList<Card> computerCardsToPlayer = new ArrayList<>();
             switch (Overlord.getInstance().passingDirection()) {
@@ -789,38 +1195,41 @@ public class MainActivity extends AppCompatActivity {
 
             Overlord.getInstance().setPassing(false);
             passButton.setVisibility(View.INVISIBLE);
-            cardsReceivedPopUp(computerCardsToPlayer);
+            passWait(computerCardsToPlayer);
         }
-
     }
 
     private void cardsReceivedPopUp(ArrayList<Card> computerCardsToPlayer) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Hearts");
-        builder.setMessage("You received: " + Arrays.toString(computerCardsToPlayer.toArray()));
-        builder.setIcon(R.mipmap.ic_launcher);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Overlord.getInstance().setPlayerWithTheTwoOfClubs();
-                Table.getInstance().getPlayer1().organizeHand();
-                Table.getInstance().getPlayer2().organizeHand();
-                Table.getInstance().getPlayer3().organizeHand();
-                Table.getInstance().getPlayer4().organizeHand();
-                for (int j = 0; j < 13; j++) {
-                    removeCardFromView(j);
-                    b1.setVisibility(View.VISIBLE);
 
-                }
-                displayImages();
-                fixTransparentImages();
-                createListeners();
-                beginRound();
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Hearts");
+                builder.setMessage("You received: " + Arrays.toString(computerCardsToPlayer.toArray()));
+                builder.setIcon(R.mipmap.ic_launcher);
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Overlord.getInstance().setPlayerWithTheTwoOfClubs();
+                                Table.getInstance().getPlayer1().organizeHand();
+                                Table.getInstance().getPlayer2().organizeHand();
+                                Table.getInstance().getPlayer3().organizeHand();
+                                Table.getInstance().getPlayer4().organizeHand();
+                                for (int j = 0; j < 13; j++) {
+                                    removeCardFromView(j);
+                                    b1.setVisibility(View.VISIBLE);
+
+                                }
+                                displayImages();
+                                fixTransparentImages();
+                                createListeners();
+                                beginRound();
+                            }
+                        }
+
+                );
+                builder.setCancelable(false);
+                builder.show();
             }
-        });
-        builder.setCancelable(false);
-        builder.show();
-    }
+
 
     ImageView.OnClickListener onCardClick = new ImageView.OnClickListener() {
         @Override
@@ -871,5 +1280,4 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
-
-}
+    }
