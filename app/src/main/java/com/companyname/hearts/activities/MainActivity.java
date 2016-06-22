@@ -1020,8 +1020,6 @@ public class MainActivity extends AppCompatActivity {
                 Table.getInstance().getPlayer4().organizeHand();
                 for (int j = 0; j < 13; j++) {
                     removeCardFromView(j);
-                    b1.setVisibility(View.VISIBLE);
-
                 }
                 displayImages();
                 fixTransparentImages();
