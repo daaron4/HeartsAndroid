@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Overlord implements Serializable {
@@ -412,16 +413,35 @@ public class Overlord implements Serializable {
             }
 
         }
+        // ToDo: remove this eventually:
+        ////////////////////////  joker crap: ///////////////////////////////////
+
+        // Make a temporary hand that is duplicate of original hand:
+        ArrayList<Card> copy = new ArrayList<>();
+        for (int i = 0; i < whosPlaying.getHand().size(); i++) {
+            copy.add(whosPlaying.getHand().get(i));
+        }
+        // Remove all jokers from this hand:
+        for (int i = 0; i < copy.size(); i++) {
+            if (copy.get(i).toString().equals("Joker of Joker")) {
+                copy.remove(i);
+                i--;
+            }
+        }
+        // Use this hand from now on...
+
+        ////////////////////////////////////////////////////////////////////////
+
+
         // If all you have is hearts or all hearts and the queen of spades, you
         // can play right away no matter what:
         int numHearts = 0;
-        for (int i = 0; i < whosPlaying.getHand().size(); i++) {
-            if (whosPlaying.getHand().get(i).getSuit() == Suit.Hearts
-                    || (whosPlaying.getHand().get(i).getSuit() == Suit.Spades && whosPlaying.getHand()
-                    .get(i).getRank() == Rank.Queen))
+        for (int i = 0; i < copy.size(); i++) {
+            if (copy.get(i).getSuit() == Suit.Hearts
+                    || (copy.get(i).getSuit() == Suit.Spades && copy.get(i).getRank() == Rank.Queen))
                 numHearts++;
         }
-        if (numHearts == whosPlaying.getHand().size()) {
+        if (numHearts == copy.size()) {
             // All you have is hearts, return true and break hearts:
             heartsBroken = true;
             return true;
@@ -432,8 +452,7 @@ public class Overlord implements Serializable {
             // heart, or the queen, if hearts have not been broken:
             if (!heartsBroken) {
                 if (userCard.getSuit() == Suit.Hearts
-                        || (userCard.getSuit() == Suit.Spades && userCard
-                        .getRank() == Rank.Queen)) {
+                        || (userCard.getSuit() == Suit.Spades && userCard.getRank() == Rank.Queen)) {
                     // System.out.println("Cant play that, Hearts have not been broken yet, ");
                     return false;
                 }
@@ -446,8 +465,8 @@ public class Overlord implements Serializable {
             Suit leadingSuit = Table.getInstance().getBoard().get(0).getSuit();
             // Check to see if the current player can follow suit:
             int times = 0;
-            for (int i = 0; i < whosPlaying.getHand().size(); i++) {
-                if (whosPlaying.getHand().get(i).getSuit() == leadingSuit)
+            for (int i = 0; i < copy.size(); i++) {
+                if (copy.get(i).getSuit() == leadingSuit)
                     times++;
             }
             // I have to follow suit here
