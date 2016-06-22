@@ -3,6 +3,7 @@ package com.companyname.hearts.activities;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -45,11 +46,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initializeViews();
-        createListeners();
-        setUpGame();
-        displayImages();
-        beginRound();
+        Intent intent = getIntent();
+        boolean continueOldGame = intent.getBooleanExtra("continueOldGame", false);
+        if (continueOldGame) {
+            initializeSavedGame();
+            setViewSavedGame();
+        }
+        else {
+            initializeViews();
+            createListeners();
+            setUpGame();
+            displayImages();
+            beginRound();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        saveGame();
     }
 
     @Override
@@ -94,6 +109,42 @@ public class MainActivity extends AppCompatActivity {
         computer2Name.setText(playerNames[2]);
         computer3Name.setText(playerNames[3]);
         Table.getInstance().initializeTable(playerNames[0], playerNames[1], playerNames[2], playerNames[3]);
+    }
+
+    private void initializeSavedGame() {
+        playerName = (TextView) findViewById(R.id.player_name);
+        computer1Name = (TextView) findViewById(R.id.computer1_name);
+        computer2Name = (TextView) findViewById(R.id.computer2_name);
+        computer3Name = (TextView) findViewById(R.id.computer3_name);
+        passButton = (Button) findViewById(R.id.pass_cards_button);
+
+        b1 = (ImageView) findViewById(R.id.card_1);
+        b2 = (ImageView) findViewById(R.id.card_2);
+        b3 = (ImageView) findViewById(R.id.card_3);
+        b4 = (ImageView) findViewById(R.id.card_4);
+        b5 = (ImageView) findViewById(R.id.card_5);
+        b6 = (ImageView) findViewById(R.id.card_6);
+        b7 = (ImageView) findViewById(R.id.card_7);
+        b8 = (ImageView) findViewById(R.id.card_8);
+        b9 = (ImageView) findViewById(R.id.card_9);
+        b10 = (ImageView) findViewById(R.id.card_10);
+        b11 = (ImageView) findViewById(R.id.card_11);
+        b12 = (ImageView) findViewById(R.id.card_12);
+        b13 = (ImageView) findViewById(R.id.card_13);
+
+        playerCard = (ImageView) findViewById(R.id.player_card);
+        computer1Card = (ImageView) findViewById(R.id.computer1_card);
+        computer2Card = (ImageView) findViewById(R.id.computer2_card);
+        computer3Card = (ImageView) findViewById(R.id.computer3_card);
+
+        suitPlayed = (ImageView) findViewById(R.id.played_suit);
+
+        loadGame();
+
+        playerName.setText(Table.getInstance().getPlayer1().getName());
+        computer1Name.setText(Table.getInstance().getPlayer2().getName());
+        computer2Name.setText(Table.getInstance().getPlayer3().getName());
+        computer3Name.setText(Table.getInstance().getPlayer4().getName());
     }
 
     private void createListeners() {
@@ -153,6 +204,136 @@ public class MainActivity extends AppCompatActivity {
         b13.setImageResource(c13.getResId());
 
         remakeVisible();
+    }
+
+    private void setViewSavedGame() {
+        Card c1 = Table.getInstance().getPlayer1().getHand().get(0);
+        Card c2 = Table.getInstance().getPlayer1().getHand().get(1);
+        Card c3 = Table.getInstance().getPlayer1().getHand().get(2);
+        Card c4 = Table.getInstance().getPlayer1().getHand().get(3);
+        Card c5 = Table.getInstance().getPlayer1().getHand().get(4);
+        Card c6 = Table.getInstance().getPlayer1().getHand().get(5);
+        Card c7 = Table.getInstance().getPlayer1().getHand().get(6);
+        Card c8 = Table.getInstance().getPlayer1().getHand().get(7);
+        Card c9 = Table.getInstance().getPlayer1().getHand().get(8);
+        Card c10 = Table.getInstance().getPlayer1().getHand().get(9);
+        Card c11 = Table.getInstance().getPlayer1().getHand().get(10);
+        Card c12 = Table.getInstance().getPlayer1().getHand().get(11);
+        Card c13 = Table.getInstance().getPlayer1().getHand().get(12);
+
+        if (!c1.toString().equals("Joker of Joker")) {
+            b1.setImageResource(c1.getResId());
+            b1.setOnClickListener(onCardClick);
+        }
+        else {
+            b1.setImageResource(0);
+        }
+        if (!c2.toString().equals("Joker of Joker")) {
+            b2.setImageResource(c2.getResId());
+            b2.setOnClickListener(onCardClick);
+        }
+        else {
+            b2.setImageResource(0);
+        }
+        if (!c3.toString().equals("Joker of Joker")) {
+            b3.setImageResource(c3.getResId());
+            b3.setOnClickListener(onCardClick);
+        }
+        else {
+            b3.setImageResource(0);
+        }
+        if (!c4.toString().equals("Joker of Joker")) {
+            b4.setImageResource(c4.getResId());
+            b4.setOnClickListener(onCardClick);
+        }
+        else {
+            b4.setImageResource(0);
+        }
+        if (!c5.toString().equals("Joker of Joker")) {
+            b5.setImageResource(c5.getResId());
+            b5.setOnClickListener(onCardClick);
+        }
+        else {
+            b5.setImageResource(0);
+        }
+        if (!c6.toString().equals("Joker of Joker")) {
+            b6.setImageResource(c6.getResId());
+            b6.setOnClickListener(onCardClick);
+        }
+        else {
+            b6.setImageResource(0);
+        }
+        if (!c7.toString().equals("Joker of Joker")) {
+            b7.setImageResource(c7.getResId());
+            b7.setOnClickListener(onCardClick);
+        }
+        else {
+            b7.setImageResource(0);
+        }
+        if (!c8.toString().equals("Joker of Joker")) {
+            b8.setImageResource(c8.getResId());
+            b8.setOnClickListener(onCardClick);
+        }
+        else {
+            b8.setImageResource(0);
+        }
+        if (!c9.toString().equals("Joker of Joker")) {
+            b9.setImageResource(c9.getResId());
+            b9.setOnClickListener(onCardClick);
+        }
+        else {
+            b9.setImageResource(0);
+        }
+        if (!c10.toString().equals("Joker of Joker")) {
+            b10.setImageResource(c10.getResId());
+            b10.setOnClickListener(onCardClick);
+        }
+        else {
+            b10.setImageResource(0);
+        }
+        if (!c11.toString().equals("Joker of Joker")) {
+            b11.setImageResource(c11.getResId());
+            b11.setOnClickListener(onCardClick);
+        }
+        else {
+            b11.setImageResource(0);
+        }
+        if (!c12.toString().equals("Joker of Joker")) {
+            b12.setImageResource(c12.getResId());
+            b12.setOnClickListener(onCardClick);
+        }
+        else {
+            b12.setImageResource(0);
+        }
+        if (!c13.toString().equals("Joker of Joker")) {
+            b13.setImageResource(c13.getResId());
+            b13.setOnClickListener(onCardClick);
+        }
+        else {
+            b13.setImageResource(0);
+        }
+
+        remakeVisible();
+        setSuitImage();
+
+        // HAL9000 played the first card on the board:
+        if (Overlord.getInstance().getLeadingPlayer().getName().equals(Table.getInstance().getPlayer2().getName())) {
+            computer1Card.setImageResource(Table.getInstance().getBoard().get(0).getResId());
+            computer2Card.setImageResource(Table.getInstance().getBoard().get(1).getResId());
+            computer3Card.setImageResource(Table.getInstance().getBoard().get(2).getResId());
+        }
+        // Terminator played the first card on the board:
+        if (Overlord.getInstance().getLeadingPlayer().getName().equals(Table.getInstance().getPlayer3().getName())) {
+            computer2Card.setImageResource(Table.getInstance().getBoard().get(0).getResId());
+            computer3Card.setImageResource(Table.getInstance().getBoard().get(1).getResId());
+        }
+        // Zombocom played the first card on the board:
+        if (Overlord.getInstance().getLeadingPlayer().getName().equals(Table.getInstance().getPlayer4().getName())) {
+            computer3Card.setImageResource(Table.getInstance().getBoard().get(0).getResId());
+        }
+
+        // ToDo: if card is selected, need to display its animated form:
+
     }
 
     private void cantPlayThatPopUp() {
@@ -615,7 +796,7 @@ public class MainActivity extends AppCompatActivity {
     private void clickedCard(int i) {
         if (!Overlord.getInstance().getPassing()) {
             Card computerSelection;
-            if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer2()) {
+            if (Overlord.getInstance().getLeadingPlayer().getName().equals(Table.getInstance().getPlayer2().getName())) {
                 if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1())) {
                     Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
                     playerCard.setImageResource(Table.getInstance().getPlayer1().getHand().get(i).getResId());
@@ -633,7 +814,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     cantPlayThatPopUp();
                 }
-            } else if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer3()) {
+            } else if (Overlord.getInstance().getLeadingPlayer().getName().equals(Table.getInstance().getPlayer3().getName())) {
                 if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1())) {
                     Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
                     playerCard.setImageResource(Table.getInstance().getPlayer1().getHand().get(i).getResId());
@@ -655,7 +836,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     cantPlayThatPopUp();
                 }
-            } else if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer4()) {
+            } else if (Overlord.getInstance().getLeadingPlayer().getName().equals(Table.getInstance().getPlayer4().getName())) {
                 if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1())) {
                     Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
                     playerCard.setImageResource(Table.getInstance().getPlayer1().getHand().get(i).getResId());
@@ -744,7 +925,6 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 }
-            // ToDo: make computer selections better:
             ArrayList<Card> computerCardsToPlayer = new ArrayList<>();
             switch (Overlord.getInstance().passingDirection()) {
                 // Case: HAL9000:
@@ -803,7 +983,7 @@ public class MainActivity extends AppCompatActivity {
                             i--;
                         }
                     }
-                    // ToDo: make computer selections better:
+                    // ToDo: make Terminator selections better:
                     computerCardsToPlayer = new ArrayList<>();
                     for (int i = 0; i < 3; i++) {
                         Card passMe = Table.getInstance().getPlayer2().getHand().get(i);
@@ -840,8 +1020,6 @@ public class MainActivity extends AppCompatActivity {
                 Table.getInstance().getPlayer4().organizeHand();
                 for (int j = 0; j < 13; j++) {
                     removeCardFromView(j);
-                    b1.setVisibility(View.VISIBLE);
-
                 }
                 displayImages();
                 fixTransparentImages();
@@ -851,6 +1029,16 @@ public class MainActivity extends AppCompatActivity {
         });
         builder.setCancelable(false);
         builder.show();
+    }
+
+    private void saveGame() {
+        Table.saveTable(getApplicationContext());
+        Overlord.saveOverlord(getApplicationContext());
+    }
+
+    private void loadGame() {
+        Table.loadTable(getApplicationContext());
+        Overlord.loadOverlord(getApplicationContext());
     }
 
     ImageView.OnClickListener onCardClick = new ImageView.OnClickListener() {

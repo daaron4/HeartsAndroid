@@ -268,6 +268,4 @@ public class DeckAndDealerTest {
 
     }
 
-    // ToDo: test deal deck:
-
 }
