@@ -31,6 +31,7 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:hint="Player Name"
         android:text="Player 1"
+        android:maxLength="10"
         android:layout_below="@+id/welcome_to_hearts"/>
 
     <EditText
@@ -43,6 +44,7 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:hint="Computer 1"
         android:text="Player 2"
+        android:maxLength="10"
         android:layout_below="@id/user_name_input"/>
 
     <EditText
@@ -55,6 +57,7 @@
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:hint="Computer 2"
         android:text="Player 3"
+        android:maxLength="10"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/welcome_to_hearts"/>
 
@@ -68,8 +71,20 @@
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:hint="Computer 3"
         android:text="Player 4"
+        android:maxLength="10"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/computer2_input"/>
+
+    <Button
+        android:id="@+id/continue_hearts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:onClick="clickedContinueHearts"
+        android:text="Continue Previous Game!"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"/>
 
     <Button
         android:id="@+id/start_hearts"

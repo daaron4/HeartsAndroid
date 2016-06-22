@@ -3,10 +3,12 @@ package com.companyname.hearts.activities;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13;
     private ImageView playerCard, computer1Card, computer2Card, computer3Card;
     private ImageView suitPlayed;
-    private Animation passAnimation, middle1, middle2, middle3, middle4, middle5, middle6, middle7,middle8, middle9, middle10, middle11, middle12, middle13;
+    private Animation passLeftAnimation, passRightAnimation, passAcrossAnimation, middle1, middle2, middle3, middle4, middle5, middle6, middle7,middle8, middle9, middle10, middle11, middle12, middle13;
     private int x;
 
 
@@ -48,11 +50,30 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initializeViews();
-        createListeners();
-        setUpGame();
-        displayImages();
-        beginRound();
+        Intent intent = getIntent();
+        boolean continueOldGame = intent.getBooleanExtra("continueOldGame", false);
+        if (continueOldGame) {
+            initializeSavedGame();
+            setViewSavedGame();
+        }
+        else {
+            initializeViews();
+            createListeners();
+            setUpGame();
+            displayImages();
+            beginRound();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        saveGame();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(MainActivity.this, getString(R.string.no_escape), Toast.LENGTH_LONG).show();
     }
 
     private void initializeViews() {
@@ -63,7 +84,11 @@ public class MainActivity extends AppCompatActivity {
         passButton = (Button) findViewById(R.id.pass_cards_button);
 
 
-        passAnimation = AnimationUtils.loadAnimation(this, R.anim.pass);
+        passLeftAnimation = AnimationUtils.loadAnimation(this, R.anim.passleft);
+        passRightAnimation = AnimationUtils.loadAnimation(this, R.anim.passright);
+        passAcrossAnimation = AnimationUtils.loadAnimation(this, R.anim.passacross);
+
+
         middle1 = AnimationUtils.loadAnimation(this, R.anim.middle1);
         middle2 = AnimationUtils.loadAnimation(this, R.anim.middle2);
         middle3 = AnimationUtils.loadAnimation(this, R.anim.middle3);
@@ -110,6 +135,42 @@ public class MainActivity extends AppCompatActivity {
         computer2Name.setText(playerNames[2]);
         computer3Name.setText(playerNames[3]);
         Table.getInstance().initializeTable(playerNames[0], playerNames[1], playerNames[2], playerNames[3]);
+    }
+
+    private void initializeSavedGame() {
+        playerName = (TextView) findViewById(R.id.player_name);
+        computer1Name = (TextView) findViewById(R.id.computer1_name);
+        computer2Name = (TextView) findViewById(R.id.computer2_name);
+        computer3Name = (TextView) findViewById(R.id.computer3_name);
+        passButton = (Button) findViewById(R.id.pass_cards_button);
+
+        b1 = (ImageView) findViewById(R.id.card_1);
+        b2 = (ImageView) findViewById(R.id.card_2);
+        b3 = (ImageView) findViewById(R.id.card_3);
+        b4 = (ImageView) findViewById(R.id.card_4);
+        b5 = (ImageView) findViewById(R.id.card_5);
+        b6 = (ImageView) findViewById(R.id.card_6);
+        b7 = (ImageView) findViewById(R.id.card_7);
+        b8 = (ImageView) findViewById(R.id.card_8);
+        b9 = (ImageView) findViewById(R.id.card_9);
+        b10 = (ImageView) findViewById(R.id.card_10);
+        b11 = (ImageView) findViewById(R.id.card_11);
+        b12 = (ImageView) findViewById(R.id.card_12);
+        b13 = (ImageView) findViewById(R.id.card_13);
+
+        playerCard = (ImageView) findViewById(R.id.player_card);
+        computer1Card = (ImageView) findViewById(R.id.computer1_card);
+        computer2Card = (ImageView) findViewById(R.id.computer2_card);
+        computer3Card = (ImageView) findViewById(R.id.computer3_card);
+
+        suitPlayed = (ImageView) findViewById(R.id.played_suit);
+
+        loadGame();
+
+        playerName.setText(Table.getInstance().getPlayer1().getName());
+        computer1Name.setText(Table.getInstance().getPlayer2().getName());
+        computer2Name.setText(Table.getInstance().getPlayer3().getName());
+        computer3Name.setText(Table.getInstance().getPlayer4().getName());
     }
 
     private void createListeners() {
@@ -174,12 +235,142 @@ public class MainActivity extends AppCompatActivity {
         remakeVisible();
     }
 
+    private void setViewSavedGame() {
+        Card c1 = Table.getInstance().getPlayer1().getHand().get(0);
+        Card c2 = Table.getInstance().getPlayer1().getHand().get(1);
+        Card c3 = Table.getInstance().getPlayer1().getHand().get(2);
+        Card c4 = Table.getInstance().getPlayer1().getHand().get(3);
+        Card c5 = Table.getInstance().getPlayer1().getHand().get(4);
+        Card c6 = Table.getInstance().getPlayer1().getHand().get(5);
+        Card c7 = Table.getInstance().getPlayer1().getHand().get(6);
+        Card c8 = Table.getInstance().getPlayer1().getHand().get(7);
+        Card c9 = Table.getInstance().getPlayer1().getHand().get(8);
+        Card c10 = Table.getInstance().getPlayer1().getHand().get(9);
+        Card c11 = Table.getInstance().getPlayer1().getHand().get(10);
+        Card c12 = Table.getInstance().getPlayer1().getHand().get(11);
+        Card c13 = Table.getInstance().getPlayer1().getHand().get(12);
+
+        if (!c1.toString().equals("Joker of Joker")) {
+            b1.setImageResource(c1.getResId());
+            b1.setOnClickListener(onCardClick);
+        }
+        else {
+            b1.setImageResource(0);
+        }
+        if (!c2.toString().equals("Joker of Joker")) {
+            b2.setImageResource(c2.getResId());
+            b2.setOnClickListener(onCardClick);
+        }
+        else {
+            b2.setImageResource(0);
+        }
+        if (!c3.toString().equals("Joker of Joker")) {
+            b3.setImageResource(c3.getResId());
+            b3.setOnClickListener(onCardClick);
+        }
+        else {
+            b3.setImageResource(0);
+        }
+        if (!c4.toString().equals("Joker of Joker")) {
+            b4.setImageResource(c4.getResId());
+            b4.setOnClickListener(onCardClick);
+        }
+        else {
+            b4.setImageResource(0);
+        }
+        if (!c5.toString().equals("Joker of Joker")) {
+            b5.setImageResource(c5.getResId());
+            b5.setOnClickListener(onCardClick);
+        }
+        else {
+            b5.setImageResource(0);
+        }
+        if (!c6.toString().equals("Joker of Joker")) {
+            b6.setImageResource(c6.getResId());
+            b6.setOnClickListener(onCardClick);
+        }
+        else {
+            b6.setImageResource(0);
+        }
+        if (!c7.toString().equals("Joker of Joker")) {
+            b7.setImageResource(c7.getResId());
+            b7.setOnClickListener(onCardClick);
+        }
+        else {
+            b7.setImageResource(0);
+        }
+        if (!c8.toString().equals("Joker of Joker")) {
+            b8.setImageResource(c8.getResId());
+            b8.setOnClickListener(onCardClick);
+        }
+        else {
+            b8.setImageResource(0);
+        }
+        if (!c9.toString().equals("Joker of Joker")) {
+            b9.setImageResource(c9.getResId());
+            b9.setOnClickListener(onCardClick);
+        }
+        else {
+            b9.setImageResource(0);
+        }
+        if (!c10.toString().equals("Joker of Joker")) {
+            b10.setImageResource(c10.getResId());
+            b10.setOnClickListener(onCardClick);
+        }
+        else {
+            b10.setImageResource(0);
+        }
+        if (!c11.toString().equals("Joker of Joker")) {
+            b11.setImageResource(c11.getResId());
+            b11.setOnClickListener(onCardClick);
+        }
+        else {
+            b11.setImageResource(0);
+        }
+        if (!c12.toString().equals("Joker of Joker")) {
+            b12.setImageResource(c12.getResId());
+            b12.setOnClickListener(onCardClick);
+        }
+        else {
+            b12.setImageResource(0);
+        }
+        if (!c13.toString().equals("Joker of Joker")) {
+            b13.setImageResource(c13.getResId());
+            b13.setOnClickListener(onCardClick);
+        }
+        else {
+            b13.setImageResource(0);
+        }
+
+        remakeVisible();
+        setSuitImage();
+
+        // HAL9000 played the first card on the board:
+        if (Overlord.getInstance().getLeadingPlayer().getName().equals(Table.getInstance().getPlayer2().getName())) {
+            computer1Card.setImageResource(Table.getInstance().getBoard().get(0).getResId());
+            computer2Card.setImageResource(Table.getInstance().getBoard().get(1).getResId());
+            computer3Card.setImageResource(Table.getInstance().getBoard().get(2).getResId());
+        }
+        // Terminator played the first card on the board:
+        if (Overlord.getInstance().getLeadingPlayer().getName().equals(Table.getInstance().getPlayer3().getName())) {
+            computer2Card.setImageResource(Table.getInstance().getBoard().get(0).getResId());
+            computer3Card.setImageResource(Table.getInstance().getBoard().get(1).getResId());
+        }
+        // Zombocom played the first card on the board:
+        if (Overlord.getInstance().getLeadingPlayer().getName().equals(Table.getInstance().getPlayer4().getName())) {
+            computer3Card.setImageResource(Table.getInstance().getBoard().get(0).getResId());
+        }
+
+        // ToDo: if card is selected, need to display its animated form:
+
+    }
+
     private void cantPlayThatPopUp() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Hearts");
-        builder.setMessage("You can't play that!");
+        builder.setTitle(getString(R.string.app_name));
+        builder.setMessage(getString(R.string.illegal_move));
         builder.setIcon(R.mipmap.ic_launcher);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 // does nothing
@@ -191,16 +382,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void displayTrickWinnerPopUp() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Hearts");
-        builder.setMessage(Overlord.getInstance().getLeadingPlayer().getName() + " wins the trick." + "\n" +
-                "The board was: " + Arrays.toString(Table.getInstance().getBoard().toArray()));
+
+        builder.setTitle(getString(R.string.app_name));
+        builder.setMessage(Overlord.getInstance().getLeadingPlayer().getName() + " " + getString(R.string.trick_winner) + "\n" +
+                getString(R.string.board_contains) + " " + Arrays.toString(Table.getInstance().getBoard().toArray()));
         builder.setIcon(R.mipmap.ic_launcher);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (Overlord.getInstance().getRoundsPlayed() == 14) {
+                    removeCenterIcon();
                     displayScorePopUp();
                 } else {
+                    removeCenterIcon();
                     beginRound();
                 }
             }
@@ -219,11 +413,12 @@ public class MainActivity extends AppCompatActivity {
             playAgainPopUp();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setTitle(Table.getInstance().getPlayer1().getName() + " | " + Table.getInstance().getPlayer2().getName() +
-                    " | " + Table.getInstance().getPlayer3().getName() + " | " + Table.getInstance().getPlayer4().getName());
-            builder.setMessage(Overlord.getInstance().getScoreTracker());
-            builder.setIcon(R.mipmap.ic_launcher);
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+            builder.setTitle(getString(R.string.score_alert));
+            LayoutInflater alertLayout = this.getLayoutInflater();
+            View alertView = alertLayout.inflate(R.layout.alert_scores, null);
+            builder.setView(alertView);
+            builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     removeCenterIcon();
@@ -233,8 +428,21 @@ public class MainActivity extends AppCompatActivity {
                     beginRound();
                 }
             });
+            builder.setIcon(R.mipmap.ic_launcher);
             builder.setCancelable(false);
             builder.show();
+            TextView alertNames = (TextView) alertView.findViewById(R.id.alert_score_names);
+            TextView alertScores = (TextView) alertView.findViewById(R.id.alert_score_scores);
+            String nameHolder = Table.getInstance().getPlayer1().getName() + "\n" +
+                    Table.getInstance().getPlayer2().getName() + "\n" +
+                    Table.getInstance().getPlayer3().getName() + "\n" +
+                    Table.getInstance().getPlayer4().getName() + "\n";
+            String scoreHolder = Table.getInstance().getPlayer1().getPoints() + "\n" +
+                    Table.getInstance().getPlayer2().getPoints() + "\n" +
+                    Table.getInstance().getPlayer3().getPoints() + "\n" +
+                    Table.getInstance().getPlayer4().getPoints() + "\n";
+            alertNames.setText(nameHolder);
+            alertScores.setText(scoreHolder);
         }
     }
 
@@ -244,13 +452,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void playAgainPopUp() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle(Overlord.getInstance().getWinningPlayer().getName() + " wins the game!");
-        builder.setMessage(Table.getInstance().getPlayer1().getName() + " : " + Table.getInstance().getPlayer1().getPoints() + "\n" +
-                Table.getInstance().getPlayer2().getName() + " : " + Table.getInstance().getPlayer2().getPoints() + "\n" +
-                Table.getInstance().getPlayer3().getName() + " : " + Table.getInstance().getPlayer3().getPoints() + "\n" +
-                Table.getInstance().getPlayer4().getName() + " : " + Table.getInstance().getPlayer4().getPoints() + "\n");
-        builder.setIcon(R.mipmap.ic_launcher);
-        builder.setPositiveButton("Play Again?", new DialogInterface.OnClickListener() {
+        builder.setTitle(Overlord.getInstance().getWinningPlayer().getName() + " " + getString(R.string.game_winner));
+        LayoutInflater alertLayout = this.getLayoutInflater();
+        View alertView = alertLayout.inflate(R.layout.alert_scores, null);
+        builder.setView(alertView);
+        builder.setPositiveButton(getString(R.string.play_again), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Overlord.getInstance().prepareForNextGame();
@@ -261,15 +467,28 @@ public class MainActivity extends AppCompatActivity {
                 beginRound();
             }
         });
-        builder.setNegativeButton("Quit", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.quit), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(MainActivity.this, "Bye", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, getString(R.string.bye), Toast.LENGTH_LONG).show();
                 finish();
             }
         });
+        builder.setIcon(R.mipmap.ic_launcher);
         builder.setCancelable(false);
         builder.show();
+        TextView alertNames = (TextView) alertView.findViewById(R.id.alert_score_names);
+        TextView alertScores = (TextView) alertView.findViewById(R.id.alert_score_scores);
+        String nameHolder = Table.getInstance().getPlayer1().getName() + "\n" +
+                Table.getInstance().getPlayer2().getName() + "\n" +
+                Table.getInstance().getPlayer3().getName() + "\n" +
+                Table.getInstance().getPlayer4().getName() + "\n";
+        String scoreHolder = Table.getInstance().getPlayer1().getPoints() + "\n" +
+                Table.getInstance().getPlayer2().getPoints() + "\n" +
+                Table.getInstance().getPlayer3().getPoints() + "\n" +
+                Table.getInstance().getPlayer4().getPoints() + "\n";
+        alertNames.setText(nameHolder);
+        alertScores.setText(scoreHolder);
     }
 
     private void beginRound() {
@@ -354,71 +573,209 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void passShit(int i) {
+    private void passLeft(int i) {
         switch (i) {
             case 0:
                 if (Table.getInstance().getPlayer1().getHand().get(0).isSelected()) {
-                    b1.startAnimation(passAnimation);
+                    b1.startAnimation(passLeftAnimation);
                 }
                 break;
             case 1:
                 if (Table.getInstance().getPlayer1().getHand().get(1).isSelected()) {
-                    b2.startAnimation(passAnimation);
+                    b2.startAnimation(passLeftAnimation);
                 }
                 break;
             case 2:
                 if (Table.getInstance().getPlayer1().getHand().get(2).isSelected()) {
-                    b3.startAnimation(passAnimation);
+                    b3.startAnimation(passLeftAnimation);
                 }
                 break;
             case 3:
                 if (Table.getInstance().getPlayer1().getHand().get(3).isSelected()) {
-                    b4.startAnimation(passAnimation);
+                    b4.startAnimation(passLeftAnimation);
                 }
                 break;
             case 4:
                 if (Table.getInstance().getPlayer1().getHand().get(4).isSelected()) {
-                    b5.startAnimation(passAnimation);
+                    b5.startAnimation(passLeftAnimation);
                 }
                 break;
             case 5:
                 if (Table.getInstance().getPlayer1().getHand().get(5).isSelected()) {
-                    b6.startAnimation(passAnimation);
+                    b6.startAnimation(passLeftAnimation);
                 }
                 break;
             case 6:
                 if (Table.getInstance().getPlayer1().getHand().get(6).isSelected()) {
-                    b7.startAnimation(passAnimation);
+                    b7.startAnimation(passLeftAnimation);
                 }
                 break;
             case 7:
                 if (Table.getInstance().getPlayer1().getHand().get(7).isSelected()) {
-                    b8.startAnimation(passAnimation);
+                    b8.startAnimation(passLeftAnimation);
                 }
                 break;
             case 8:
                 if (Table.getInstance().getPlayer1().getHand().get(8).isSelected()) {
-                    b9.startAnimation(passAnimation);
+                    b9.startAnimation(passLeftAnimation);
                 }
                 break;
             case 9:
                 if (Table.getInstance().getPlayer1().getHand().get(9).isSelected()) {
-                    b10.startAnimation(passAnimation);
+                    b10.startAnimation(passLeftAnimation);
                 }
                 break;
             case 10:
                 if (Table.getInstance().getPlayer1().getHand().get(10).isSelected()) {
-                    b11.startAnimation(passAnimation);
+                    b11.startAnimation(passLeftAnimation);
                 }
                 break;
             case 11:
                 if (Table.getInstance().getPlayer1().getHand().get(11).isSelected()) {
-                    b12.startAnimation(passAnimation);
+                    b12.startAnimation(passLeftAnimation);
                 }
                 break;
             case 12:
                 if (Table.getInstance().getPlayer1().getHand().get(12).isSelected()) {
-                    b13.startAnimation(passAnimation);
+                    b13.startAnimation(passLeftAnimation);
+                }
+                break;
+        }
+    }
+    private void passRight(int i) {
+        switch (i) {
+            case 0:
+                if (Table.getInstance().getPlayer1().getHand().get(0).isSelected()) {
+                    b1.startAnimation(passRightAnimation);
+                }
+                break;
+            case 1:
+                if (Table.getInstance().getPlayer1().getHand().get(1).isSelected()) {
+                    b2.startAnimation(passRightAnimation);
+                }
+                break;
+            case 2:
+                if (Table.getInstance().getPlayer1().getHand().get(2).isSelected()) {
+                    b3.startAnimation(passRightAnimation);
+                }
+                break;
+            case 3:
+                if (Table.getInstance().getPlayer1().getHand().get(3).isSelected()) {
+                    b4.startAnimation(passRightAnimation);
+                }
+                break;
+            case 4:
+                if (Table.getInstance().getPlayer1().getHand().get(4).isSelected()) {
+                    b5.startAnimation(passRightAnimation);
+                }
+                break;
+            case 5:
+                if (Table.getInstance().getPlayer1().getHand().get(5).isSelected()) {
+                    b6.startAnimation(passRightAnimation);
+                }
+                break;
+            case 6:
+                if (Table.getInstance().getPlayer1().getHand().get(6).isSelected()) {
+                    b7.startAnimation(passRightAnimation);
+                }
+                break;
+            case 7:
+                if (Table.getInstance().getPlayer1().getHand().get(7).isSelected()) {
+                    b8.startAnimation(passRightAnimation);
+                }
+                break;
+            case 8:
+                if (Table.getInstance().getPlayer1().getHand().get(8).isSelected()) {
+                    b9.startAnimation(passRightAnimation);
+                }
+                break;
+            case 9:
+                if (Table.getInstance().getPlayer1().getHand().get(9).isSelected()) {
+                    b10.startAnimation(passRightAnimation);
+                }
+                break;
+            case 10:
+                if (Table.getInstance().getPlayer1().getHand().get(10).isSelected()) {
+                    b11.startAnimation(passRightAnimation);
+                }
+                break;
+            case 11:
+                if (Table.getInstance().getPlayer1().getHand().get(11).isSelected()) {
+                    b12.startAnimation(passRightAnimation);
+                }
+                break;
+            case 12:
+                if (Table.getInstance().getPlayer1().getHand().get(12).isSelected()) {
+                    b13.startAnimation(passRightAnimation);
+                }
+                break;
+        }
+    }
+    private void passAcross(int i) {
+        switch (i) {
+            case 0:
+                if (Table.getInstance().getPlayer1().getHand().get(0).isSelected()) {
+                    b1.startAnimation(passAcrossAnimation);
+                }
+                break;
+            case 1:
+                if (Table.getInstance().getPlayer1().getHand().get(1).isSelected()) {
+                    b2.startAnimation(passAcrossAnimation);
+                }
+                break;
+            case 2:
+                if (Table.getInstance().getPlayer1().getHand().get(2).isSelected()) {
+                    b3.startAnimation(passAcrossAnimation);
+                }
+                break;
+            case 3:
+                if (Table.getInstance().getPlayer1().getHand().get(3).isSelected()) {
+                    b4.startAnimation(passAcrossAnimation);
+                }
+                break;
+            case 4:
+                if (Table.getInstance().getPlayer1().getHand().get(4).isSelected()) {
+                    b5.startAnimation(passAcrossAnimation);
+                }
+                break;
+            case 5:
+                if (Table.getInstance().getPlayer1().getHand().get(5).isSelected()) {
+                    b6.startAnimation(passAcrossAnimation);
+                }
+                break;
+            case 6:
+                if (Table.getInstance().getPlayer1().getHand().get(6).isSelected()) {
+                    b7.startAnimation(passAcrossAnimation);
+                }
+                break;
+            case 7:
+                if (Table.getInstance().getPlayer1().getHand().get(7).isSelected()) {
+                    b8.startAnimation(passAcrossAnimation);
+                }
+                break;
+            case 8:
+                if (Table.getInstance().getPlayer1().getHand().get(8).isSelected()) {
+                    b9.startAnimation(passAcrossAnimation);
+                }
+                break;
+            case 9:
+                if (Table.getInstance().getPlayer1().getHand().get(9).isSelected()) {
+                    b10.startAnimation(passAcrossAnimation);
+                }
+                break;
+            case 10:
+                if (Table.getInstance().getPlayer1().getHand().get(10).isSelected()) {
+                    b11.startAnimation(passAcrossAnimation);
+                }
+                break;
+            case 11:
+                if (Table.getInstance().getPlayer1().getHand().get(11).isSelected()) {
+                    b12.startAnimation(passAcrossAnimation);
+                }
+                break;
+            case 12:
+                if (Table.getInstance().getPlayer1().getHand().get(12).isSelected()) {
+                    b13.startAnimation(passAcrossAnimation);
                 }
                 break;
         }
@@ -659,9 +1016,9 @@ public class MainActivity extends AppCompatActivity {
         b12.setVisibility(View.VISIBLE);
         b13.setVisibility(View.VISIBLE);
     }
-private void passWait(final ArrayList<Card> computerCardsToPlayer) {
-
-    passAnimation.setAnimationListener(new Animation.AnimationListener() {
+private void passLeftWait(ArrayList<Card> computerCardsToPlayer) {
+ final ArrayList<Card> computerCardsToPlayer1 = computerCardsToPlayer;
+    passLeftAnimation.setAnimationListener(new Animation.AnimationListener() {
 
         @Override
         public void onAnimationStart(Animation animation) {
@@ -673,12 +1030,49 @@ private void passWait(final ArrayList<Card> computerCardsToPlayer) {
 
         @Override
         public void onAnimationEnd(Animation animation) {
-            cardsReceivedPopUp(computerCardsToPlayer);
-
+            cardsReceivedPopUp(computerCardsToPlayer1);
         }
 
     });
 }
+    private void passRightWait(ArrayList<Card> computerCardsToPlayer) {
+        final ArrayList<Card> computerCardsToPlayer1 = computerCardsToPlayer;
+        passLeftAnimation.setAnimationListener(new Animation.AnimationListener() {
+
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                cardsReceivedPopUp(computerCardsToPlayer1);
+            }
+
+        });
+    }
+    private void passAcrossWait(ArrayList<Card> computerCardsToPlayer) {
+        final ArrayList<Card> computerCardsToPlayer1 = computerCardsToPlayer;
+        passLeftAnimation.setAnimationListener(new Animation.AnimationListener() {
+
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                cardsReceivedPopUp(computerCardsToPlayer1);
+            }
+
+        });
+    }
 
     private void middleWait(final int i) {
         if(i==0) {
@@ -694,16 +1088,15 @@ private void passWait(final ArrayList<Card> computerCardsToPlayer) {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    Log.e("WAIT", "Waiting");
 //                    Overlord.getInstance().determineTrickWinner();
-                    resetPlayedCards();
                     displayTrickWinnerPopUp();
+                    resetPlayedCards();
                     removeCardFromView(i);
-                }
+                    Table.getInstance().getBoard().clear();
 
+                }
             });
-        }
-        if(i==1) {
+        }if(i==1) {
             middle2.setAnimationListener(new Animation.AnimationListener() {
 
                 @Override
@@ -716,11 +1109,12 @@ private void passWait(final ArrayList<Card> computerCardsToPlayer) {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    Log.e("WAIT", "Waiting");
 //                    Overlord.getInstance().determineTrickWinner();
-                    resetPlayedCards();
                     displayTrickWinnerPopUp();
+                    resetPlayedCards();
                     removeCardFromView(i);
+                    Table.getInstance().getBoard().clear();
+
                 }
 
             });
@@ -737,11 +1131,12 @@ private void passWait(final ArrayList<Card> computerCardsToPlayer) {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    Log.e("WAIT", "Waiting");
 //                    Overlord.getInstance().determineTrickWinner();
-                    resetPlayedCards();
                     displayTrickWinnerPopUp();
+                    resetPlayedCards();
                     removeCardFromView(i);
+                    Table.getInstance().getBoard().clear();
+
 
                 }
 
@@ -759,11 +1154,12 @@ private void passWait(final ArrayList<Card> computerCardsToPlayer) {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    Log.e("WAIT", "Waiting");
 //                    Overlord.getInstance().determineTrickWinner();
-                    resetPlayedCards();
                     displayTrickWinnerPopUp();
+                    resetPlayedCards();
                     removeCardFromView(i);
+                    Table.getInstance().getBoard().clear();
+
 
                 }
 
@@ -781,11 +1177,12 @@ private void passWait(final ArrayList<Card> computerCardsToPlayer) {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    Log.e("WAIT", "Waiting");
 //                    Overlord.getInstance().determineTrickWinner();
-                    resetPlayedCards();
                     displayTrickWinnerPopUp();
+                    resetPlayedCards();
                     removeCardFromView(i);
+                    Table.getInstance().getBoard().clear();
+
 
                 }
 
@@ -803,11 +1200,12 @@ private void passWait(final ArrayList<Card> computerCardsToPlayer) {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    Log.e("WAIT", "Waiting");
 //                    Overlord.getInstance().determineTrickWinner();
-                    resetPlayedCards();
                     displayTrickWinnerPopUp();
+                    resetPlayedCards();
                     removeCardFromView(i);
+                    Table.getInstance().getBoard().clear();
+
                 }
 
             });
@@ -824,11 +1222,12 @@ private void passWait(final ArrayList<Card> computerCardsToPlayer) {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    Log.e("WAIT", "Waiting");
 //                    Overlord.getInstance().determineTrickWinner();
-                    resetPlayedCards();
                     displayTrickWinnerPopUp();
+                    resetPlayedCards();
                     removeCardFromView(i);
+                    Table.getInstance().getBoard().clear();
+
 
                 }
 
@@ -846,11 +1245,12 @@ private void passWait(final ArrayList<Card> computerCardsToPlayer) {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    Log.e("WAIT", "Waiting");
 //                    Overlord.getInstance().determineTrickWinner();
-                    resetPlayedCards();
                     displayTrickWinnerPopUp();
+                    resetPlayedCards();
                     removeCardFromView(i);
+                    Table.getInstance().getBoard().clear();
+
 
                 }
 
@@ -868,11 +1268,12 @@ private void passWait(final ArrayList<Card> computerCardsToPlayer) {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    Log.e("WAIT", "Waiting");
 //                    Overlord.getInstance().determineTrickWinner();
-                    resetPlayedCards();
                     displayTrickWinnerPopUp();
+                    resetPlayedCards();
                     removeCardFromView(i);
+                    Table.getInstance().getBoard().clear();
+
 
                 }
 
@@ -890,11 +1291,12 @@ private void passWait(final ArrayList<Card> computerCardsToPlayer) {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    Log.e("WAIT", "Waiting");
 //                    Overlord.getInstance().determineTrickWinner();
-                    resetPlayedCards();
                     displayTrickWinnerPopUp();
+                    resetPlayedCards();
                     removeCardFromView(i);
+                    Table.getInstance().getBoard().clear();
+
 
                 }
 
@@ -912,11 +1314,12 @@ private void passWait(final ArrayList<Card> computerCardsToPlayer) {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    Log.e("WAIT", "Waiting");
 //                    Overlord.getInstance().determineTrickWinner();
-                    resetPlayedCards();
                     displayTrickWinnerPopUp();
+                    resetPlayedCards();
                     removeCardFromView(i);
+                    Table.getInstance().getBoard().clear();
+
                 }
 
             });
@@ -933,11 +1336,11 @@ private void passWait(final ArrayList<Card> computerCardsToPlayer) {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    Log.e("WAIT", "Waiting");
 //                    Overlord.getInstance().determineTrickWinner();
-                    resetPlayedCards();
                     displayTrickWinnerPopUp();
+                    resetPlayedCards();
                     removeCardFromView(i);
+                    Table.getInstance().getBoard().clear();
 
                 }
 
@@ -955,76 +1358,65 @@ private void passWait(final ArrayList<Card> computerCardsToPlayer) {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    Log.e("WAIT", "Waiting");
-
-//                    Overlord.getInstance().determineTrickWinner();
-                    resetPlayedCards();
                     displayTrickWinnerPopUp();
+                    resetPlayedCards();
                     removeCardFromView(i);
+                    Table.getInstance().getBoard().clear();
+
                 }
 
             });
         }
-
     }
-
     private void clickedCard(int i) {
         if (!Overlord.getInstance().getPassing()) {
             Card computerSelection;
-            if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer2()) {
+            if (Overlord.getInstance().getLeadingPlayer().getName().equals(Table.getInstance().getPlayer2().getName())) {
                 if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1())) {
-
-                    passMiddle(i);
-                    Log.e("WTF", Integer.toString(i));
-
                     Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
                     playerCard.setImageResource(Table.getInstance().getPlayer1().getHand().get(i).getResId());
                     setSuitImage();
+
                     Table.getInstance().getPlayer1().getHand().remove(i);
                     Table.getInstance().getPlayer1().getHand().add(i, new Card(Rank.Joker, Suit.Joker, R.drawable.derpycard));
-                    Overlord.getInstance().determineTrickWinner();
-                    middleWait(i);
 
+                    Overlord.getInstance().determineTrickWinner();
+                    passMiddle(i);
+                    middleWait(i);
 //                    resetPlayedCards();
 //                    displayTrickWinnerPopUp();
 //                    removeCardFromView(i);
-                    Table.getInstance().getBoard().clear();
+//                    Table.getInstance().getBoard().clear();
                     Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
                 } else {
+                    cantPlayThatPopUp();
                 }
-            } else if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer3()) {
+            } else if (Overlord.getInstance().getLeadingPlayer().getName().equals(Table.getInstance().getPlayer3().getName())) {
                 if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1())) {
-
-                    passMiddle(i);
-                    Log.e("WTF", Integer.toString(i));
-
                     Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
                     playerCard.setImageResource(Table.getInstance().getPlayer1().getHand().get(i).getResId());
                     setSuitImage();
+
                     Table.getInstance().getPlayer1().getHand().remove(i);
                     Table.getInstance().getPlayer1().getHand().add(i, new Card(Rank.Joker, Suit.Joker, R.drawable.derpycard));
+
                     computerSelection = HAL9000.computer1MakesMove();
                     Table.getInstance().getBoard().add(computerSelection);
                     computer1Card.setImageResource(computerSelection.getResId());
 
                     Overlord.getInstance().determineTrickWinner();
+                    passMiddle(i);
                     middleWait(i);
-
 //                    resetPlayedCards();
 //                    displayTrickWinnerPopUp();
 //                    removeCardFromView(i);
-                    Table.getInstance().getBoard().clear();
+//                    Table.getInstance().getBoard().clear();
                     Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
                 } else {
                     cantPlayThatPopUp();
                 }
-            } else if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer4()) {
+            } else if (Overlord.getInstance().getLeadingPlayer().getName().equals(Table.getInstance().getPlayer4().getName())) {
                 if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1())) {
-
-
-                    passMiddle(i);
-                    Log.e("WTF", Integer.toString(i));
-
                     Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
                     playerCard.setImageResource(Table.getInstance().getPlayer1().getHand().get(i).getResId());
 
@@ -1040,22 +1432,18 @@ private void passWait(final ArrayList<Card> computerCardsToPlayer) {
                     computer2Card.setImageResource(computerSelection.getResId());
 
                     Overlord.getInstance().determineTrickWinner();
+                    passMiddle(i);
                     middleWait(i);
-
 //                    resetPlayedCards();
 //                    displayTrickWinnerPopUp();
 //                    removeCardFromView(i);
-                    Table.getInstance().getBoard().clear();
+//                    Table.getInstance().getBoard().clear();
                     Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
                 } else {
                     cantPlayThatPopUp();
                 }
             } else {
                 if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1())) {
-
-                    passMiddle(i);
-                    Log.e("WTF", Integer.toString(i));
-
                     Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
                     playerCard.setImageResource(Table.getInstance().getPlayer1().getHand().get(i).getResId());
                     // ToDo: deal with issue with removing cards:
@@ -1075,16 +1463,17 @@ private void passWait(final ArrayList<Card> computerCardsToPlayer) {
                     computer3Card.setImageResource(computerSelection.getResId());
 
                     Overlord.getInstance().determineTrickWinner();
+                    passMiddle(i);
                     middleWait(i);
-
 //                    resetPlayedCards();
 //                    displayTrickWinnerPopUp();
 //                    removeCardFromView(i);
-                    Table.getInstance().getBoard().clear();
+//                    Table.getInstance().getBoard().clear();
                     Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
                 } else {
                     cantPlayThatPopUp();
                 }
+
             }
         }
         // We are passing here:
@@ -1100,7 +1489,7 @@ private void passWait(final ArrayList<Card> computerCardsToPlayer) {
                     Table.getInstance().getPlayer1().getHand().get(i).setSelected(true);
                     passCardSelector(i);
                 } else {
-//                    Toast.makeText(MainActivity.this, getString(R.string.three_cards_max), Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, getString(R.string.three_cards_max), Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -1109,21 +1498,43 @@ private void passWait(final ArrayList<Card> computerCardsToPlayer) {
 
     public void clickedPassCards(View view) {
         if (Table.getInstance().getPlayer1().getNumberOfSelectedCards() != 3) {
-            Toast.makeText(MainActivity.this, "You must pass three cards", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, getString(R.string.must_pass_three), Toast.LENGTH_LONG).show();
         } else {
-            if (Overlord.getInstance().passingDirection() == Direction.LEFT)
+            if (Overlord.getInstance().passingDirection() == Direction.LEFT) {
                 for (int x = 0; x < 13; x++) {
                     if (Table.getInstance().getPlayer1().getHand().get(x).isSelected()) {
                         Log.e("BALLS", Integer.toString(x));
-                        passShit(x);
+                        passLeft(x);
                     }
                 }
-            // ToDo: make computer selections better:
+            }
+            if (Overlord.getInstance().passingDirection() == Direction.RIGHT) {
+                for (int x = 0; x < 13; x++) {
+                    if (Table.getInstance().getPlayer1().getHand().get(x).isSelected()) {
+                        Log.e("BALLS", Integer.toString(x));
+                        passRight(x);
+                    }
+                }
+            }
+            if (Overlord.getInstance().passingDirection() == Direction.ACROSS) {
+                for (int x = 0; x < 13; x++) {
+                    if (Table.getInstance().getPlayer1().getHand().get(x).isSelected()) {
+                        Log.e("BALLS", Integer.toString(x));
+                        passAcross(x);
+                    }
+                }
+            }
             ArrayList<Card> computerCardsToPlayer = new ArrayList<>();
             switch (Overlord.getInstance().passingDirection()) {
+                // Case: HAL9000:
                 case LEFT:
                     System.out.println("Starting P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
                     System.out.println("Starting P2 hand: " + Arrays.toString(Table.getInstance().getPlayer2().getHand().toArray()));
+
+                    computerCardsToPlayer = HAL9000.cardsToPassComp1();
+                    for (int i = 0; i < 3; i++) {
+                        Table.getInstance().getPlayer1().getHand().add(computerCardsToPlayer.get(i));
+                    }
 
                     for (int i = 0; i < Table.getInstance().getPlayer1().getHand().size(); i++) {
                         if (Table.getInstance().getPlayer1().getHand().get(i).isSelected()) {
@@ -1133,21 +1544,21 @@ private void passWait(final ArrayList<Card> computerCardsToPlayer) {
                             i--;
                         }
                     }
-                    // ToDo: make computer selections better:
-                    computerCardsToPlayer = new ArrayList<>();
-                    for (int i = 0; i < 3; i++) {
-                        Card passMe = Table.getInstance().getPlayer2().getHand().get(i);
-                        computerCardsToPlayer.add(passMe);
-                        Table.getInstance().getPlayer2().getHand().remove(i);
-                        Table.getInstance().getPlayer1().getHand().add(passMe);
-                    }
 
+                    passLeftWait(computerCardsToPlayer);
                     System.out.println("Ending P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
                     System.out.println("Ending P2 hand: " + Arrays.toString(Table.getInstance().getPlayer2().getHand().toArray()));
                     break;
+                // Case: Zombocom:
                 case RIGHT:
                     System.out.println("Starting P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
                     System.out.println("Starting P4 hand: " + Arrays.toString(Table.getInstance().getPlayer4().getHand().toArray()));
+
+                    computerCardsToPlayer = Zombocom.cardsToPassComp3();
+                    for (int i = 0; i < 3; i++) {
+                        Table.getInstance().getPlayer1().getHand().add(computerCardsToPlayer.get(i));
+                    }
+
                     for (int i = 0; i < Table.getInstance().getPlayer1().getHand().size(); i++) {
                         if (Table.getInstance().getPlayer1().getHand().get(i).isSelected()) {
                             Table.getInstance().getPlayer1().getHand().get(i).setSelected(false);
@@ -1156,17 +1567,12 @@ private void passWait(final ArrayList<Card> computerCardsToPlayer) {
                             i--;
                         }
                     }
-                    // ToDo: make computer selections better:
-                    computerCardsToPlayer = new ArrayList<>();
-                    for (int i = 0; i < 3; i++) {
-                        Card passMe = Table.getInstance().getPlayer2().getHand().get(i);
-                        computerCardsToPlayer.add(passMe);
-                        Table.getInstance().getPlayer4().getHand().remove(i);
-                        Table.getInstance().getPlayer1().getHand().add(passMe);
-                    }
+                    passRightWait(computerCardsToPlayer);
+
                     System.out.println("Ending P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
                     System.out.println("Ending P4 hand: " + Arrays.toString(Table.getInstance().getPlayer4().getHand().toArray()));
                     break;
+                // Case: Terminator
                 case ACROSS:
                     System.out.println("Starting P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
                     System.out.println("Starting P3 hand: " + Arrays.toString(Table.getInstance().getPlayer3().getHand().toArray()));
@@ -1178,7 +1584,7 @@ private void passWait(final ArrayList<Card> computerCardsToPlayer) {
                             i--;
                         }
                     }
-                    // ToDo: make computer selections better:
+                    // ToDo: make Terminator selections better:
                     computerCardsToPlayer = new ArrayList<>();
                     for (int i = 0; i < 3; i++) {
                         Card passMe = Table.getInstance().getPlayer2().getHand().get(i);
@@ -1186,6 +1592,7 @@ private void passWait(final ArrayList<Card> computerCardsToPlayer) {
                         Table.getInstance().getPlayer3().getHand().remove(i);
                         Table.getInstance().getPlayer1().getHand().add(passMe);
                     }
+                    passAcrossWait(computerCardsToPlayer);
                     System.out.println("Ending P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
                     System.out.println("Ending P3 hand: " + Arrays.toString(Table.getInstance().getPlayer3().getHand().toArray()));
                     break;
@@ -1195,41 +1602,46 @@ private void passWait(final ArrayList<Card> computerCardsToPlayer) {
 
             Overlord.getInstance().setPassing(false);
             passButton.setVisibility(View.INVISIBLE);
-            passWait(computerCardsToPlayer);
         }
     }
 
     private void cardsReceivedPopUp(ArrayList<Card> computerCardsToPlayer) {
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle("Hearts");
-                builder.setMessage("You received: " + Arrays.toString(computerCardsToPlayer.toArray()));
-                builder.setIcon(R.mipmap.ic_launcher);
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                Overlord.getInstance().setPlayerWithTheTwoOfClubs();
-                                Table.getInstance().getPlayer1().organizeHand();
-                                Table.getInstance().getPlayer2().organizeHand();
-                                Table.getInstance().getPlayer3().organizeHand();
-                                Table.getInstance().getPlayer4().organizeHand();
-                                for (int j = 0; j < 13; j++) {
-                                    removeCardFromView(j);
-                                    b1.setVisibility(View.VISIBLE);
-
-                                }
-                                displayImages();
-                                fixTransparentImages();
-                                createListeners();
-                                beginRound();
-                            }
-                        }
-
-                );
-                builder.setCancelable(false);
-                builder.show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle(getString(R.string.app_name));
+        builder.setMessage(getString(R.string.cards_received) + " " + Arrays.toString(computerCardsToPlayer.toArray()));
+        builder.setIcon(R.mipmap.ic_launcher);
+        builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Overlord.getInstance().setPlayerWithTheTwoOfClubs();
+                Table.getInstance().getPlayer1().organizeHand();
+                Table.getInstance().getPlayer2().organizeHand();
+                Table.getInstance().getPlayer3().organizeHand();
+                Table.getInstance().getPlayer4().organizeHand();
+                for (int j = 0; j < 13; j++) {
+                    removeCardFromView(j);
+                }
+                displayImages();
+                fixTransparentImages();
+                createListeners();
+                beginRound();
             }
+        });
+        builder.setCancelable(false);
+        builder.show();
+    }
 
+
+
+    private void saveGame() {
+        Table.saveTable(getApplicationContext());
+        Overlord.saveOverlord(getApplicationContext());
+    }
+
+    private void loadGame() {
+        Table.loadTable(getApplicationContext());
+        Overlord.loadOverlord(getApplicationContext());
+    }
 
     ImageView.OnClickListener onCardClick = new ImageView.OnClickListener() {
         @Override
@@ -1280,4 +1692,4 @@ private void passWait(final ArrayList<Card> computerCardsToPlayer) {
             }
         }
     };
-    }
+}

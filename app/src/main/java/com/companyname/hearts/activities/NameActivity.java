@@ -11,6 +11,10 @@ import android.widget.Toast;
 
 import com.companyname.hearts.R;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+
 public class NameActivity extends AppCompatActivity {
 
     private EditText userNameInput;
@@ -29,6 +33,21 @@ public class NameActivity extends AppCompatActivity {
         computer2Input = (EditText) findViewById(R.id.computer2_input);
         computer3Input = (EditText) findViewById(R.id.computer3_input);
         playerNames = new String[4];
+    }
+
+    public void clickedContinueHearts (View view) {
+        try {
+            FileInputStream fis = getApplicationContext().openFileInput("table.dat");
+            ObjectInputStream is = new ObjectInputStream(fis);
+            is.close();
+            fis.close();
+            Intent mainIntent = new Intent(NameActivity.this, MainActivity.class);
+            mainIntent.putExtra("continueOldGame", true);
+            startActivity(mainIntent);
+        } catch (IOException e) {
+            Toast.makeText(NameActivity.this, "You don't have any saved games!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     public void clickedStartHearts(View view) {
@@ -79,6 +98,7 @@ public class NameActivity extends AppCompatActivity {
         }catch(Error e){
             Toast.makeText(NameActivity.this, "Try Again", Toast.LENGTH_SHORT).show();
         }
+
     }
 
 }

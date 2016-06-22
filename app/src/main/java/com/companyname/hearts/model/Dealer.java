@@ -7,6 +7,8 @@ import java.util.Random;
  */
 public class Dealer {
 
+    // ToDo: decide if dealer should be saved
+
     private static Dealer instance = null;
 
     private Deck deck;
