@@ -80,21 +80,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:textSize="20sp"
+        android:textSize="18sp"
+        android:padding="5dp"
         android:onClick="clickedContinueHearts"
         android:text="Continue Previous Game!"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"/>
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/roundedcorners"/>
 
     <Button
         android:id="@+id/start_hearts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:textSize="20sp"
+        android:textSize="18sp"
+        android:padding="5dp"
         android:onClick="clickedStartHearts"
         android:text="Start Hearts!"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentRight="true"
+        android:background="@drawable/roundedcorners"/>
 
 </RelativeLayout>
