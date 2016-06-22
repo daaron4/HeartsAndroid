@@ -1,7 +1,19 @@
 <resources>
     <string name="app_name">Hearts</string>
+    <string name="board_contains">The board was:</string>
+    <string name="score_alert">Current Game Score</string>
+    <string name="three_cards_max">You cannot pass more than three cards</string>
+    <string name="must_pass_three">You must pass three cards</string>
+    <string name="quit">Quit!</string>
+    <string name="bye">Bye!</string>
+    <string name="ok">OK!</string>
+    <string name="illegal_move">Illegal move, please try another card!</string>
+    <string name="game_winner">wins the game!</string>
+    <string name="play_again">Would you like to play again?</string>
     <string name="title_activity_main">MainActivity</string>
-
+    <string name="cards_received">You received:</string>
+    <string name="trick_winner">wins the trick!</string>
+    <string name="no_escape">There is no back in Hearts!!!</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -94,7 +94,6 @@ public class NameActivity extends AppCompatActivity {
         editor.commit();
 
         Intent shuffleIntent = new Intent(getApplicationContext(), ShuffleAnimationActivity.class);
-//        shuffleIntent.putExtra("playerNames", playerNames);
         startActivity(shuffleIntent);
     }
 
