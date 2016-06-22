@@ -26,11 +26,6 @@ import com.companyname.hearts.model.Rank;
 import com.companyname.hearts.model.Suit;
 import com.companyname.hearts.model.Table;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -55,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
             initializeSavedGame();
             createListeners();
             displayImages();
-            //beginRound();
             System.out.println("BOARD IS: " + Arrays.toString(Table.getInstance().getBoard().toArray()));
         }
         else {
@@ -68,14 +62,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        Toast.makeText(getApplicationContext(), "There is no going back in Hearts!!!!", Toast.LENGTH_LONG).show();
-    }
-
-    @Override
     protected void onPause() {
         super.onPause();
         saveGame();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(MainActivity.this, "There is no back in Hearts!!!!!!", Toast.LENGTH_LONG).show();
     }
 
     private void initializeViews() {
@@ -259,7 +253,9 @@ public class MainActivity extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle(Table.getInstance().getPlayer1().getName() + " | " + Table.getInstance().getPlayer2().getName() +
                     " | " + Table.getInstance().getPlayer3().getName() + " | " + Table.getInstance().getPlayer4().getName());
-            builder.setMessage(Overlord.getInstance().getScoreTracker());
+            builder.setMessage(String.format("%20s%19s%18s%17s", Table.getInstance().getPlayer1().getPoints(), Table.getInstance().getPlayer2().getPoints(),
+                    Table.getInstance().getPlayer3().getPoints(),Table.getInstance().getPlayer4().getPoints()));
+
             builder.setIcon(R.mipmap.ic_launcher);
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
@@ -778,9 +774,15 @@ public class MainActivity extends AppCompatActivity {
             // ToDo: make computer selections better:
             ArrayList<Card> computerCardsToPlayer = new ArrayList<>();
             switch (Overlord.getInstance().passingDirection()) {
+                // Case: HAL9000:
                 case LEFT:
                     System.out.println("Starting P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
                     System.out.println("Starting P2 hand: " + Arrays.toString(Table.getInstance().getPlayer2().getHand().toArray()));
+
+                    computerCardsToPlayer = HAL9000.cardsToPassComp1();
+                    for (int i = 0; i < 3; i++) {
+                        Table.getInstance().getPlayer1().getHand().add(computerCardsToPlayer.get(i));
+                    }
 
                     for (int i = 0; i < Table.getInstance().getPlayer1().getHand().size(); i++) {
                         if (Table.getInstance().getPlayer1().getHand().get(i).isSelected()) {
@@ -790,21 +792,20 @@ public class MainActivity extends AppCompatActivity {
                             i--;
                         }
                     }
-                    // ToDo: make computer selections better:
-                    computerCardsToPlayer = new ArrayList<>();
-                    for (int i = 0; i < 3; i++) {
-                        Card passMe = Table.getInstance().getPlayer2().getHand().get(i);
-                        computerCardsToPlayer.add(passMe);
-                        Table.getInstance().getPlayer2().getHand().remove(i);
-                        Table.getInstance().getPlayer1().getHand().add(passMe);
-                    }
 
                     System.out.println("Ending P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
                     System.out.println("Ending P2 hand: " + Arrays.toString(Table.getInstance().getPlayer2().getHand().toArray()));
                     break;
+                // Case: Zombocom:
                 case RIGHT:
                     System.out.println("Starting P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
                     System.out.println("Starting P4 hand: " + Arrays.toString(Table.getInstance().getPlayer4().getHand().toArray()));
+
+                    computerCardsToPlayer = Zombocom.cardsToPassComp3();
+                    for (int i = 0; i < 3; i++) {
+                        Table.getInstance().getPlayer1().getHand().add(computerCardsToPlayer.get(i));
+                    }
+
                     for (int i = 0; i < Table.getInstance().getPlayer1().getHand().size(); i++) {
                         if (Table.getInstance().getPlayer1().getHand().get(i).isSelected()) {
                             Table.getInstance().getPlayer1().getHand().get(i).setSelected(false);
@@ -813,17 +814,11 @@ public class MainActivity extends AppCompatActivity {
                             i--;
                         }
                     }
-                    // ToDo: make computer selections better:
-                    computerCardsToPlayer = new ArrayList<>();
-                    for (int i = 0; i < 3; i++) {
-                        Card passMe = Table.getInstance().getPlayer2().getHand().get(i);
-                        computerCardsToPlayer.add(passMe);
-                        Table.getInstance().getPlayer4().getHand().remove(i);
-                        Table.getInstance().getPlayer1().getHand().add(passMe);
-                    }
+
                     System.out.println("Ending P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
                     System.out.println("Ending P4 hand: " + Arrays.toString(Table.getInstance().getPlayer4().getHand().toArray()));
                     break;
+                // Case: Terminator
                 case ACROSS:
                     System.out.println("Starting P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
                     System.out.println("Starting P3 hand: " + Arrays.toString(Table.getInstance().getPlayer3().getHand().toArray()));
