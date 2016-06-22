@@ -925,7 +925,6 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 }
-            // ToDo: make computer selections better:
             ArrayList<Card> computerCardsToPlayer = new ArrayList<>();
             switch (Overlord.getInstance().passingDirection()) {
                 // Case: HAL9000:
@@ -984,7 +983,7 @@ public class MainActivity extends AppCompatActivity {
                             i--;
                         }
                     }
-                    // ToDo: make computer selections better:
+                    // ToDo: make Terminator selections better:
                     computerCardsToPlayer = new ArrayList<>();
                     for (int i = 0; i < 3; i++) {
                         Card passMe = Table.getInstance().getPlayer2().getHand().get(i);
