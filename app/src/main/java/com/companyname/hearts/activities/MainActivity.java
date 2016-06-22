@@ -1128,6 +1128,7 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
                 public void onAnimationRepeat(Animation animation) {
                 }
 
+
                 @Override
                 public void onAnimationEnd(Animation animation) {
 //                    displayTrickWinnerPopUp();
@@ -1533,13 +1534,15 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
                         passLeft(x);
                     }
                 }
-            if (Overlord.getInstance().passingDirection() == Direction.RIGHT)
+            }
+            if (Overlord.getInstance().passingDirection() == Direction.RIGHT) {
                 for (int x = 0; x < 13; x++) {
                     if (Table.getInstance().getPlayer1().getHand().get(x).isSelected()) {
                         passRight(x);
                     }
                 }
-            if (Overlord.getInstance().passingDirection() == Direction.ACROSS)
+            }
+            if (Overlord.getInstance().passingDirection() == Direction.ACROSS){
                 for (int x = 0; x < 13; x++) {
                     if (Table.getInstance().getPlayer1().getHand().get(x).isSelected()) {
                         passAcross(x);
