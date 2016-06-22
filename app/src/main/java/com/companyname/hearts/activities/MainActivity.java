@@ -1132,7 +1132,6 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-//                    Overlord.getInstance().determineTrickWinner();
 //                    displayTrickWinnerPopUp();
                     resetPlayedCards();
                     removeCardFromView(i);
@@ -1153,7 +1152,6 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-//                    Overlord.getInstance().determineTrickWinner();
 //                    displayTrickWinnerPopUp();
                     resetPlayedCards();
                     removeCardFromView(i);
@@ -1175,7 +1173,6 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-//                    Overlord.getInstance().determineTrickWinner();
 //                    displayTrickWinnerPopUp();
                     resetPlayedCards();
                     removeCardFromView(i);
@@ -1198,7 +1195,6 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-//                    Overlord.getInstance().determineTrickWinner();
 //                    displayTrickWinnerPopUp();
                     resetPlayedCards();
                     removeCardFromView(i);
@@ -1221,7 +1217,6 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-//                    Overlord.getInstance().determineTrickWinner();
 //                    displayTrickWinnerPopUp();
                     resetPlayedCards();
                     removeCardFromView(i);
@@ -1244,7 +1239,6 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-//                    Overlord.getInstance().determineTrickWinner();
 //                    displayTrickWinnerPopUp();
                     resetPlayedCards();
                     removeCardFromView(i);
@@ -1266,7 +1260,6 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-//                    Overlord.getInstance().determineTrickWinner();
 //                    displayTrickWinnerPopUp();
                     resetPlayedCards();
                     removeCardFromView(i);
@@ -1289,7 +1282,6 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-//                    Overlord.getInstance().determineTrickWinner();
 //                    displayTrickWinnerPopUp();
                     resetPlayedCards();
                     removeCardFromView(i);
@@ -1312,7 +1304,6 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-//                    Overlord.getInstance().determineTrickWinner();
 //                    displayTrickWinnerPopUp();
                     resetPlayedCards();
                     removeCardFromView(i);
@@ -1335,7 +1326,6 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-//                    Overlord.getInstance().determineTrickWinner();
 //                    displayTrickWinnerPopUp();
                     resetPlayedCards();
                     removeCardFromView(i);
@@ -1358,7 +1348,6 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-//                    Overlord.getInstance().determineTrickWinner();
 //                    displayTrickWinnerPopUp();
                     resetPlayedCards();
                     removeCardFromView(i);
@@ -1380,7 +1369,6 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-//                    Overlord.getInstance().determineTrickWinner();
 //                    displayTrickWinnerPopUp();
                     resetPlayedCards();
                     removeCardFromView(i);
@@ -1641,126 +1629,6 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
         }
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-//    public void clickedPassCards(View view) {
-//        if (Table.getInstance().getPlayer1().getNumberOfSelectedCards() != 3) {
-//            Toast.makeText(MainActivity.this, getString(R.string.must_pass_three), Toast.LENGTH_LONG).show();
-//        } else {
-//            if (Overlord.getInstance().passingDirection() == Direction.LEFT) {
-//                for (int x = 0; x < 13; x++) {
-//                    if (Table.getInstance().getPlayer1().getHand().get(x).isSelected()) {
-//                        Log.e("BALLS", Integer.toString(x));
-//                        passLeft(x);
-//                    }
-//                }
-//            }
-//            if (Overlord.getInstance().passingDirection() == Direction.RIGHT) {
-//                for (int x = 0; x < 13; x++) {
-//                    if (Table.getInstance().getPlayer1().getHand().get(x).isSelected()) {
-//                        Log.e("BALLS", Integer.toString(x));
-//                        passRight(x);
-//                    }
-//                }
-//            }
-//            if (Overlord.getInstance().passingDirection() == Direction.ACROSS) {
-//                for (int x = 0; x < 13; x++) {
-//                    if (Table.getInstance().getPlayer1().getHand().get(x).isSelected()) {
-//                        Log.e("BALLS", Integer.toString(x));
-//                        passAcross(x);
-//                    }
-//                }
-//            }
-//            ArrayList<Card> computerCardsToPlayer = new ArrayList<>();
-//            switch (Overlord.getInstance().passingDirection()) {
-//                // Case: HAL9000:
-//                case LEFT:
-//                    System.out.println("Starting P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
-//                    System.out.println("Starting P2 hand: " + Arrays.toString(Table.getInstance().getPlayer2().getHand().toArray()));
-//
-//                    computerCardsToPlayer = HAL9000.cardsToPassComp1();
-//                    for (int i = 0; i < 3; i++) {
-//                        Table.getInstance().getPlayer1().getHand().add(computerCardsToPlayer.get(i));
-//                    }
-//
-//                    for (int i = 0; i < Table.getInstance().getPlayer1().getHand().size(); i++) {
-//                        if (Table.getInstance().getPlayer1().getHand().get(i).isSelected()) {
-//                            Table.getInstance().getPlayer1().getHand().get(i).setSelected(false);
-//                            Table.getInstance().getPlayer2().getHand().add(Table.getInstance().getPlayer1().getHand().get(i));
-//                            Table.getInstance().getPlayer1().getHand().remove(i);
-//                            i--;
-//                        }
-//                    }
-//
-//                    passLeftWait(computerCardsToPlayer);
-//                    System.out.println("Ending P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
-//                    System.out.println("Ending P2 hand: " + Arrays.toString(Table.getInstance().getPlayer2().getHand().toArray()));
-//                    break;
-//                // Case: Zombocom:
-//                case RIGHT:
-//                    System.out.println("Starting P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
-//                    System.out.println("Starting P4 hand: " + Arrays.toString(Table.getInstance().getPlayer4().getHand().toArray()));
-//
-//                    computerCardsToPlayer = Zombocom.cardsToPassComp3();
-//                    for (int i = 0; i < 3; i++) {
-//                        Table.getInstance().getPlayer1().getHand().add(computerCardsToPlayer.get(i));
-//                    }
-//
-//                    for (int i = 0; i < Table.getInstance().getPlayer1().getHand().size(); i++) {
-//                        if (Table.getInstance().getPlayer1().getHand().get(i).isSelected()) {
-//                            Table.getInstance().getPlayer1().getHand().get(i).setSelected(false);
-//                            Table.getInstance().getPlayer4().getHand().add(Table.getInstance().getPlayer1().getHand().get(i));
-//                            Table.getInstance().getPlayer1().getHand().remove(i);
-//                            i--;
-//                        }
-//                    }
-//                    passRightWait(computerCardsToPlayer);
-//
-//                    System.out.println("Ending P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
-//                    System.out.println("Ending P4 hand: " + Arrays.toString(Table.getInstance().getPlayer4().getHand().toArray()));
-//                    break;
-//                // Case: Terminator
-//                case ACROSS:
-//                    System.out.println("Starting P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
-//                    System.out.println("Starting P3 hand: " + Arrays.toString(Table.getInstance().getPlayer3().getHand().toArray()));
-//                    for (int i = 0; i < Table.getInstance().getPlayer1().getHand().size(); i++) {
-//                        if (Table.getInstance().getPlayer1().getHand().get(i).isSelected()) {
-//                            Table.getInstance().getPlayer1().getHand().get(i).setSelected(false);
-//                            Table.getInstance().getPlayer3().getHand().add(Table.getInstance().getPlayer1().getHand().get(i));
-//                            Table.getInstance().getPlayer1().getHand().remove(i);
-//                            i--;
-//                        }
-//                    }
-//                    // ToDo: make Terminator selections better:
-//                    computerCardsToPlayer = new ArrayList<>();
-//                    for (int i = 0; i < 3; i++) {
-//                        Card passMe = Table.getInstance().getPlayer2().getHand().get(i);
-//                        computerCardsToPlayer.add(passMe);
-//                        Table.getInstance().getPlayer3().getHand().remove(i);
-//                        Table.getInstance().getPlayer1().getHand().add(passMe);
-//                    }
-//                    passAcrossWait(computerCardsToPlayer);
-//                    System.out.println("Ending P1 hand: " + Arrays.toString(Table.getInstance().getPlayer1().getHand().toArray()));
-//                    System.out.println("Ending P3 hand: " + Arrays.toString(Table.getInstance().getPlayer3().getHand().toArray()));
-//                    break;
-//                case NO_PASSING:
-//                    break;
-//            }
-//
-//            Overlord.getInstance().setPassing(false);
-//            passButton.setVisibility(View.INVISIBLE);
-//        }
-//    }
 
     private void cardsReceivedPopUp(ArrayList<Card> computerCardsToPlayer) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
