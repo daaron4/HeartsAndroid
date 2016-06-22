@@ -21,27 +21,24 @@ public class Shuffle extends PApplet {
 
     PImage img;
 
-
     public void setup(){
 
         stroke(0);
         fill(255);
-//      img = loadImage("http://www.wopc.co.uk/images/subjects/delarue/animal-grab-back.jpg");
         img = loadImage("back.jpg");
     }
 
     public void draw(){
-
         background(39, 119, 20);
         doThing();
 
     }
 
     public void doThing(){
-        int dx1 = 260;
-        int dy1 = 260;
-        int dx2 = 260;
-        int dy2 = 260;
+        int dx1 = 280;
+        int dy1 = 280;
+        int dx2 = 280;
+        int dy2 = 280;
 
         image(img, 920, 420, 160, 200);
 
@@ -51,16 +48,13 @@ public class Shuffle extends PApplet {
 
             if (start1 >= 1900){
                 image(img, 920, start2 -= dy1, 160, 200);
-//                rect(420, start2 -= dy1, 160, 200, 6);
             }
             if(start2 <= 100){
                 image(img, start3 -= dx2, 420, 160, 200);
-//                rect(start3 -= dx2, 420, 160, 200, 6);
             }
             if(start3 <=100 ){
                 image(img,920, start4 += dy2, 160, 200);
 
-//                rect(420, start4 += dy2, 160, 200, 6);
             }
             if(start4 >=1900){
                 start1 = 920;
