@@ -95,7 +95,7 @@ public class NameActivity extends AppCompatActivity {
         try {
             Intent shuffleIntent = new Intent(getApplicationContext(), ShuffleAnimationActivity.class);
             startActivity(shuffleIntent);
-        }catch(Error e){
+        } catch(Error e) {
             Toast.makeText(NameActivity.this, "Try Again", Toast.LENGTH_SHORT).show();
         }
 
