@@ -343,25 +343,72 @@ public class MainActivity extends AppCompatActivity {
         }
 
         remakeVisible();
-        setSuitImage();
 
-        // HAL9000 played the first card on the board:
-        if (Overlord.getInstance().getLeadingPlayer().getName().equals(Table.getInstance().getPlayer2().getName())) {
-            computer1Card.setImageResource(Table.getInstance().getBoard().get(0).getResId());
-            computer2Card.setImageResource(Table.getInstance().getBoard().get(1).getResId());
-            computer3Card.setImageResource(Table.getInstance().getBoard().get(2).getResId());
+        // ToDo: if card is selected, animate it accordingly on start up:
+        if (Overlord.getInstance().getPassing()) {
+            if (Table.getInstance().getPlayer1().getHand().get(0).isSelected()) {
+                b1.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
+            }
+            if (Table.getInstance().getPlayer1().getHand().get(1).isSelected()) {
+                b2.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
+            }
+            if (Table.getInstance().getPlayer1().getHand().get(2).isSelected()) {
+                b3.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
+            }
+            if (Table.getInstance().getPlayer1().getHand().get(3).isSelected()) {
+                b4.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
+            }
+            if (Table.getInstance().getPlayer1().getHand().get(4).isSelected()) {
+                b5.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
+            }
+            if (Table.getInstance().getPlayer1().getHand().get(5).isSelected()) {
+                b6.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
+            }
+            if (Table.getInstance().getPlayer1().getHand().get(6).isSelected()) {
+                b7.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
+            }
+            if (Table.getInstance().getPlayer1().getHand().get(7).isSelected()) {
+                b8.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
+            }
+            if (Table.getInstance().getPlayer1().getHand().get(8).isSelected()) {
+                b9.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
+            }
+            if (Table.getInstance().getPlayer1().getHand().get(9).isSelected()) {
+                b10.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
+            }
+            if (Table.getInstance().getPlayer1().getHand().get(10).isSelected()) {
+                b11.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
+            }
+            if (Table.getInstance().getPlayer1().getHand().get(11).isSelected()) {
+                b12.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
+            }
+            if (Table.getInstance().getPlayer1().getHand().get(12).isSelected()) {
+                b13.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
+            }
+            passButton.setText(Overlord.getInstance().getPassingDirection());
+            passButton.setVisibility(View.VISIBLE);
         }
-        // Terminator played the first card on the board:
-        if (Overlord.getInstance().getLeadingPlayer().getName().equals(Table.getInstance().getPlayer3().getName())) {
-            computer2Card.setImageResource(Table.getInstance().getBoard().get(0).getResId());
-            computer3Card.setImageResource(Table.getInstance().getBoard().get(1).getResId());
-        }
-        // Zombocom played the first card on the board:
-        if (Overlord.getInstance().getLeadingPlayer().getName().equals(Table.getInstance().getPlayer4().getName())) {
-            computer3Card.setImageResource(Table.getInstance().getBoard().get(0).getResId());
-        }
+        else {
+            // Setting board:
 
-        // ToDo: if card is selected, need to display its animated form:
+            // HAL9000 played the first card on the board:
+            if (Overlord.getInstance().getLeadingPlayer().getName().equals(Table.getInstance().getPlayer2().getName())) {
+                computer1Card.setImageResource(Table.getInstance().getBoard().get(0).getResId());
+                computer2Card.setImageResource(Table.getInstance().getBoard().get(1).getResId());
+                computer3Card.setImageResource(Table.getInstance().getBoard().get(2).getResId());
+            }
+            // Terminator played the first card on the board:
+            if (Overlord.getInstance().getLeadingPlayer().getName().equals(Table.getInstance().getPlayer3().getName())) {
+                computer2Card.setImageResource(Table.getInstance().getBoard().get(0).getResId());
+                computer3Card.setImageResource(Table.getInstance().getBoard().get(1).getResId());
+            }
+            // Zombocom played the first card on the board:
+            if (Overlord.getInstance().getLeadingPlayer().getName().equals(Table.getInstance().getPlayer4().getName())) {
+                computer3Card.setImageResource(Table.getInstance().getBoard().get(0).getResId());
+            }
+
+            setSuitImage();
+        }
 
     }
 

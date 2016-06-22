@@ -8,15 +8,16 @@
 
     <Button
         android:id="@+id/pass_cards_button"
-        android:layout_width="125dp"
-        android:layout_height="90dp"
-        android:layout_gravity="right|bottom"
-        android:layout_marginTop="100dp"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="15dp"
         android:onClick="clickedPassCards"
-        android:text="Pass cards"
-        android:textSize="15sp"
+        android:text="@string/pass_cards"
+        android:textSize="16sp"
         android:textStyle="bold"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        android:background="@drawable/roundedcorners"/>
 
     <!--Community Cards, Player Names, and Suit Indicator-->
 
@@ -31,6 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerInParent="true"
+            android:layout_marginBottom="10dp"
             android:textSize="18sp"
             android:text="Player"
             />
@@ -42,8 +44,8 @@
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
             android:rotation="90"
-            android:layout_marginLeft="-8dp"
-            android:textSize="18sp"
+            android:layout_marginLeft="-10dp"
+            android:textSize="16sp"
             android:text="Comp 1"
             />
 
@@ -53,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerInParent="true"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:text="Comp 2"
             />
 
@@ -64,8 +66,8 @@
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
             android:rotation="270"
-            android:layout_marginRight="-8dp"
-            android:textSize="18sp"
+            android:layout_marginRight="-10dp"
+            android:textSize="16sp"
             android:text="Comp 3"
             />
 
