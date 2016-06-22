@@ -225,7 +225,6 @@ public class Terminator {
 
         }
 
-
         //----------"Original Crap" THIS MUST REMAIN @ THE END OF THE CLASS------just trust me on this-------\\
         for (int i = 0; i < Table.getInstance().getPlayer3().getHand().size(); i++) {
             computerSelection = Table.getInstance().getPlayer3().getHand().get(i);
