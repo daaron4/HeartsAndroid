@@ -129,7 +129,7 @@ public class HAL9000 {
         if (Overlord.getInstance().getRoundsPlayed() > 1 && (Overlord.getInstance().amITheLeadingPlayer(Table.getInstance().getPlayer2()))) {
             //this line determines that this computer player is leading the 2nd round
 
-            if (numOfClubsComp1 != 0 && numOfClubsComp1  >= numOfDiamondsComp1 && numOfClubsComp1 >= numOfSpadesComp1) {
+            if (numOfClubsComp1 != 0 && numOfClubsComp1 >= numOfDiamondsComp1 && numOfClubsComp1 >= numOfSpadesComp1) {
                 //this here plays the lowest club
                 String lowestClub = arrayOfClubsComp1.get(0).toString();
                 for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
@@ -271,7 +271,6 @@ public class HAL9000 {
         Table.getInstance().getPlayer2().getHand().remove(computerSelection);
         System.out.println("Computer 1 played: " + computerSelection.toString());
         return computerSelection;
-
     }
 
     public static ArrayList<Card> cardsToPassComp1() {
@@ -317,7 +316,7 @@ public class HAL9000 {
             }
 
         } else {
-            //if no Queen of spades esists, then HAL just passes the three highest cards in his hand.
+            //if no Queen of spades exists, then HAL just passes the three highest cards in his hand.
             for (int i = 0; i < 3; i++) {
                 int current = 0;
                 int highest = Table.getInstance().getPlayer2().getHand().get(0).getRank().getValue();
