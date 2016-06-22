@@ -41,9 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13;
     private ImageView playerCard, computer1Card, computer2Card, computer3Card;
     private ImageView suitPlayed;
-    private Animation passLeftAnimation, passRightAnimation, passAcrossAnimation, middle1, middle2, middle3, middle4, middle5, middle6, middle7,middle8, middle9, middle10, middle11, middle12, middle13;
-    private int x;
-
+    private Animation passLeftAnimation, passRightAnimation, passAcrossAnimation, middle1, middle2, middle3, middle4, middle5, middle6, middle7, middle8, middle9, middle10, middle11, middle12, middle13;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +52,7 @@ public class MainActivity extends AppCompatActivity {
         if (continueOldGame) {
             initializeSavedGame();
             setViewSavedGame();
-        }
-        else {
+        } else {
             initializeViews();
             createListeners();
             setUpGame();
@@ -82,11 +79,9 @@ public class MainActivity extends AppCompatActivity {
         computer3Name = (TextView) findViewById(R.id.computer3_name);
         passButton = (Button) findViewById(R.id.pass_cards_button);
 
-
         passLeftAnimation = AnimationUtils.loadAnimation(this, R.anim.passleft);
         passRightAnimation = AnimationUtils.loadAnimation(this, R.anim.passright);
         passAcrossAnimation = AnimationUtils.loadAnimation(this, R.anim.passacross);
-
 
         middle1 = AnimationUtils.loadAnimation(this, R.anim.middle1);
         middle2 = AnimationUtils.loadAnimation(this, R.anim.middle2);
@@ -101,8 +96,6 @@ public class MainActivity extends AppCompatActivity {
         middle11 = AnimationUtils.loadAnimation(this, R.anim.middle11);
         middle12 = AnimationUtils.loadAnimation(this, R.anim.middle12);
         middle13 = AnimationUtils.loadAnimation(this, R.anim.middle13);
-
-
 
         b1 = (ImageView) findViewById(R.id.card_1);
         b2 = (ImageView) findViewById(R.id.card_2);
@@ -173,9 +166,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createListeners() {
-
-
-//        passAnimation.setAnimationListener();
         b1.setOnClickListener(onCardClick);
         b2.setOnClickListener(onCardClick);
         b3.setOnClickListener(onCardClick);
@@ -252,98 +242,84 @@ public class MainActivity extends AppCompatActivity {
         if (!c1.toString().equals("Joker of Joker")) {
             b1.setImageResource(c1.getResId());
             b1.setOnClickListener(onCardClick);
-        }
-        else {
+        } else {
             b1.setImageResource(0);
         }
         if (!c2.toString().equals("Joker of Joker")) {
             b2.setImageResource(c2.getResId());
             b2.setOnClickListener(onCardClick);
-        }
-        else {
+        } else {
             b2.setImageResource(0);
         }
         if (!c3.toString().equals("Joker of Joker")) {
             b3.setImageResource(c3.getResId());
             b3.setOnClickListener(onCardClick);
-        }
-        else {
+        } else {
             b3.setImageResource(0);
         }
         if (!c4.toString().equals("Joker of Joker")) {
             b4.setImageResource(c4.getResId());
             b4.setOnClickListener(onCardClick);
-        }
-        else {
+        } else {
             b4.setImageResource(0);
         }
         if (!c5.toString().equals("Joker of Joker")) {
             b5.setImageResource(c5.getResId());
             b5.setOnClickListener(onCardClick);
-        }
-        else {
+        } else {
             b5.setImageResource(0);
         }
         if (!c6.toString().equals("Joker of Joker")) {
             b6.setImageResource(c6.getResId());
             b6.setOnClickListener(onCardClick);
-        }
-        else {
+        } else {
             b6.setImageResource(0);
         }
         if (!c7.toString().equals("Joker of Joker")) {
             b7.setImageResource(c7.getResId());
             b7.setOnClickListener(onCardClick);
-        }
-        else {
+        } else {
             b7.setImageResource(0);
         }
         if (!c8.toString().equals("Joker of Joker")) {
             b8.setImageResource(c8.getResId());
             b8.setOnClickListener(onCardClick);
-        }
-        else {
+        } else {
             b8.setImageResource(0);
         }
         if (!c9.toString().equals("Joker of Joker")) {
             b9.setImageResource(c9.getResId());
             b9.setOnClickListener(onCardClick);
-        }
-        else {
+        } else {
             b9.setImageResource(0);
         }
         if (!c10.toString().equals("Joker of Joker")) {
             b10.setImageResource(c10.getResId());
             b10.setOnClickListener(onCardClick);
-        }
-        else {
+        } else {
             b10.setImageResource(0);
         }
         if (!c11.toString().equals("Joker of Joker")) {
             b11.setImageResource(c11.getResId());
             b11.setOnClickListener(onCardClick);
-        }
-        else {
+        } else {
             b11.setImageResource(0);
         }
         if (!c12.toString().equals("Joker of Joker")) {
             b12.setImageResource(c12.getResId());
             b12.setOnClickListener(onCardClick);
-        }
-        else {
+        } else {
             b12.setImageResource(0);
         }
         if (!c13.toString().equals("Joker of Joker")) {
             b13.setImageResource(c13.getResId());
             b13.setOnClickListener(onCardClick);
-        }
-        else {
+        } else {
             b13.setImageResource(0);
         }
 
         remakeVisible();
 
-        // ToDo: if card is selected, animate it accordingly on start up:
         if (Overlord.getInstance().getPassing()) {
             if (Table.getInstance().getPlayer1().getHand().get(0).isSelected()) {
                 b1.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
@@ -386,8 +362,7 @@ public class MainActivity extends AppCompatActivity {
             }
             passButton.setText(Overlord.getInstance().getPassingDirection());
             passButton.setVisibility(View.VISIBLE);
-        }
-        else {
+        } else {
             // Setting board:
 
             // HAL9000 played the first card on the board:
@@ -428,7 +403,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void displayTrickWinnerPopUp() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-
         builder.setTitle(getString(R.string.app_name));
         builder.setMessage(Overlord.getInstance().getLeadingPlayer().getName() + " " + getString(R.string.trick_winner) + "\n" +
                 getString(R.string.board_contains) + " " + Arrays.toString(Table.getInstance().getBoard().toArray()));
@@ -459,7 +433,6 @@ public class MainActivity extends AppCompatActivity {
             playAgainPopUp();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-
             builder.setTitle(getString(R.string.score_alert));
             LayoutInflater alertLayout = this.getLayoutInflater();
             View alertView = alertLayout.inflate(R.layout.alert_scores, null);
@@ -602,7 +575,7 @@ public class MainActivity extends AppCompatActivity {
         computer3Card.setImageResource(0);
     }
 
-    private void fixTransparentImages() {
+    private void animatePassingCards() {
         b1.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
         b2.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
         b3.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
@@ -617,7 +590,6 @@ public class MainActivity extends AppCompatActivity {
         b12.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
         b13.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
     }
-
 
     private void passLeft(int i) {
         switch (i) {
@@ -688,6 +660,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
+
     private void passRight(int i) {
         switch (i) {
             case 0:
@@ -757,6 +730,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
+
     private void passAcross(int i) {
         switch (i) {
             case 0:
@@ -831,26 +805,21 @@ public class MainActivity extends AppCompatActivity {
         switch (i) {
             case 0:
                 b1.startAnimation(middle1);
-
                 break;
             case 1:
                 b2.startAnimation(middle2);
                 break;
             case 2:
                 b3.startAnimation(middle3);
-
                 break;
             case 3:
                 b4.startAnimation(middle4);
-
                 break;
             case 4:
                 b5.startAnimation(middle5);
-
                 break;
             case 5:
                 b6.startAnimation(middle6);
-
                 break;
             case 6:
                 b7.startAnimation(middle7);
@@ -858,15 +827,12 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 7:
                 b8.startAnimation(middle8);
-
                 break;
             case 8:
                 b9.startAnimation(middle9);
-
                 break;
             case 9:
                 b10.startAnimation(middle10);
-
                 break;
             case 10:
                 b11.startAnimation(middle11);
@@ -882,7 +848,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void passCardSelector(int i) {
-
         switch (i) {
             case 0:
                 if (Table.getInstance().getPlayer1().getHand().get(0).isSelected()) {
@@ -979,73 +944,73 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void removeCardFromView(final int i) {
-                if (i == 0) {
-                    b1.setImageResource(0);
-                    b1.setOnClickListener(null);
-                    b1.clearAnimation();
-                    b1.setVisibility(View.GONE);
-                } else if (i == 1) {
-                    b2.setImageResource(0);
-                    b2.setOnClickListener(null);
-                    b2.clearAnimation();
-                    b2.setVisibility(View.GONE);
-                } else if (i == 2) {
-                    b3.setImageResource(0);
-                    b3.setOnClickListener(null);
-                    b3.clearAnimation();
-                    b3.setVisibility(View.GONE);
-                } else if (i == 3) {
-                    b4.setImageResource(0);
-                    b4.setOnClickListener(null);
-                    b4.clearAnimation();
-                    b4.setVisibility(View.GONE);
-                } else if (i == 4) {
-                    b5.setImageResource(0);
-                    b5.setOnClickListener(null);
-                    b5.clearAnimation();
-                    b5.setVisibility(View.GONE);
-                } else if (i == 5) {
-                    b6.setImageResource(0);
-                    b6.setOnClickListener(null);
-                    b6.clearAnimation();
-                    b6.setVisibility(View.GONE);
-                } else if (i == 6) {
-                    b7.setImageResource(0);
-                    b7.setOnClickListener(null);
-                    b7.clearAnimation();
-                    b7.setVisibility(View.GONE);
-                } else if (i == 7) {
-                    b8.setImageResource(0);
-                    b8.setOnClickListener(null);
-                    b8.clearAnimation();
-                    b8.setVisibility(View.GONE);
-                } else if (i == 8) {
-                    b9.setImageResource(0);
-                    b9.setOnClickListener(null);
-                    b9.clearAnimation();
-                    b9.setVisibility(View.GONE);
-                } else if (i == 9) {
-                    b10.setImageResource(0);
-                    b10.setOnClickListener(null);
-                    b10.clearAnimation();
-                    b10.setVisibility(View.GONE);
-                } else if (i == 10) {
-                    b11.setImageResource(0);
-                    b11.setOnClickListener(null);
-                    b11.clearAnimation();
-                    b11.setVisibility(View.GONE);
-                } else if (i == 11) {
-                    b12.setImageResource(0);
-                    b12.setOnClickListener(null);
-                    b12.clearAnimation();
-                    b12.setVisibility(View.GONE);
-                } else if (i == 12) {
-                    b13.setImageResource(0);
-                    b13.setOnClickListener(null);
-                    b13.clearAnimation();
-                    b13.setVisibility(View.GONE);
-                }
-            }
+        if (i == 0) {
+            b1.setImageResource(0);
+            b1.setOnClickListener(null);
+            b1.clearAnimation();
+            b1.setVisibility(View.GONE);
+        } else if (i == 1) {
+            b2.setImageResource(0);
+            b2.setOnClickListener(null);
+            b2.clearAnimation();
+            b2.setVisibility(View.GONE);
+        } else if (i == 2) {
+            b3.setImageResource(0);
+            b3.setOnClickListener(null);
+            b3.clearAnimation();
+            b3.setVisibility(View.GONE);
+        } else if (i == 3) {
+            b4.setImageResource(0);
+            b4.setOnClickListener(null);
+            b4.clearAnimation();
+            b4.setVisibility(View.GONE);
+        } else if (i == 4) {
+            b5.setImageResource(0);
+            b5.setOnClickListener(null);
+            b5.clearAnimation();
+            b5.setVisibility(View.GONE);
+        } else if (i == 5) {
+            b6.setImageResource(0);
+            b6.setOnClickListener(null);
+            b6.clearAnimation();
+            b6.setVisibility(View.GONE);
+        } else if (i == 6) {
+            b7.setImageResource(0);
+            b7.setOnClickListener(null);
+            b7.clearAnimation();
+            b7.setVisibility(View.GONE);
+        } else if (i == 7) {
+            b8.setImageResource(0);
+            b8.setOnClickListener(null);
+            b8.clearAnimation();
+            b8.setVisibility(View.GONE);
+        } else if (i == 8) {
+            b9.setImageResource(0);
+            b9.setOnClickListener(null);
+            b9.clearAnimation();
+            b9.setVisibility(View.GONE);
+        } else if (i == 9) {
+            b10.setImageResource(0);
+            b10.setOnClickListener(null);
+            b10.clearAnimation();
+            b10.setVisibility(View.GONE);
+        } else if (i == 10) {
+            b11.setImageResource(0);
+            b11.setOnClickListener(null);
+            b11.clearAnimation();
+            b11.setVisibility(View.GONE);
+        } else if (i == 11) {
+            b12.setImageResource(0);
+            b12.setOnClickListener(null);
+            b12.clearAnimation();
+            b12.setVisibility(View.GONE);
+        } else if (i == 12) {
+            b13.setImageResource(0);
+            b13.setOnClickListener(null);
+            b13.clearAnimation();
+            b13.setVisibility(View.GONE);
+        }
+    }
 
     private void remakeVisible() {
         b1.setVisibility(View.VISIBLE);
@@ -1062,24 +1027,26 @@ public class MainActivity extends AppCompatActivity {
         b12.setVisibility(View.VISIBLE);
         b13.setVisibility(View.VISIBLE);
     }
-private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
-    passLeftAnimation.setAnimationListener(new Animation.AnimationListener() {
 
-        @Override
-        public void onAnimationStart(Animation animation) {
-        }
+    private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
+        passLeftAnimation.setAnimationListener(new Animation.AnimationListener() {
 
-        @Override
-        public void onAnimationRepeat(Animation animation) {
-        }
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
 
-        @Override
-        public void onAnimationEnd(Animation animation) {
-            cardsReceivedPopUp(computerCardsToPlayer);
-        }
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
 
-    });
-}
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                cardsReceivedPopUp(computerCardsToPlayer);
+            }
+
+        });
+    }
+
     private void passRightWait(final ArrayList<Card> computerCardsToPlayer) {
         passRightAnimation.setAnimationListener(new Animation.AnimationListener() {
 
@@ -1098,6 +1065,7 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
 
         });
     }
+
     private void passAcrossWait(ArrayList<Card> computerCardsToPlayer) {
         final ArrayList<Card> computerCardsToPlayer1 = computerCardsToPlayer;
         passAcrossAnimation.setAnimationListener(new Animation.AnimationListener() {
@@ -1119,7 +1087,7 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
     }
 
     private void middleWait(final int i) {
-        if(i==0) {
+        if (i == 0) {
             middle1.setAnimationListener(new Animation.AnimationListener() {
 
                 @Override
@@ -1139,7 +1107,8 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
 
                 }
             });
-        }if(i==1) {
+        }
+        if (i == 1) {
             middle2.setAnimationListener(new Animation.AnimationListener() {
 
                 @Override
@@ -1160,8 +1129,9 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
                 }
 
             });
-        }        if(i==2) {
-                middle3.setAnimationListener(new Animation.AnimationListener() {
+        }
+        if (i == 2) {
+            middle3.setAnimationListener(new Animation.AnimationListener() {
 
                 @Override
                 public void onAnimationStart(Animation animation) {
@@ -1182,7 +1152,8 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
                 }
 
             });
-        }        if(i==3) {
+        }
+        if (i == 3) {
             middle4.setAnimationListener(new Animation.AnimationListener() {
 
                 @Override
@@ -1204,7 +1175,8 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
                 }
 
             });
-        }        if(i==4) {
+        }
+        if (i == 4) {
             middle5.setAnimationListener(new Animation.AnimationListener() {
 
                 @Override
@@ -1226,7 +1198,8 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
                 }
 
             });
-        }        if(i==5) {
+        }
+        if (i == 5) {
             middle6.setAnimationListener(new Animation.AnimationListener() {
 
                 @Override
@@ -1247,7 +1220,8 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
                 }
 
             });
-        }        if(i==6) {
+        }
+        if (i == 6) {
             middle7.setAnimationListener(new Animation.AnimationListener() {
 
                 @Override
@@ -1269,7 +1243,8 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
                 }
 
             });
-        }        if(i==7) {
+        }
+        if (i == 7) {
             middle8.setAnimationListener(new Animation.AnimationListener() {
 
                 @Override
@@ -1291,7 +1266,8 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
                 }
 
             });
-        }        if(i==8) {
+        }
+        if (i == 8) {
             middle9.setAnimationListener(new Animation.AnimationListener() {
 
                 @Override
@@ -1313,7 +1289,8 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
                 }
 
             });
-        }        if(i==9) {
+        }
+        if (i == 9) {
             middle10.setAnimationListener(new Animation.AnimationListener() {
 
                 @Override
@@ -1335,7 +1312,8 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
                 }
 
             });
-        }        if(i==10) {
+        }
+        if (i == 10) {
             middle11.setAnimationListener(new Animation.AnimationListener() {
 
                 @Override
@@ -1356,7 +1334,8 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
                 }
 
             });
-        }        if(i==11) {
+        }
+        if (i == 11) {
             middle12.setAnimationListener(new Animation.AnimationListener() {
 
                 @Override
@@ -1377,7 +1356,8 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
                 }
 
             });
-        }        if(i==12) {
+        }
+        if (i == 12) {
             middle13.setAnimationListener(new Animation.AnimationListener() {
 
                 @Override
@@ -1400,6 +1380,7 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
             });
         }
     }
+
     private void clickedCard(int i) {
         if (!Overlord.getInstance().getPassing()) {
             Card computerSelection;
@@ -1525,6 +1506,7 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
             }
         }
     }
+
     public void clickedPassCards(View view) {
         if (Table.getInstance().getPlayer1().getNumberOfSelectedCards() != 3) {
             Toast.makeText(MainActivity.this, getString(R.string.must_pass_three), Toast.LENGTH_LONG).show();
@@ -1535,20 +1517,22 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
                         passLeft(x);
                     }
                 }
-            if (Overlord.getInstance().passingDirection() == Direction.RIGHT)
+            }
+            if (Overlord.getInstance().passingDirection() == Direction.RIGHT) {
                 for (int x = 0; x < 13; x++) {
                     if (Table.getInstance().getPlayer1().getHand().get(x).isSelected()) {
                         passRight(x);
                     }
                 }
-            if (Overlord.getInstance().passingDirection() == Direction.ACROSS)
+            }
+            if (Overlord.getInstance().passingDirection() == Direction.ACROSS) {
                 for (int x = 0; x < 13; x++) {
                     if (Table.getInstance().getPlayer1().getHand().get(x).isSelected()) {
                         passAcross(x);
                     }
                 }
             }
-            ArrayList<Card> computerCardsToPlayer = new ArrayList<>();
+            ArrayList<Card> computerCardsToPlayer;
             switch (Overlord.getInstance().passingDirection()) {
                 // Case: HAL9000:
                 case LEFT:
@@ -1649,7 +1633,7 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
                     removeCardFromView(j);
                 }
                 displayImages();
-                fixTransparentImages();
+                animatePassingCards();
                 createListeners();
                 beginRound();
             }
@@ -1657,8 +1641,6 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
         builder.setCancelable(false);
         builder.show();
     }
-
-
 
     private void saveGame() {
         Table.saveTable(getApplicationContext());
