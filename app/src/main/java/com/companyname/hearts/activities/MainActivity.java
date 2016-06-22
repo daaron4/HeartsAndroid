@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Toast.makeText(MainActivity.this, "There is no back in Hearts!!!!!!", Toast.LENGTH_LONG).show();
+        Toast.makeText(MainActivity.this, getString(R.string.no_escape), Toast.LENGTH_LONG).show();
     }
 
     private void initializeViews() {
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         b13 = (ImageView) findViewById(R.id.card_13);
 
         SharedPreferences pref = this.getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE);
-        String sharedPrefString = pref.getString("playernames","");
+        String sharedPrefString = pref.getString("playernames", "");
         String[] playerNames = sharedPrefString.split(",");
 
         playerCard = (ImageView) findViewById(R.id.player_card);
@@ -156,10 +157,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void cantPlayThatPopUp() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Hearts");
-        builder.setMessage("You can't play that!");
+        builder.setTitle(getString(R.string.app_name));
+        builder.setMessage(getString(R.string.illegal_move));
         builder.setIcon(R.mipmap.ic_launcher);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 // does nothing
@@ -171,16 +172,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void displayTrickWinnerPopUp() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Hearts");
-        builder.setMessage(Overlord.getInstance().getLeadingPlayer().getName() + " wins the trick." + "\n" +
-            "The board was: " + Arrays.toString(Table.getInstance().getBoard().toArray()));
+        builder.setTitle(getString(R.string.app_name));
+        builder.setMessage(Overlord.getInstance().getLeadingPlayer().getName() + " " + getString(R.string.trick_winner) + "\n" +
+                getString(R.string.board_contains) + " " + Arrays.toString(Table.getInstance().getBoard().toArray()));
         builder.setIcon(R.mipmap.ic_launcher);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (Overlord.getInstance().getRoundsPlayed() == 14) {
+                    removeCenterIcon();
                     displayScorePopUp();
                 } else {
+                    removeCenterIcon();
                     beginRound();
                 }
             }
@@ -199,13 +202,12 @@ public class MainActivity extends AppCompatActivity {
             playAgainPopUp();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setTitle(Table.getInstance().getPlayer1().getName() + " | " + Table.getInstance().getPlayer2().getName() +
-                    " | " + Table.getInstance().getPlayer3().getName() + " | " + Table.getInstance().getPlayer4().getName());
-            builder.setMessage(String.format("%20s%19s%18s%17s", Table.getInstance().getPlayer1().getPoints(), Table.getInstance().getPlayer2().getPoints(),
-                    Table.getInstance().getPlayer3().getPoints(),Table.getInstance().getPlayer4().getPoints()));
 
-            builder.setIcon(R.mipmap.ic_launcher);
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            builder.setTitle(getString(R.string.score_alert));
+            LayoutInflater alertLayout = this.getLayoutInflater();
+            View alertView = alertLayout.inflate(R.layout.alert_scores, null);
+            builder.setView(alertView);
+            builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     removeCenterIcon();
@@ -215,8 +217,21 @@ public class MainActivity extends AppCompatActivity {
                     beginRound();
                 }
             });
+            builder.setIcon(R.mipmap.ic_launcher);
             builder.setCancelable(false);
             builder.show();
+            TextView alertNames = (TextView) alertView.findViewById(R.id.alert_score_names);
+            TextView alertScores = (TextView) alertView.findViewById(R.id.alert_score_scores);
+            String nameHolder = Table.getInstance().getPlayer1().getName() + "\n" +
+                    Table.getInstance().getPlayer2().getName() + "\n" +
+                    Table.getInstance().getPlayer3().getName() + "\n" +
+                    Table.getInstance().getPlayer4().getName() + "\n";
+            String scoreHolder = Table.getInstance().getPlayer1().getPoints() + "\n" +
+                    Table.getInstance().getPlayer2().getPoints() + "\n" +
+                    Table.getInstance().getPlayer3().getPoints() + "\n" +
+                    Table.getInstance().getPlayer4().getPoints() + "\n";
+            alertNames.setText(nameHolder);
+            alertScores.setText(scoreHolder);
         }
     }
 
@@ -226,13 +241,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void playAgainPopUp() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle(Overlord.getInstance().getWinningPlayer().getName() + " wins the game!");
-        builder.setMessage(Table.getInstance().getPlayer1().getName() + " : " + Table.getInstance().getPlayer1().getPoints() + "\n" +
-                Table.getInstance().getPlayer2().getName() + " : " + Table.getInstance().getPlayer2().getPoints() + "\n" +
-                Table.getInstance().getPlayer3().getName() + " : " + Table.getInstance().getPlayer3().getPoints() + "\n" +
-                Table.getInstance().getPlayer4().getName() + " : " + Table.getInstance().getPlayer4().getPoints() + "\n");
-        builder.setIcon(R.mipmap.ic_launcher);
-        builder.setPositiveButton("Play Again?", new DialogInterface.OnClickListener() {
+        builder.setTitle(Overlord.getInstance().getWinningPlayer().getName() + " " + getString(R.string.game_winner));
+        LayoutInflater alertLayout = this.getLayoutInflater();
+        View alertView = alertLayout.inflate(R.layout.alert_scores, null);
+        builder.setView(alertView);
+        builder.setPositiveButton(getString(R.string.play_again), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Overlord.getInstance().prepareForNextGame();
@@ -243,15 +256,28 @@ public class MainActivity extends AppCompatActivity {
                 beginRound();
             }
         });
-        builder.setNegativeButton("Quit", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.quit), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(MainActivity.this, "Bye", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, getString(R.string.bye), Toast.LENGTH_LONG).show();
                 finish();
             }
         });
+        builder.setIcon(R.mipmap.ic_launcher);
         builder.setCancelable(false);
         builder.show();
+        TextView alertNames = (TextView) alertView.findViewById(R.id.alert_score_names);
+        TextView alertScores = (TextView) alertView.findViewById(R.id.alert_score_scores);
+        String nameHolder = Table.getInstance().getPlayer1().getName() + "\n" +
+                Table.getInstance().getPlayer2().getName() + "\n" +
+                Table.getInstance().getPlayer3().getName() + "\n" +
+                Table.getInstance().getPlayer4().getName() + "\n";
+        String scoreHolder = Table.getInstance().getPlayer1().getPoints() + "\n" +
+                Table.getInstance().getPlayer2().getPoints() + "\n" +
+                Table.getInstance().getPlayer3().getPoints() + "\n" +
+                Table.getInstance().getPlayer4().getPoints() + "\n";
+        alertNames.setText(nameHolder);
+        alertScores.setText(scoreHolder);
     }
 
     private void beginRound() {
@@ -340,8 +366,7 @@ public class MainActivity extends AppCompatActivity {
             case 0:
                 if (Table.getInstance().getPlayer1().getHand().get(0).isSelected()) {
                     b1.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.push));
-                }
-                else {
+                } else {
                     b1.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.pull));
                 }
                 break;
@@ -595,7 +620,7 @@ public class MainActivity extends AppCompatActivity {
                     Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
                     playerCard.setImageResource(Table.getInstance().getPlayer1().getHand().get(i).getResId());
                     setSuitImage();
-                    // ToDo: deal with issue with removing cards:
+
                     Table.getInstance().getPlayer1().getHand().remove(i);
                     Table.getInstance().getPlayer1().getHand().add(i, new Card(Rank.Joker, Suit.Joker, R.drawable.derpycard));
 
@@ -613,7 +638,7 @@ public class MainActivity extends AppCompatActivity {
                     Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
                     playerCard.setImageResource(Table.getInstance().getPlayer1().getHand().get(i).getResId());
                     setSuitImage();
-                    // ToDo: deal with issue with removing cards:
+
                     Table.getInstance().getPlayer1().getHand().remove(i);
                     Table.getInstance().getPlayer1().getHand().add(i, new Card(Rank.Joker, Suit.Joker, R.drawable.derpycard));
 
@@ -634,7 +659,7 @@ public class MainActivity extends AppCompatActivity {
                 if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1())) {
                     Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
                     playerCard.setImageResource(Table.getInstance().getPlayer1().getHand().get(i).getResId());
-                    // ToDo: deal with issue with removing cards:
+
                     Table.getInstance().getPlayer1().getHand().remove(i);
                     Table.getInstance().getPlayer1().getHand().add(i, new Card(Rank.Joker, Suit.Joker, R.drawable.derpycard));
 
@@ -700,7 +725,7 @@ public class MainActivity extends AppCompatActivity {
                     Table.getInstance().getPlayer1().getHand().get(i).setSelected(true);
                     passCardSelector(i);
                 } else {
-                    Toast.makeText(MainActivity.this, "You can't pass more than three cards", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, getString(R.string.three_cards_max), Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -709,16 +734,16 @@ public class MainActivity extends AppCompatActivity {
 
     public void clickedPassCards(View view) {
         if (Table.getInstance().getPlayer1().getNumberOfSelectedCards() != 3) {
-            Toast.makeText(MainActivity.this, "You must pass three cards", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, getString(R.string.must_pass_three), Toast.LENGTH_LONG).show();
         } else {
-            if(Overlord.getInstance().passingDirection() == Direction.LEFT)
-            for (int x = 0; x < 13; x++){
-                if (Table.getInstance().getPlayer1().getHand().get(x).isSelected()) {
-                    Log.e("BALLS", Integer.toString(x));
-                                    passShit(x);
+            if (Overlord.getInstance().passingDirection() == Direction.LEFT)
+                for (int x = 0; x < 13; x++) {
+                    if (Table.getInstance().getPlayer1().getHand().get(x).isSelected()) {
+                        Log.e("BALLS", Integer.toString(x));
+                        passShit(x);
 
+                    }
                 }
-            }
             // ToDo: make computer selections better:
             ArrayList<Card> computerCardsToPlayer = new ArrayList<>();
             switch (Overlord.getInstance().passingDirection()) {
@@ -802,10 +827,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void cardsReceivedPopUp(ArrayList<Card> computerCardsToPlayer) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Hearts");
-        builder.setMessage("You received: " + Arrays.toString(computerCardsToPlayer.toArray()));
+        builder.setTitle(getString(R.string.app_name));
+        builder.setMessage(getString(R.string.cards_received) + " " + Arrays.toString(computerCardsToPlayer.toArray()));
         builder.setIcon(R.mipmap.ic_launcher);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Overlord.getInstance().setPlayerWithTheTwoOfClubs();
@@ -877,5 +902,4 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
-
 }
