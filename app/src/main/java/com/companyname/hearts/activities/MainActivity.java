@@ -1529,7 +1529,7 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
         if (Table.getInstance().getPlayer1().getNumberOfSelectedCards() != 3) {
             Toast.makeText(MainActivity.this, getString(R.string.must_pass_three), Toast.LENGTH_LONG).show();
         } else {
-            if (Overlord.getInstance().passingDirection() == Direction.LEFT)
+            if (Overlord.getInstance().passingDirection() == Direction.LEFT) {
                 for (int x = 0; x < 13; x++) {
                     if (Table.getInstance().getPlayer1().getHand().get(x).isSelected()) {
                         passLeft(x);
@@ -1547,6 +1547,7 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
                         passAcross(x);
                     }
                 }
+            }
             ArrayList<Card> computerCardsToPlayer = new ArrayList<>();
             switch (Overlord.getInstance().passingDirection()) {
                 // Case: HAL9000:
@@ -1620,6 +1621,7 @@ private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
                     System.out.println("Ending P3 hand: " + Arrays.toString(Table.getInstance().getPlayer3().getHand().toArray()));
                     break;
                 case NO_PASSING:
+                    Toast.makeText(MainActivity.this, "No Passing!", Toast.LENGTH_SHORT).show();
                     break;
             }
 
