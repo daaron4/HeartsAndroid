@@ -30,6 +30,13 @@ public class NameActivity extends AppCompatActivity {
         playerNames = new String[4];
     }
 
+    public void clickedContinueHearts (View view) {
+        // ToDo: add check for previous game here:
+        Intent mainIntent = new Intent(NameActivity.this, MainActivity.class);
+        mainIntent.putExtra("continueOldGame", true);
+        startActivity(mainIntent);
+    }
+
     public void clickedStartHearts(View view) {
         String playerDefault = "Player 1";
         String computer1Default = "Computer 1";
