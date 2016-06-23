@@ -138,7 +138,6 @@ public class NameActivity extends AppCompatActivity {
 
             Intent shuffleIntent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(shuffleIntent);
-            Toast.makeText(NameActivity.this, "Try Again", Toast.LENGTH_SHORT).show();
 
     }
 }
