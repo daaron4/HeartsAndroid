@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -42,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView playerCard, computer1Card, computer2Card, computer3Card;
     private ImageView suitPlayed;
     private boolean wtfBool = true;
-
+    private MediaPlayer terminator, zombo, hal;
     private Animation passLeftAnimation, passRightAnimation, passAcrossAnimation, middle1, middle2, middle3, middle4, middle5, middle6, middle7, middle8, middle9, middle10, middle11, middle12, middle13;
 
     @Override
@@ -1749,4 +1751,48 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+
+    public void clickInfoAlert(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle(getString(R.string.hearts_reference));
+        LayoutInflater alertLayout = this.getLayoutInflater();
+        View alertView = alertLayout.inflate(R.layout.hearts_info, null);
+        builder.setView(alertView);
+//        builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                removeCenterIcon();
+//                setUpGame();
+//                displayImages();
+//                createListeners();
+//                beginRound();
+//            }
+//        });
+        builder.setIcon(R.mipmap.ic_launcher);
+        builder.setCancelable(true);
+        builder.show();
+        TextView aboutHearts = (TextView) alertView.findViewById(R.id.about_hearts);
+        String infoHolder = getString(R.string.hearts_intro_line) + "\n" + "\n" +
+                getString(R.string.hearts_points_line) + "\n" + "\n" +
+                getString(R.string.hearts_breaking_hearts) + "\n" + "\n" +
+                getString(R.string.hearts_shoot_moon);
+        aboutHearts.setMovementMethod(new ScrollingMovementMethod());
+        aboutHearts.setText(infoHolder);
+    }
+
+    public void HalClicker(View view) {
+        hal = MediaPlayer.create(this, R.raw.hal_what_do_dave);
+        hal.start();
+    }
+
+    public void ZomboClicker(View view) {
+        zombo = MediaPlayer.create(this, R.raw.zombo_com);
+        zombo.start();
+    }
+
+    public void TerminatorClicker(View view) {
+        terminator = MediaPlayer.create(this, R.raw.terminator);
+        terminator.start();
+    }
 }
+
