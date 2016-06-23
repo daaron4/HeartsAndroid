@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
@@ -26,9 +28,6 @@ import java.io.ObjectInputStream;
 public class NameActivity extends AppCompatActivity {
 
     private EditText userNameInput;
-    private EditText computer1Input;
-    private EditText computer2Input;
-    private EditText computer3Input;
     private String[] playerNames;
 
     @Override
@@ -37,15 +36,12 @@ public class NameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_name);
 
         userNameInput = (EditText) findViewById(R.id.user_name_input);
-        computer1Input = (EditText) findViewById(R.id.computer1_input);
-        computer2Input = (EditText) findViewById(R.id.computer2_input);
-        computer3Input = (EditText) findViewById(R.id.computer3_input);
         playerNames = new String[4];
     }
 
     // Skips shuffle, goes right into main activity with an extra boolean, telling that
     // activity to load save game instead of start new one
-    public void clickedContinueHearts (View view) {
+    public void clickedContinueHearts(View view) {
         try {
             FileInputStream fis = getApplicationContext().openFileInput("table.dat");
             ObjectInputStream is = new ObjectInputStream(fis);
@@ -69,7 +65,7 @@ public class NameActivity extends AppCompatActivity {
             fis.close();
             // Create alert dialog here telling user previous save game will be overwritten:
             AlertDialog.Builder builder = new AlertDialog.Builder(NameActivity.this);
-            builder.setTitle("Hearts");
+            builder.setTitle(getString(R.string.app_name));
             builder.setMessage("Your previous save game will be overwritten, continue?");
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
@@ -105,18 +101,6 @@ public class NameActivity extends AppCompatActivity {
             playerDefault = userNameInput.getText().toString();
         }
 
-        if (!computer1Input.getText().toString().equals("")) {
-            computer1Default = computer1Input.getText().toString();
-        }
-
-        if (!computer2Input.getText().toString().equals("")) {
-            computer2Default = computer2Input.getText().toString();
-        }
-
-        if (!computer3Input.getText().toString().equals("")) {
-            computer3Default = computer3Input.getText().toString();
-        }
-
         playerNames[0] = playerDefault;
         playerNames[1] = computer1Default;
         playerNames[2] = computer2Default;
@@ -136,9 +120,15 @@ public class NameActivity extends AppCompatActivity {
         editor.putString("playernames", sb.toString());
         editor.commit();
 
-            Intent shuffleIntent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(shuffleIntent);
-            Toast.makeText(NameActivity.this, "Try Again", Toast.LENGTH_SHORT).show();
+        Pair<View, String> morphHal = Pair.create(findViewById(R.id.hal_name_icon), "hal_morph");
+        Pair<View, String> morphTerm = Pair.create(findViewById(R.id.terminator_name_icon), "terminator_morph");
+        Pair<View, String> morphZombo = Pair.create(findViewById(R.id.zombo_name_icon), "zombo_morph");
+
+        ActivityOptionsCompat morpher = ActivityOptionsCompat.makeSceneTransitionAnimation(this, morphHal, morphTerm, morphZombo);
+
+        Intent shuffleIntent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(shuffleIntent, morpher.toBundle());
+        Toast.makeText(NameActivity.this, "Try Again", Toast.LENGTH_SHORT).show();
 
     }
 }

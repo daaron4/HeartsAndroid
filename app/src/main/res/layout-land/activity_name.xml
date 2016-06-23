@@ -27,49 +27,80 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:layout_marginBottom="@dimen/activity_horizontal_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:hint="Player Name"
-        android:maxLength="10"
-        android:layout_below="@+id/welcome_to_hearts"/>
+        android:maxLength="12"
+        android:inputType="textCapWords"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="70dp"
+        />
 
-    <EditText
+    <ImageView
+        android:id="@+id/terminator_name_icon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_below="@id/welcome_to_hearts"
+        android:layout_centerHorizontal="true"
+        android:layout_marginRight="82dp"
+        android:layout_marginLeft="82dp"
+        android:src="@drawable/terminator_heart"
+        android:transitionName="terminator_morph"
+        />
+
+    <ImageView
+        android:id="@+id/hal_name_icon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_below="@id/welcome_to_hearts"
+        android:layout_toLeftOf="@id/terminator_name_icon"
+        android:src="@drawable/hal_lgheart"
+        android:transitionName="hal_morph"
+        />
+
+    <ImageView
+        android:id="@+id/zombo_name_icon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_below="@id/welcome_to_hearts"
+        android:layout_toRightOf="@id/terminator_name_icon"
+        android:src="@drawable/zombo_heart"
+        android:transitionName="zombo_morph"
+        />
+
+    <TextView
         android:id="@+id/computer1_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:layout_marginBottom="@dimen/activity_horizontal_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:hint="Computer 1"
-        android:maxLength="10"
-        android:layout_below="@id/user_name_input"/>
+        android:text="Hal 9000"
+        android:layout_toLeftOf="@id/computer2_input"
+        android:layout_below="@id/hal_name_icon"
+        android:layout_marginTop="5dp"/>
 
-    <EditText
+    <TextView
         android:id="@+id/computer2_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:layout_marginBottom="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:hint="Computer 2"
-        android:maxLength="10"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/welcome_to_hearts"/>
+        android:text="Terminator"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/terminator_name_icon"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="55dp"
+        android:layout_marginRight="40dp"/>
 
-    <EditText
+    <TextView
         android:id="@+id/computer3_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:layout_marginBottom="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:hint="Computer 3"
-        android:maxLength="10"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/computer2_input"/>
+        android:text="Zombocom"
+        android:layout_toRightOf="@id/computer2_input"
+        android:layout_below="@id/zombo_name_icon"
+        android:layout_marginTop="5dp"/>
 
     <Button
         android:id="@+id/continue_hearts"
