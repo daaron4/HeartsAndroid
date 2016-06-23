@@ -9,10 +9,13 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -436,8 +439,20 @@ public class MainActivity extends AppCompatActivity {
                     removeCenterIcon();
                     displayScorePopUp();
                 } else {
-                    removeCenterIcon();
-                    beginRound();
+
+                    Log.e("Reset/Clear", "3");
+
+
+                    moveViewToScreenCenter(computer1Card);
+                    moveViewToScreenCenter(computer3Card);
+                    moveViewToScreenCenter(computer2Card);
+                    moveViewToScreenCenter(playerCard);
+
+
+
+                    Log.e("Begin Round/Rmvecenter", "3");
+//                    removeCenterIcon();
+//                    beginRound();
                 }
             }
         });
@@ -462,11 +477,17 @@ public class MainActivity extends AppCompatActivity {
             builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    removeCenterIcon();
+                    moveViewToScreenCenter(computer1Card);
+                    moveViewToScreenCenter(computer3Card);
+                    moveViewToScreenCenter(computer2Card);
+                    moveViewToScreenCenter(playerCard);
+
+
+//                    removeCenterIcon();
                     setUpGame();
                     displayImages();
                     createListeners();
-                    beginRound();
+//                    beginRound();
                 }
             });
             builder.setIcon(R.mipmap.ic_launcher);
@@ -538,41 +559,60 @@ public class MainActivity extends AppCompatActivity {
             if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer2()) {
                 computerSelection = HAL9000.computer1MakesMove();
                 Table.getInstance().getBoard().add(computerSelection);
+                Log.e("Image on Thing", "5");
+                Log.e("Rounds Played:", Integer.toString(Overlord.getInstance().getRoundsPlayed()));
+                Log.e("img id", "res id " + computerSelection.getResId());
+
                 computer1Card.setImageResource(computerSelection.getResId());
+                computer1Card.setVisibility(View.VISIBLE);
+
                 setSuitImage();
 
                 computerSelection = Terminator.computer2MakesMove();
                 Table.getInstance().getBoard().add(computerSelection);
+
                 computer2Card.setImageResource(computerSelection.getResId());
+                computer2Card.setVisibility(View.VISIBLE);
 
                 computerSelection = Zombocom.computer3MakesMove();
                 Table.getInstance().getBoard().add(computerSelection);
+
                 computer3Card.setImageResource(computerSelection.getResId());
+                computer3Card.setVisibility(View.VISIBLE);
 
             } else if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer3()) {
                 computerSelection = Terminator.computer2MakesMove();
                 Table.getInstance().getBoard().add(computerSelection);
+                Log.e("Image on Thing", "5");
+
                 computer2Card.setImageResource(computerSelection.getResId());
+                computer2Card.setVisibility(View.VISIBLE);
                 setSuitImage();
 
                 computerSelection = Zombocom.computer3MakesMove();
                 Table.getInstance().getBoard().add(computerSelection);
+
                 computer3Card.setImageResource(computerSelection.getResId());
+                computer3Card.setVisibility(View.VISIBLE);
 
             } else if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer4()) {
                 computerSelection = Zombocom.computer3MakesMove();
                 Table.getInstance().getBoard().add(computerSelection);
+                Log.e("Image on Thing", "5");
                 computer3Card.setImageResource(computerSelection.getResId());
+                computer3Card.setVisibility(View.VISIBLE);
                 setSuitImage();
             }
         } else {
             passButton.setText(Overlord.getInstance().getPassingDirection());
             passButton.setVisibility(View.VISIBLE);
         }
-
+        activateListeners();
     }
 
     private void setSuitImage() {
+        Log.e("Set suit image", "6");
+
         Suit suit = Table.getInstance().getBoard().get(0).getSuit();
         switch (suit) {
             case Hearts:
@@ -824,6 +864,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void passMiddle(int i) {
+        disableListeners();
+        Log.e("PassMiddle","1");
         switch (i) {
             case 0:
                 b1.startAnimation(middle1);
@@ -866,7 +908,6 @@ public class MainActivity extends AppCompatActivity {
                 b13.startAnimation(middle13);
                 break;
         }
-        disableListeners();
     }
 
     private void passCardSelector(int i) {
@@ -1051,6 +1092,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
+        final ArrayList<Card> computerCardsToPlayer1 = computerCardsToPlayer;
         passLeftAnimation.setAnimationListener(new Animation.AnimationListener() {
 
             @Override
@@ -1063,13 +1105,15 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                cardsReceivedPopUp(computerCardsToPlayer);
+                cardsReceivedPopUp(computerCardsToPlayer1);
             }
 
         });
     }
 
-    private void passRightWait(final ArrayList<Card> computerCardsToPlayer) {
+    private void passRightWait( ArrayList<Card> computerCardsToPlayer) {
+        final ArrayList<Card> computerCardsToPlayer1 = computerCardsToPlayer;
+
         passRightAnimation.setAnimationListener(new Animation.AnimationListener() {
 
             @Override
@@ -1082,7 +1126,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                cardsReceivedPopUp(computerCardsToPlayer);
+                cardsReceivedPopUp(computerCardsToPlayer1);
             }
 
         });
@@ -1109,6 +1153,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void middleWait(final int i) {
+
+        Log.e("MiddleWait", "1");
+
         wtfBool = true;
         if (i == 0) {
             middle1.setAnimationListener(new Animation.AnimationListener() {
@@ -1125,11 +1172,13 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     if(wtfBool) {
+                        Log.e("DisplayTrickWinnerPopup", "2");
                         displayTrickWinnerPopUp();
-                        resetPlayedCards();
+                        Log.e("Remove card", "2");
+//                        resetPlayedCards();
                         removeCardFromView(i);
-                        Table.getInstance().getBoard().clear();
-                        activateListeners();
+//                        Table.getInstance().getBoard().clear();
+//                        activateListeners();
                         wtfBool = false;
                     }
                 }
@@ -1149,11 +1198,13 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     if(wtfBool) {
+                        Log.e("DisplayTrickWinnerPopup", "2");
                         displayTrickWinnerPopUp();
-                        resetPlayedCards();
+                        Log.e("Remove card", "2");
+//                        resetPlayedCards();
                         removeCardFromView(i);
-                        Table.getInstance().getBoard().clear();
-                        activateListeners();
+//                        Table.getInstance().getBoard().clear();
+//                        activateListeners();
                         wtfBool = false;
                     }
                 }
@@ -1174,11 +1225,13 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     if(wtfBool) {
+                        Log.e("DisplayTrickWinnerPopup", "2");
                         displayTrickWinnerPopUp();
-                        resetPlayedCards();
+                        Log.e("Remove card", "2");
+//                        resetPlayedCards();
                         removeCardFromView(i);
-                        Table.getInstance().getBoard().clear();
-                        activateListeners();
+//                        Table.getInstance().getBoard().clear();
+//                        activateListeners();
                         wtfBool = false;
                     }
                 }
@@ -1199,11 +1252,13 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     if(wtfBool) {
+                        Log.e("DisplayTrickWinnerPopup", "2");
                         displayTrickWinnerPopUp();
-                        resetPlayedCards();
+                        Log.e("Remove card", "2");
+//                        resetPlayedCards();
                         removeCardFromView(i);
-                        Table.getInstance().getBoard().clear();
-                        activateListeners();
+//                        Table.getInstance().getBoard().clear();
+//                        activateListeners();
                         wtfBool = false;
                     }
                 }
@@ -1224,11 +1279,13 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     if(wtfBool) {
+                        Log.e("DisplayTrickWinnerPopup", "2");
                         displayTrickWinnerPopUp();
-                        resetPlayedCards();
+                        Log.e("Remove card", "2");
+//                        resetPlayedCards();
                         removeCardFromView(i);
-                        Table.getInstance().getBoard().clear();
-                        activateListeners();
+//                        Table.getInstance().getBoard().clear();
+//                        activateListeners();
                         wtfBool = false;
                     }
 
@@ -1250,11 +1307,13 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     if(wtfBool) {
+                        Log.e("DisplayTrickWinnerPopup", "2");
                         displayTrickWinnerPopUp();
-                        resetPlayedCards();
+                        Log.e("Remove card", "2");
+//                        resetPlayedCards();
                         removeCardFromView(i);
-                        Table.getInstance().getBoard().clear();
-                        activateListeners();
+//                        Table.getInstance().getBoard().clear();
+//                        activateListeners();
                         wtfBool = false;
                     }
                 }
@@ -1275,11 +1334,13 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     if(wtfBool) {
+                        Log.e("DisplayTrickWinnerPopup", "2");
                         displayTrickWinnerPopUp();
-                        resetPlayedCards();
+                        Log.e("Remove card", "2");
+//                        resetPlayedCards();
                         removeCardFromView(i);
-                        Table.getInstance().getBoard().clear();
-                        activateListeners();
+//                        Table.getInstance().getBoard().clear();
+//                        activateListeners();
                         wtfBool = false;
                     }
                 }
@@ -1300,11 +1361,13 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     if(wtfBool) {
+                        Log.e("DisplayTrickWinnerPopup", "2");
                         displayTrickWinnerPopUp();
-                        resetPlayedCards();
+                        Log.e("Remove card", "2");
+//                        resetPlayedCards();
                         removeCardFromView(i);
-                        Table.getInstance().getBoard().clear();
-                        activateListeners();
+//                        Table.getInstance().getBoard().clear();
+//                        activateListeners();
                         wtfBool = false;
                     }
                 }
@@ -1325,11 +1388,13 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     if(wtfBool) {
+                        Log.e("DisplayTrickWinnerPopup", "2");
                         displayTrickWinnerPopUp();
-                        resetPlayedCards();
+                        Log.e("Remove card", "2");
+//                        resetPlayedCards();
                         removeCardFromView(i);
-                        Table.getInstance().getBoard().clear();
-                        activateListeners();
+//                        Table.getInstance().getBoard().clear();
+//                        activateListeners();
                         wtfBool = false;
                     }
                 }
@@ -1350,11 +1415,13 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     if(wtfBool) {
+                        Log.e("DisplayTrickWinnerPopup", "2");
                         displayTrickWinnerPopUp();
-                        resetPlayedCards();
+                        Log.e("Remove card", "2");
+//                        resetPlayedCards();
                         removeCardFromView(i);
-                        Table.getInstance().getBoard().clear();
-                        activateListeners();
+//                        Table.getInstance().getBoard().clear();
+//                        activateListeners();
                         wtfBool = false;
                     }
                 }
@@ -1375,11 +1442,13 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     if(wtfBool) {
+                        Log.e("DisplayTrickWinnerPopup", "2");
                         displayTrickWinnerPopUp();
-                        resetPlayedCards();
+                        Log.e("Remove card", "2");
+//                        resetPlayedCards();
                         removeCardFromView(i);
-                        Table.getInstance().getBoard().clear();
-                        activateListeners();
+//                        Table.getInstance().getBoard().clear();
+//                        activateListeners();
                         wtfBool = false;
                     }
 
@@ -1401,11 +1470,13 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     if(wtfBool) {
+                        Log.e("DisplayTrickWinnerPopup", "2");
                         displayTrickWinnerPopUp();
-                        resetPlayedCards();
+                        Log.e("Remove card", "2");
+//                        resetPlayedCards();
                         removeCardFromView(i);
-                        Table.getInstance().getBoard().clear();
-                        activateListeners();
+//                        Table.getInstance().getBoard().clear();
+//                        activateListeners();
                         wtfBool = false;
                     }
 
@@ -1427,11 +1498,13 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     if(wtfBool) {
+                        Log.e("DisplayTrickWinnerPopup", "2");
                         displayTrickWinnerPopUp();
-                        resetPlayedCards();
+                        Log.e("Remove card", "2");
+//                        resetPlayedCards();
                         removeCardFromView(i);
-                        Table.getInstance().getBoard().clear();
-                        activateListeners();
+//                        Table.getInstance().getBoard().clear();
+//                        activateListeners();
                         wtfBool = false;
                     }
 
@@ -1460,6 +1533,7 @@ public class MainActivity extends AppCompatActivity {
 //                    displayTrickWinnerPopUp();
 //                    removeCardFromView(i);
 //                    Table.getInstance().getBoard().clear();
+                    Log.e("Increment Rounds", "1");
                     Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
                 } else {
                     cantPlayThatPopUp();
@@ -1485,6 +1559,7 @@ public class MainActivity extends AppCompatActivity {
 //                    displayTrickWinnerPopUp();
 //                    removeCardFromView(i);
 //                    Table.getInstance().getBoard().clear();
+                    Log.e("Increment Rounds", "1");
                     Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
                 } else {
                     cantPlayThatPopUp();
@@ -1512,6 +1587,7 @@ public class MainActivity extends AppCompatActivity {
 //                    displayTrickWinnerPopUp();
 //                    removeCardFromView(i);
 //                    Table.getInstance().getBoard().clear();
+                    Log.e("Increment Rounds", "1");
                     Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
                 } else {
                     cantPlayThatPopUp();
@@ -1543,6 +1619,7 @@ public class MainActivity extends AppCompatActivity {
 //                    displayTrickWinnerPopUp();
 //                    removeCardFromView(i);
 //                    Table.getInstance().getBoard().clear();
+                    Log.e("Increment Rounds", "1");
                     Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
                 } else {
                     cantPlayThatPopUp();
@@ -1676,6 +1753,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Todo - This method does some specific stuff
+     * @param computerCardsToPlayer
+     */
     private void cardsReceivedPopUp(ArrayList<Card> computerCardsToPlayer) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle(getString(R.string.app_name));
@@ -1835,6 +1916,168 @@ public class MainActivity extends AppCompatActivity {
             b13.setOnClickListener(onCardClick);
         }
     }
+
+    private void moveViewToScreenCenter(final View view ) {
+        Log.e("RunToCenter", "3");
+
+        DisplayMetrics dm = new DisplayMetrics();
+        this.getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+        final int originalPos[] = new int[2];
+        view.getLocationOnScreen(originalPos);
+
+        int xDest = dm.widthPixels/2;
+        xDest -= (view.getMeasuredWidth()/2);
+        final int yDest = dm.heightPixels/2 - (view.getMeasuredHeight()/2);
+
+
+        TranslateAnimation anim = new TranslateAnimation( 0, xDest - originalPos[0] , 0, yDest - originalPos[1] );
+        anim.setDuration(1000);
+        view.startAnimation(anim);
+
+        final int finalXDest = xDest;
+        anim.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+                if(Overlord.getInstance().getLeadingPLayerAsInt()==1) {
+
+                    TranslateAnimation anim2 = new TranslateAnimation(finalXDest - originalPos[0], 0, yDest - originalPos[1], 1000);
+                    anim2.setDuration(1000);
+                    anim2.setFillAfter(false);
+                    view.startAnimation(anim2);
+                    anim2.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            if (view == playerCard) {
+                                Log.e("Begin Round", "4");
+
+                                resetPlayedCards();
+                                Table.getInstance().getBoard().clear();
+
+                                removeCenterIcon();
+                                beginRound();
+//                          Toast.makeText(MainActivity.this, "Animation Finished", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
+                } if(Overlord.getInstance().getLeadingPLayerAsInt()==2) {
+
+                    TranslateAnimation anim2 = new TranslateAnimation(finalXDest - originalPos[0], -1000, yDest - originalPos[1], 0);
+                    anim2.setDuration(1000);
+                    anim2.setFillAfter(false);
+                    view.startAnimation(anim2);
+                    anim2.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            if (view == playerCard) {
+                                Log.e("Begin Round", "4");
+
+                                resetPlayedCards();
+                                Table.getInstance().getBoard().clear();
+
+                                removeCenterIcon();
+                                beginRound();
+//                          Toast.makeText(MainActivity.this, "Animation Finished", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
+                } if(Overlord.getInstance().getLeadingPLayerAsInt()==3) {
+
+                    TranslateAnimation anim2 = new TranslateAnimation(finalXDest - originalPos[0], 0, yDest - originalPos[1], -1000);
+                    anim2.setDuration(1000);
+                    anim2.setFillAfter(false);
+                    view.startAnimation(anim2);
+                    anim2.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            if (view == playerCard) {
+                                Log.e("Begin Round", "4");
+
+                                resetPlayedCards();
+                                Table.getInstance().getBoard().clear();
+
+                                removeCenterIcon();
+                                beginRound();
+//                          Toast.makeText(MainActivity.this, "Animation Finished", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
+                } if(Overlord.getInstance().getLeadingPLayerAsInt()==4) {
+
+                    TranslateAnimation anim2 = new TranslateAnimation(finalXDest - originalPos[0], 1000, yDest - originalPos[1], 0);
+                    anim2.setDuration(1000);
+                    anim2.setFillAfter(false);
+                    view.startAnimation(anim2);
+                    anim2.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            if (view == playerCard) {
+                                Log.e("Begin Round", "4");
+
+                                resetPlayedCards();
+                                Table.getInstance().getBoard().clear();
+
+                                removeCenterIcon();
+                                beginRound();
+//                          Toast.makeText(MainActivity.this, "Animation Finished", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
+                }
+
+            }
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+    }
+
 
     ImageView.OnClickListener onCardClick = new ImageView.OnClickListener() {
         @Override

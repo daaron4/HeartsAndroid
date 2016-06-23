@@ -34,7 +34,6 @@ public class ShuffleAnimationActivity extends Activity {
         frame.setId(viewId);
         setContentView(frame, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
-
         if (savedInstanceState == null) {
             frame.setBackgroundColor(Color.RED);
             fragment = new Shuffle();
