@@ -73,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        hal = MediaPlayer.create(this, R.raw.hal_no_do_that);
+        hal.start();
         Toast.makeText(MainActivity.this, getString(R.string.no_escape), Toast.LENGTH_LONG).show();
     }
 
