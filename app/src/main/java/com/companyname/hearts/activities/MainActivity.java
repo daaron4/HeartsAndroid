@@ -507,6 +507,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setPositiveButton(getString(R.string.play_again), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                // ToDo: fix
                 Overlord.getInstance().prepareForNextGame();
                 removeCenterIcon();
                 setUpGame();
@@ -518,6 +519,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setNegativeButton(getString(R.string.quit), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                // ToDo: test
                 Toast.makeText(MainActivity.this, getString(R.string.bye), Toast.LENGTH_LONG).show();
                 finish();
             }
@@ -1684,15 +1686,6 @@ public class MainActivity extends AppCompatActivity {
     private void loadGame() {
         Table.loadTable(getApplicationContext());
         Overlord.loadOverlord(getApplicationContext());
-    }
-
-    private void waitABit() {
-        // ToDo: mess with this
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     public void clickInfoAlert(View view) {
