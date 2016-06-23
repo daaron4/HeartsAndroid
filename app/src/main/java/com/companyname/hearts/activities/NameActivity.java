@@ -7,13 +7,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.companyname.hearts.R;
-import com.companyname.hearts.model.Overlord;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -138,12 +136,9 @@ public class NameActivity extends AppCompatActivity {
         editor.putString("playernames", sb.toString());
         editor.commit();
 
-        try {
-            Intent shuffleIntent = new Intent(getApplicationContext(), ShuffleAnimationActivity.class);
+            Intent shuffleIntent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(shuffleIntent);
-        } catch(Error deleteThis) {
             Toast.makeText(NameActivity.this, "Try Again", Toast.LENGTH_SHORT).show();
-        }
-    }
 
+    }
 }
