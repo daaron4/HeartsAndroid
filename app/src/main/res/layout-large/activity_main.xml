@@ -2,7 +2,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#277714">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#277714"
+    tools:context=".activities.MainActivity">
 
     <Button
         android:id="@+id/pass_cards_button"
