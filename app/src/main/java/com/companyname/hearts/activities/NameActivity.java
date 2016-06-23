@@ -51,7 +51,7 @@ public class NameActivity extends AppCompatActivity {
             mainIntent.putExtra("continueOldGame", true);
             startActivity(mainIntent);
         } catch (IOException e) {
-            Toast.makeText(NameActivity.this, "You don't have any saved games!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(NameActivity.this, getString(R.string.no_save_found), Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -66,14 +66,14 @@ public class NameActivity extends AppCompatActivity {
             // Create alert dialog here telling user previous save game will be overwritten:
             AlertDialog.Builder builder = new AlertDialog.Builder(NameActivity.this);
             builder.setTitle(getString(R.string.app_name));
-            builder.setMessage("Your previous save game will be overwritten, continue?");
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            builder.setMessage(getString(R.string.overwrite_save));
+            builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     startTheGameAlready();
                 }
             });
-            builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            builder.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     //does nothing
@@ -128,7 +128,5 @@ public class NameActivity extends AppCompatActivity {
 
         Intent shuffleIntent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(shuffleIntent, morpher.toBundle());
-        Toast.makeText(NameActivity.this, "Try Again", Toast.LENGTH_SHORT).show();
-
     }
 }

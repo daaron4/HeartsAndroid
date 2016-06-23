@@ -1667,7 +1667,7 @@ public class MainActivity extends AppCompatActivity {
                     System.out.println("Ending P3 hand: " + Arrays.toString(Table.getInstance().getPlayer3().getHand().toArray()));
                     break;
                 case NO_PASSING:
-                    Toast.makeText(MainActivity.this, "No Passing!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, getString(R.string.no_passing), Toast.LENGTH_SHORT).show();
                     break;
             }
 
