@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#277714"
-    tools:context=".activities.MainActivity">
+    android:background="#277714">
 
     <Button
         android:id="@+id/pass_cards_button"
@@ -23,6 +21,8 @@
         android:id="@+id/info_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
         android:onClick="clickInfoAlert"
         android:background="@drawable/circleimagebutton"
         android:src="@android:drawable/ic_dialog_info"
@@ -31,8 +31,8 @@
     <!--Community Cards, Player Names, and Suit Indicator-->
 
     <RelativeLayout
-        android:layout_width="380dp"
-        android:layout_height="250dp"
+        android:layout_width="900dp"
+        android:layout_height="575dp"
         android:layout_gravity="center"
         android:layout_marginBottom="10dp">
 
@@ -49,10 +49,11 @@
 
         <ImageView
             android:id="@+id/hal_player_icon"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
+            android:layout_marginLeft="5dp"
             android:background="@drawable/hal_lgheart"
             android:onClick="HalClicker"/>
 
@@ -74,9 +75,8 @@
             android:id="@+id/terminator_player_icon"
             android:layout_centerInParent="true"
             android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/computer2_card"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             android:background="@drawable/terminator_heart"
             android:onClick="TerminatorClicker"
             />
@@ -97,8 +97,9 @@
             android:layout_centerInParent="true"
             android:layout_alignParentRight="true"
             android:background="@drawable/zombo_heart"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             android:onClick="ZomboClicker"
             />
 
@@ -117,21 +118,21 @@
 
         <ImageView
             android:id="@+id/played_suit"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             android:layout_centerInParent="true"/>
 
         <ImageView
             android:id="@+id/player_card"
-            android:layout_width="45dp"
-            android:layout_height="75dp"
+            android:layout_width="90dp"
+            android:layout_height="150dp"
             android:layout_below="@+id/played_suit"
             android:layout_centerHorizontal="true"/>
 
         <ImageView
             android:id="@+id/computer1_card"
-            android:layout_width="45dp"
-            android:layout_height="75dp"
+            android:layout_width="90dp"
+            android:layout_height="150dp"
             android:layout_marginRight="10dp"
             android:rotation="-90"
             android:layout_toLeftOf="@+id/played_suit"
@@ -139,15 +140,15 @@
 
         <ImageView
             android:id="@+id/computer2_card"
-            android:layout_width="45dp"
-            android:layout_height="75dp"
+            android:layout_width="90dp"
+            android:layout_height="150dp"
             android:layout_above="@+id/played_suit"
             android:layout_centerHorizontal="true"/>
 
         <ImageView
             android:id="@+id/computer3_card"
-            android:layout_width="45dp"
-            android:layout_height="75dp"
+            android:layout_width="90dp"
+            android:layout_height="150dp"
             android:layout_marginLeft="10dp"
             android:rotation="90"
             android:layout_toRightOf="@+id/played_suit"
@@ -656,6 +657,5 @@
         android:layout_marginRight="-50dp"
         android:rotation="90"
         android:src="@drawable/back" />
-
 
 </FrameLayout>
