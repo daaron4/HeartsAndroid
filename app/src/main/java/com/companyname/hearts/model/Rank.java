@@ -1,5 +1,10 @@
 package com.companyname.hearts.model;
 
+/*
+    This enum represents the Rank of a Card. Each rank has a name,
+    and an Integer value for how 'strong' it is
+ */
+
 public enum Rank {
 	Deuce(2),
 	Three(3),

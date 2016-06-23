@@ -11,6 +11,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/*
+    The Overlord is responsible for maintaining rules and calculations throughout the game.
+ */
+
 public class Overlord implements Serializable {
 
     private boolean playing;
@@ -49,6 +53,23 @@ public class Overlord implements Serializable {
             return false;
         }
     }
+
+    // ToDo: tell john about this?
+    public int getLeadingPLayerAsInt() {
+        if (leadingPlayer.getName().equals(Table.getInstance().getPlayer1().getName())) {
+            return 1;
+        }
+        else if (leadingPlayer.getName().equals(Table.getInstance().getPlayer2().getName())) {
+            return 2;
+        }
+        else if (leadingPlayer.getName().equals(Table.getInstance().getPlayer3().getName())) {
+            return 3;
+        }
+        else {
+            return 4;
+        }
+    }
+
 
     public static void putInstance(Overlord newInstance) {
         instance = newInstance;
@@ -362,7 +383,6 @@ public class Overlord implements Serializable {
         return Direction.NO_PASSING;
     }
 
-    // ToDo: jokers are fucking up can play card, when the user must break hearts:
     public boolean canPlayCard(Card userCard, Player whosPlaying) {
         if (getRoundsPlayed() == 1) {
             if (getLeadingPlayer() == whosPlaying) {
@@ -413,7 +433,7 @@ public class Overlord implements Serializable {
             }
 
         }
-        // ToDo: remove this eventually:
+
         ////////////////////////  joker crap: ///////////////////////////////////
 
         // Make a temporary hand that is duplicate of original hand:

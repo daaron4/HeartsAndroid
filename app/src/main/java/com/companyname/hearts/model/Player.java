@@ -4,6 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/*
+    The Player class contains blueprints for each player in the game. Each Player
+    has a name, their current points, an ArrayList of cards containing their current hand,
+    as well as an ArrayList of cards containing the cards that they have won during the round.
+ */
+
 public class Player implements Serializable {
 	private String name;
 	private int points;
@@ -49,6 +55,7 @@ public class Player implements Serializable {
 		this.hand = hand;
 	}
 
+    // Method that tells the MainActivity how many cards this player has selected during passing.
 	public int getNumberOfSelectedCards() {
         int selectedCards = 0;
         for (int i = 0; i < getHand().size(); i++) {
@@ -59,6 +66,7 @@ public class Player implements Serializable {
         return selectedCards;
     }
 
+    // Method for organizing the hand of the Player.
 	public void organizeHand() {
         int spot = 0;
         for (int i = 0; i < getHand().size(); i++) {

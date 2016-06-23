@@ -1,19 +1,29 @@
 package com.companyname.hearts.activities;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.companyname.hearts.R;
+import com.companyname.hearts.model.Overlord;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+
+/*
+    This activity is the starting activity that lets the user set
+    their name, as well as the names of the three computers. The
+    user can also decide if they wish to load their previous save or not.
+ */
 
 public class NameActivity extends AppCompatActivity {
 
@@ -35,6 +45,8 @@ public class NameActivity extends AppCompatActivity {
         playerNames = new String[4];
     }
 
+    // Skips shuffle, goes right into main activity with an extra boolean, telling that
+    // activity to load save game instead of start new one
     public void clickedContinueHearts (View view) {
         try {
             FileInputStream fis = getApplicationContext().openFileInput("table.dat");
@@ -51,6 +63,41 @@ public class NameActivity extends AppCompatActivity {
     }
 
     public void clickedStartHearts(View view) {
+        // Begin check for saved game
+        try {
+            FileInputStream fis = getApplicationContext().openFileInput("table.dat");
+            ObjectInputStream is = new ObjectInputStream(fis);
+            is.close();
+            fis.close();
+            // Create alert dialog here telling user previous save game will be overwritten:
+            AlertDialog.Builder builder = new AlertDialog.Builder(NameActivity.this);
+            builder.setTitle("Hearts");
+            builder.setMessage("Your previous save game will be overwritten, continue?");
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    startTheGameAlready();
+                }
+            });
+            builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //does nothing
+                }
+            });
+            builder.setIcon(R.mipmap.ic_launcher);
+            builder.setCancelable(false);
+            builder.show();
+        }
+        // No save game exists, start regular game:
+        catch (IOException e) {
+            startTheGameAlready();
+        }
+
+    }
+
+    // Method that starts a new game:
+    private void startTheGameAlready() {
         String playerDefault = "Player 1";
         String computer1Default = "Computer 1";
         String computer2Default = "Computer 2";
@@ -83,7 +130,6 @@ public class NameActivity extends AppCompatActivity {
         for (int i = 0; i < playerNames.length; i++) {
             sb.append(playerNames[i]).append(",");
         }
-        //TODO: Change sharedPrefs name?
 
         //store value string in shared prefs
         SharedPreferences sharedpreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE);
@@ -95,10 +141,9 @@ public class NameActivity extends AppCompatActivity {
         try {
             Intent shuffleIntent = new Intent(getApplicationContext(), ShuffleAnimationActivity.class);
             startActivity(shuffleIntent);
-        } catch(Error e) {
+        } catch(Error deleteThis) {
             Toast.makeText(NameActivity.this, "Try Again", Toast.LENGTH_SHORT).show();
         }
-
     }
 
 }

@@ -1510,7 +1510,7 @@ public class MainActivity extends AppCompatActivity {
                 if (Overlord.getInstance().canPlayCard(Table.getInstance().getPlayer1().getHand().get(i), Table.getInstance().getPlayer1())) {
                     Table.getInstance().getBoard().add(Table.getInstance().getPlayer1().getHand().get(i));
                     playerCard.setImageResource(Table.getInstance().getPlayer1().getHand().get(i).getResId());
-                    // ToDo: deal with issue with removing cards:
+
                     Table.getInstance().getPlayer1().getHand().remove(i);
                     Table.getInstance().getPlayer1().getHand().add(i, new Card(Rank.Joker, Suit.Joker, R.drawable.derpycard));
 
@@ -1702,6 +1702,58 @@ public class MainActivity extends AppCompatActivity {
         Overlord.loadOverlord(getApplicationContext());
     }
 
+    private void waitABit() {
+        // ToDo: mess with this
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void clickInfoAlert(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle(getString(R.string.hearts_reference));
+        LayoutInflater alertLayout = this.getLayoutInflater();
+        View alertView = alertLayout.inflate(R.layout.hearts_info, null);
+        builder.setView(alertView);
+//        builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                removeCenterIcon();
+//                setUpGame();
+//                displayImages();
+//                createListeners();
+//                beginRound();
+//            }
+//        });
+        builder.setIcon(R.mipmap.ic_launcher);
+        builder.setCancelable(true);
+        builder.show();
+        TextView aboutHearts = (TextView) alertView.findViewById(R.id.about_hearts);
+        String infoHolder = getString(R.string.hearts_intro_line) + "\n" + "\n" +
+                getString(R.string.hearts_points_line) + "\n" + "\n" +
+                getString(R.string.hearts_breaking_hearts) + "\n" + "\n" +
+                getString(R.string.hearts_shoot_moon);
+        aboutHearts.setMovementMethod(new ScrollingMovementMethod());
+        aboutHearts.setText(infoHolder);
+    }
+
+    public void HalClicker(View view) {
+        hal = MediaPlayer.create(this, R.raw.hal_what_do_dave);
+        hal.start();
+    }
+
+    public void ZomboClicker(View view) {
+        zombo = MediaPlayer.create(this, R.raw.zombo_com);
+        zombo.start();
+    }
+
+    public void TerminatorClicker(View view) {
+        terminator = MediaPlayer.create(this, R.raw.terminator);
+        terminator.start();
+    }
+
     ImageView.OnClickListener onCardClick = new ImageView.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -1752,47 +1804,5 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    public void clickInfoAlert(View view) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle(getString(R.string.hearts_reference));
-        LayoutInflater alertLayout = this.getLayoutInflater();
-        View alertView = alertLayout.inflate(R.layout.hearts_info, null);
-        builder.setView(alertView);
-//        builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//                removeCenterIcon();
-//                setUpGame();
-//                displayImages();
-//                createListeners();
-//                beginRound();
-//            }
-//        });
-        builder.setIcon(R.mipmap.ic_launcher);
-        builder.setCancelable(true);
-        builder.show();
-        TextView aboutHearts = (TextView) alertView.findViewById(R.id.about_hearts);
-        String infoHolder = getString(R.string.hearts_intro_line) + "\n" + "\n" +
-                getString(R.string.hearts_points_line) + "\n" + "\n" +
-                getString(R.string.hearts_breaking_hearts) + "\n" + "\n" +
-                getString(R.string.hearts_shoot_moon);
-        aboutHearts.setMovementMethod(new ScrollingMovementMethod());
-        aboutHearts.setText(infoHolder);
-    }
-
-    public void HalClicker(View view) {
-        hal = MediaPlayer.create(this, R.raw.hal_what_do_dave);
-        hal.start();
-    }
-
-    public void ZomboClicker(View view) {
-        zombo = MediaPlayer.create(this, R.raw.zombo_com);
-        zombo.start();
-    }
-
-    public void TerminatorClicker(View view) {
-        terminator = MediaPlayer.create(this, R.raw.terminator);
-        terminator.start();
-    }
 }
 
