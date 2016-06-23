@@ -23,7 +23,6 @@ public class Overlord implements Serializable {
     private int roundsPlayed;
     private int handsPlayed;
     private Player leadingPlayer;
-    private String scoreTracker = "";
 
     private static Overlord instance = null;
 
@@ -34,8 +33,6 @@ public class Overlord implements Serializable {
         passing = true;
         roundsPlayed = 1;
         handsPlayed = 0;
-        scoreTracker += Table.getInstance().getPlayer1().getName() + " | " + Table.getInstance().getPlayer2().getName() +
-                " | " + Table.getInstance().getPlayer3().getName() + " | " + Table.getInstance().getPlayer4().getName() + "\n";
     }
 
     public static Overlord getInstance() {
@@ -54,7 +51,6 @@ public class Overlord implements Serializable {
         }
     }
 
-    // ToDo: tell john about this?
     public int getLeadingPLayerAsInt() {
         if (leadingPlayer.getName().equals(Table.getInstance().getPlayer1().getName())) {
             return 1;
@@ -69,7 +65,6 @@ public class Overlord implements Serializable {
             return 4;
         }
     }
-
 
     public static void putInstance(Overlord newInstance) {
         instance = newInstance;
@@ -220,20 +215,10 @@ public class Overlord implements Serializable {
         passing = true;
         roundsPlayed = 1;
         handsPlayed = 0;
-        scoreTracker = "";
         Table.getInstance().getPlayer1().setPoints(0);
         Table.getInstance().getPlayer2().setPoints(0);
         Table.getInstance().getPlayer3().setPoints(0);
         Table.getInstance().getPlayer4().setPoints(0);
-    }
-
-    public void updateScoreTracker() {
-        scoreTracker += Table.getInstance().getPlayer1().getPoints() + " | " + Table.getInstance().getPlayer2().getPoints() +
-                " | " + Table.getInstance().getPlayer3().getPoints() + " | " + Table.getInstance().getPlayer4().getPoints() + "\n";
-    }
-
-    public String getScoreTracker() {
-        return scoreTracker;
     }
 
     public void updatePlaying() {
@@ -451,7 +436,6 @@ public class Overlord implements Serializable {
         // Use this hand from now on...
 
         ////////////////////////////////////////////////////////////////////////
-
 
         // If all you have is hearts or all hearts and the queen of spades, you
         // can play right away no matter what:
