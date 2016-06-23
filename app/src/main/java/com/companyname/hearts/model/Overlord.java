@@ -11,6 +11,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/*
+    The Overlord is responsible for maintaining rules and calculations throughout the game.
+ */
+
 public class Overlord implements Serializable {
 
     private boolean playing;

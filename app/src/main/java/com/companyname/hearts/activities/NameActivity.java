@@ -19,6 +19,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+/*
+    This activity is the starting activity that lets the user set
+    their name, as well as the names of the three computers. The
+    user can also decide if they wish to load their previous save or not.
+ */
+
 public class NameActivity extends AppCompatActivity {
 
     private EditText userNameInput;
@@ -39,6 +45,8 @@ public class NameActivity extends AppCompatActivity {
         playerNames = new String[4];
     }
 
+    // Skips shuffle, goes right into main activity with an extra boolean, telling that
+    // activity to load save game instead of start new one
     public void clickedContinueHearts (View view) {
         try {
             FileInputStream fis = getApplicationContext().openFileInput("table.dat");
@@ -55,12 +63,13 @@ public class NameActivity extends AppCompatActivity {
     }
 
     public void clickedStartHearts(View view) {
+        // Begin check for saved game
         try {
             FileInputStream fis = getApplicationContext().openFileInput("table.dat");
             ObjectInputStream is = new ObjectInputStream(fis);
             is.close();
             fis.close();
-            // ToDo: create alert dialog here telling user previous save game will be overwritten:
+            // Create alert dialog here telling user previous save game will be overwritten:
             AlertDialog.Builder builder = new AlertDialog.Builder(NameActivity.this);
             builder.setTitle("Hearts");
             builder.setMessage("Your previous save game will be overwritten, continue?");
@@ -79,12 +88,15 @@ public class NameActivity extends AppCompatActivity {
             builder.setIcon(R.mipmap.ic_launcher);
             builder.setCancelable(false);
             builder.show();
-        } catch (IOException e) {
+        }
+        // No save game exists, start regular game:
+        catch (IOException e) {
             startTheGameAlready();
         }
 
     }
 
+    // Method that starts a new game:
     private void startTheGameAlready() {
         String playerDefault = "Player 1";
         String computer1Default = "Computer 1";

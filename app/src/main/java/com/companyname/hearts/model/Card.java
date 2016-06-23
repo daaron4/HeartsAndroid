@@ -2,6 +2,12 @@ package com.companyname.hearts.model;
 
 import java.io.Serializable;
 
+/*
+    The Card class contains blueprints for cards. Each card has rank, suit,
+    and the resourceId for its corresponding photo. Every card also has the
+    ability to be 'selected' or not during passing.
+*/
+
 public class Card implements Comparable<Card>, Serializable {
 
 	private Rank rank;

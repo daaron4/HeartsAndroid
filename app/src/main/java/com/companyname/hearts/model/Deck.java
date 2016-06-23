@@ -5,6 +5,10 @@ import com.companyname.hearts.R;
 import java.util.ArrayList;
 import java.util.Random;
 
+/*
+    This is the Deck class that creates an ArrayList of 52 unique Cards
+ */
+
 public class Deck {
 
     private ArrayList<Card> deck;

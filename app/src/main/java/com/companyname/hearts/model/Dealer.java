@@ -2,12 +2,13 @@ package com.companyname.hearts.model;
 
 import java.util.Random;
 
-/**
- * Created by David on 6/11/2016.
+/*
+    This is the Dealer class. It is a singleton that creates a Deck once and only once.
+    This class is responsible for shuffling the deck, and dealing out the deck
+    to four Players.
  */
-public class Dealer {
 
-    // ToDo: decide if dealer should be saved
+public class Dealer {
 
     private static Dealer instance = null;
 
@@ -19,7 +20,7 @@ public class Dealer {
     }
 
     public static Dealer getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new Dealer();
         }
         return instance;
@@ -56,6 +57,7 @@ public class Dealer {
 
     }
 
+    // Method for dealing the deck to four Players:
     public void deal(Player player1, Player player2, Player player3, Player player4) {
         for (int i = 0; i < 13; i++) {
             player1.getHand().add(deck.get(i));
