@@ -9,10 +9,15 @@
     <string name="three_cards_max">You cannot pass more than three cards</string>
     <string name="must_pass_three">You must pass three cards</string>
     <string name="cards_received">You received:</string>
+    <string name="no_passing">No passing this round.</string>
 
     <string name="quit">Quit!</string>
     <string name="bye">Bye!</string>
-    <string name="ok">OK!</string>
+    <string name="ok">OK</string>
+    <string name="no">No</string>
+
+    <string name="overwrite_save">Your previous save game will be overwritten, continue?</string>
+    <string name="no_save_found">You do not have any saved games!</string>
 
     <string name="illegal_move">Illegal move, please try another card!</string>
     <string name="no_escape">There is no back in Hearts!!!</string>
@@ -27,8 +32,8 @@
     <string name="player_zombo_com">ZomboCom</string>
 
     <string name="hearts_reference">Hearts Quick Reference</string>
-    <string name="hearts_intro_line">Hearts is a trick-taking game where players attempt to receive as few points as possible; the player with the fewest points when another player has reached one-hundred (100) points is declared the winner.</string>
+    <string name="hearts_intro_line">Hearts is a trick-taking game (highest value card of the starting suit wins a trick) where players attempt to receive as few points as possible; the player with the fewest points when another player has reached one-hundred (100) points is declared the winner.</string>
     <string name="hearts_points_line">In the game, all Heart cards are worth one (1) point while the Queen of Spades is worth thirteen (13) points.</string>
-    <string name="hearts_breaking_hearts">Breaking Hearts: Hearts cannot be played on the first turn, or until they have been broken by being dumped on a suit that the player cannot follow.</string>
+    <string name="hearts_breaking_hearts">Breaking Hearts: Hearts cannot be played on the first turn, or until they have been broken by being played on a suit that the player cannot follow.</string>
     <string name="hearts_shoot_moon">Shooting the Moon: When one player manages to collect all thirteen (13) Heart cards and the Queen of Spades, they receive zero points and the three other players each receive twenty-six (26) points.</string>
 </resources>

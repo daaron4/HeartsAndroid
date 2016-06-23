@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -76,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        hal = MediaPlayer.create(this, R.raw.hal_no_do_that);
+        hal.start();
         Toast.makeText(MainActivity.this, getString(R.string.no_escape), Toast.LENGTH_LONG).show();
     }
 
@@ -1640,7 +1641,7 @@ public class MainActivity extends AppCompatActivity {
                     System.out.println("Ending P3 hand: " + Arrays.toString(Table.getInstance().getPlayer3().getHand().toArray()));
                     break;
                 case NO_PASSING:
-                    Toast.makeText(MainActivity.this, "No Passing!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, getString(R.string.no_passing), Toast.LENGTH_SHORT).show();
                     break;
             }
 
@@ -1997,6 +1998,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
-
 }
 
