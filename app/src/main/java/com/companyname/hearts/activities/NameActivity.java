@@ -130,7 +130,6 @@ public class NameActivity extends AppCompatActivity {
         for (int i = 0; i < playerNames.length; i++) {
             sb.append(playerNames[i]).append(",");
         }
-        //TODO: Change sharedPrefs name?
 
         //store value string in shared prefs
         SharedPreferences sharedpreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE);

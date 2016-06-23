@@ -383,7 +383,6 @@ public class Overlord implements Serializable {
         return Direction.NO_PASSING;
     }
 
-    // ToDo: jokers are fucking up can play card, when the user must break hearts:
     public boolean canPlayCard(Card userCard, Player whosPlaying) {
         if (getRoundsPlayed() == 1) {
             if (getLeadingPlayer() == whosPlaying) {
@@ -434,7 +433,7 @@ public class Overlord implements Serializable {
             }
 
         }
-        // ToDo: remove this eventually:
+
         ////////////////////////  joker crap: ///////////////////////////////////
 
         // Make a temporary hand that is duplicate of original hand:
