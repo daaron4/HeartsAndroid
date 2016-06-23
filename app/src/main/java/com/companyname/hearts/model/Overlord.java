@@ -50,6 +50,23 @@ public class Overlord implements Serializable {
         }
     }
 
+    // ToDo: tell john about this?
+    public int getLeadingPLayerAsInt() {
+        if (leadingPlayer.getName().equals(Table.getInstance().getPlayer1().getName())) {
+            return 1;
+        }
+        else if (leadingPlayer.getName().equals(Table.getInstance().getPlayer2().getName())) {
+            return 2;
+        }
+        else if (leadingPlayer.getName().equals(Table.getInstance().getPlayer3().getName())) {
+            return 3;
+        }
+        else {
+            return 4;
+        }
+    }
+
+
     public static void putInstance(Overlord newInstance) {
         instance = newInstance;
     }
