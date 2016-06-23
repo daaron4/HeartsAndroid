@@ -26,6 +26,8 @@
         android:onClick="clickInfoAlert"
         android:background="@drawable/circleimagebutton"
         android:src="@android:drawable/ic_dialog_info"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
         />
 
     <!--Community Cards, Player Names, and Suit Indicator-->
@@ -53,8 +55,10 @@
             android:layout_height="60dp"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
-            android:background="@drawable/hal_lgheart"
-            android:onClick="HalClicker"/>
+            android:src="@drawable/hal_lgheart"
+            android:onClick="HalClicker"
+            android:transitionName="hal_morph"
+            />
 
         <TextView
             android:id="@+id/computer1_name"
@@ -77,8 +81,9 @@
             android:layout_toLeftOf="@+id/computer2_card"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:background="@drawable/terminator_heart"
+            android:src="@drawable/terminator_heart"
             android:onClick="TerminatorClicker"
+            android:transitionName="terminator_morph"
             />
 
         <TextView
@@ -96,10 +101,11 @@
             android:id="@+id/zombo_player_icon"
             android:layout_centerInParent="true"
             android:layout_alignParentRight="true"
-            android:background="@drawable/zombo_heart"
+            android:src="@drawable/zombo_heart"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:onClick="ZomboClicker"
+            android:transitionName="zombo_morph"
             />
 
         <TextView
