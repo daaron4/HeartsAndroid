@@ -594,20 +594,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setSuitImage() {
-        Suit suit = Table.getInstance().getBoard().get(0).getSuit();
-        switch (suit) {
-            case Hearts:
-                suitPlayed.setImageResource(R.drawable.heart);
-                break;
-            case Spades:
-                suitPlayed.setImageResource(R.drawable.spade);
-                break;
-            case Diamonds:
-                suitPlayed.setImageResource(R.drawable.diamond);
-                break;
-            case Clubs:
-                suitPlayed.setImageResource(R.drawable.club);
-                break;
+        if (!Table.getInstance().getBoard().isEmpty()) {
+            Suit suit = Table.getInstance().getBoard().get(0).getSuit();
+            switch (suit) {
+                case Hearts:
+                    suitPlayed.setImageResource(R.drawable.heart);
+                    break;
+                case Spades:
+                    suitPlayed.setImageResource(R.drawable.spade);
+                    break;
+                case Diamonds:
+                    suitPlayed.setImageResource(R.drawable.diamond);
+                    break;
+                case Clubs:
+                    suitPlayed.setImageResource(R.drawable.club);
+                    break;
+            }
         }
     }
 
@@ -1945,7 +1947,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 
     ImageView.OnClickListener onCardClick = new ImageView.OnClickListener() {
         @Override
