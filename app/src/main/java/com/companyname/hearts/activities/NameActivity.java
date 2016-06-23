@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.companyname.hearts.R;
-import com.companyname.hearts.model.Table;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -93,8 +92,13 @@ public class NameActivity extends AppCompatActivity {
         editor.putString("playernames", sb.toString());
         editor.commit();
 
-        Intent shuffleIntent = new Intent(getApplicationContext(), ShuffleAnimationActivity.class);
-        startActivity(shuffleIntent);
+        try {
+            Intent shuffleIntent = new Intent(getApplicationContext(), ShuffleAnimationActivity.class);
+            startActivity(shuffleIntent);
+        } catch(Error e) {
+            Toast.makeText(NameActivity.this, "Try Again", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 }
