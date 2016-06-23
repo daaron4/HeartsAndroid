@@ -455,7 +455,6 @@ public class MainActivity extends AppCompatActivity {
         Overlord.getInstance().calculatePoints();
         Overlord.getInstance().updatePlaying();
         Overlord.getInstance().reset();
-        Overlord.getInstance().updateScoreTracker();
 
         if (!Overlord.getInstance().getPlaying()) {
             playAgainPopUp();
