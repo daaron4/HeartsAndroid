@@ -1944,36 +1944,131 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
 
-                TranslateAnimation anim2 = new TranslateAnimation( finalXDest - originalPos[0], 0, yDest- originalPos[1], 1000 );
-                anim2.setDuration(1000);
-                anim2.setFillAfter(false);
-                view.startAnimation(anim2);
-                anim2.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
+                if(Overlord.getInstance().getLeadingPLayerAsInt()==1) {
 
-                    }
+                    TranslateAnimation anim2 = new TranslateAnimation(finalXDest - originalPos[0], 0, yDest - originalPos[1], 1000);
+                    anim2.setDuration(1000);
+                    anim2.setFillAfter(false);
+                    view.startAnimation(anim2);
+                    anim2.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
 
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        // ToDo: Why is this line here? Don't delete this comment, change it instead.
-                        if(view == playerCard) {
-                            Log.e("Begin Round", "4");
-
-                            resetPlayedCards();
-                            Table.getInstance().getBoard().clear();
-
-                            removeCenterIcon();
-                            beginRound();
-//                            Toast.makeText(MainActivity.this, "Animation Finished", Toast.LENGTH_SHORT).show();
                         }
-                    }
 
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            if (view == playerCard) {
+                                Log.e("Begin Round", "4");
 
-                    }
-                });
+                                resetPlayedCards();
+                                Table.getInstance().getBoard().clear();
+
+                                removeCenterIcon();
+                                beginRound();
+//                          Toast.makeText(MainActivity.this, "Animation Finished", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
+                } if(Overlord.getInstance().getLeadingPLayerAsInt()==2) {
+
+                    TranslateAnimation anim2 = new TranslateAnimation(finalXDest - originalPos[0], -1000, yDest - originalPos[1], 0);
+                    anim2.setDuration(1000);
+                    anim2.setFillAfter(false);
+                    view.startAnimation(anim2);
+                    anim2.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            if (view == playerCard) {
+                                Log.e("Begin Round", "4");
+
+                                resetPlayedCards();
+                                Table.getInstance().getBoard().clear();
+
+                                removeCenterIcon();
+                                beginRound();
+//                          Toast.makeText(MainActivity.this, "Animation Finished", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
+                } if(Overlord.getInstance().getLeadingPLayerAsInt()==3) {
+
+                    TranslateAnimation anim2 = new TranslateAnimation(finalXDest - originalPos[0], 0, yDest - originalPos[1], -1000);
+                    anim2.setDuration(1000);
+                    anim2.setFillAfter(false);
+                    view.startAnimation(anim2);
+                    anim2.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            if (view == playerCard) {
+                                Log.e("Begin Round", "4");
+
+                                resetPlayedCards();
+                                Table.getInstance().getBoard().clear();
+
+                                removeCenterIcon();
+                                beginRound();
+//                          Toast.makeText(MainActivity.this, "Animation Finished", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
+                } if(Overlord.getInstance().getLeadingPLayerAsInt()==4) {
+
+                    TranslateAnimation anim2 = new TranslateAnimation(finalXDest - originalPos[0], 1000, yDest - originalPos[1], 0);
+                    anim2.setDuration(1000);
+                    anim2.setFillAfter(false);
+                    view.startAnimation(anim2);
+                    anim2.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            if (view == playerCard) {
+                                Log.e("Begin Round", "4");
+
+                                resetPlayedCards();
+                                Table.getInstance().getBoard().clear();
+
+                                removeCenterIcon();
+                                beginRound();
+//                          Toast.makeText(MainActivity.this, "Animation Finished", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
+                }
 
             }
             @Override
@@ -1982,6 +2077,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
     ImageView.OnClickListener onCardClick = new ImageView.OnClickListener() {
         @Override
