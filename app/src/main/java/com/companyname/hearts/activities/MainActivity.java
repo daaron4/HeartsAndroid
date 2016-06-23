@@ -866,7 +866,7 @@ public class MainActivity extends AppCompatActivity {
                 b13.startAnimation(middle13);
                 break;
         }
-
+        disableListeners();
     }
 
     private void passCardSelector(int i) {
@@ -1111,7 +1111,6 @@ public class MainActivity extends AppCompatActivity {
     private void middleWait(final int i) {
         wtfBool = true;
         if (i == 0) {
-
             middle1.setAnimationListener(new Animation.AnimationListener() {
 
                 @Override
@@ -1130,6 +1129,7 @@ public class MainActivity extends AppCompatActivity {
                         resetPlayedCards();
                         removeCardFromView(i);
                         Table.getInstance().getBoard().clear();
+                        activateListeners();
                         wtfBool = false;
                     }
                 }
@@ -1153,6 +1153,7 @@ public class MainActivity extends AppCompatActivity {
                         resetPlayedCards();
                         removeCardFromView(i);
                         Table.getInstance().getBoard().clear();
+                        activateListeners();
                         wtfBool = false;
                     }
                 }
@@ -1177,6 +1178,7 @@ public class MainActivity extends AppCompatActivity {
                         resetPlayedCards();
                         removeCardFromView(i);
                         Table.getInstance().getBoard().clear();
+                        activateListeners();
                         wtfBool = false;
                     }
                 }
@@ -1201,6 +1203,7 @@ public class MainActivity extends AppCompatActivity {
                         resetPlayedCards();
                         removeCardFromView(i);
                         Table.getInstance().getBoard().clear();
+                        activateListeners();
                         wtfBool = false;
                     }
                 }
@@ -1225,6 +1228,7 @@ public class MainActivity extends AppCompatActivity {
                         resetPlayedCards();
                         removeCardFromView(i);
                         Table.getInstance().getBoard().clear();
+                        activateListeners();
                         wtfBool = false;
                     }
 
@@ -1250,6 +1254,7 @@ public class MainActivity extends AppCompatActivity {
                         resetPlayedCards();
                         removeCardFromView(i);
                         Table.getInstance().getBoard().clear();
+                        activateListeners();
                         wtfBool = false;
                     }
                 }
@@ -1270,11 +1275,11 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     if(wtfBool) {
-
                         displayTrickWinnerPopUp();
                         resetPlayedCards();
                         removeCardFromView(i);
                         Table.getInstance().getBoard().clear();
+                        activateListeners();
                         wtfBool = false;
                     }
                 }
@@ -1299,6 +1304,7 @@ public class MainActivity extends AppCompatActivity {
                         resetPlayedCards();
                         removeCardFromView(i);
                         Table.getInstance().getBoard().clear();
+                        activateListeners();
                         wtfBool = false;
                     }
                 }
@@ -1323,6 +1329,7 @@ public class MainActivity extends AppCompatActivity {
                         resetPlayedCards();
                         removeCardFromView(i);
                         Table.getInstance().getBoard().clear();
+                        activateListeners();
                         wtfBool = false;
                     }
                 }
@@ -1347,6 +1354,7 @@ public class MainActivity extends AppCompatActivity {
                         resetPlayedCards();
                         removeCardFromView(i);
                         Table.getInstance().getBoard().clear();
+                        activateListeners();
                         wtfBool = false;
                     }
                 }
@@ -1371,6 +1379,7 @@ public class MainActivity extends AppCompatActivity {
                         resetPlayedCards();
                         removeCardFromView(i);
                         Table.getInstance().getBoard().clear();
+                        activateListeners();
                         wtfBool = false;
                     }
 
@@ -1396,6 +1405,7 @@ public class MainActivity extends AppCompatActivity {
                         resetPlayedCards();
                         removeCardFromView(i);
                         Table.getInstance().getBoard().clear();
+                        activateListeners();
                         wtfBool = false;
                     }
 
@@ -1404,7 +1414,6 @@ public class MainActivity extends AppCompatActivity {
             });
         }
         if (i == 12) {
-
             middle13.setAnimationListener(new Animation.AnimationListener() {
 
                 @Override
@@ -1422,6 +1431,7 @@ public class MainActivity extends AppCompatActivity {
                         resetPlayedCards();
                         removeCardFromView(i);
                         Table.getInstance().getBoard().clear();
+                        activateListeners();
                         wtfBool = false;
                     }
 
@@ -1752,6 +1762,78 @@ public class MainActivity extends AppCompatActivity {
     public void TerminatorClicker(View view) {
         terminator = MediaPlayer.create(this, R.raw.terminator);
         terminator.start();
+    }
+
+    private void disableListeners() {
+        b1.setOnClickListener(null);
+        b2.setOnClickListener(null);
+        b3.setOnClickListener(null);
+        b4.setOnClickListener(null);
+        b5.setOnClickListener(null);
+        b6.setOnClickListener(null);
+        b7.setOnClickListener(null);
+        b8.setOnClickListener(null);
+        b9.setOnClickListener(null);
+        b10.setOnClickListener(null);
+        b11.setOnClickListener(null);
+        b12.setOnClickListener(null);
+        b13.setOnClickListener(null);
+    }
+
+    private void activateListeners() {
+        Card c1 = Table.getInstance().getPlayer1().getHand().get(0);
+        Card c2 = Table.getInstance().getPlayer1().getHand().get(1);
+        Card c3 = Table.getInstance().getPlayer1().getHand().get(2);
+        Card c4 = Table.getInstance().getPlayer1().getHand().get(3);
+        Card c5 = Table.getInstance().getPlayer1().getHand().get(4);
+        Card c6 = Table.getInstance().getPlayer1().getHand().get(5);
+        Card c7 = Table.getInstance().getPlayer1().getHand().get(6);
+        Card c8 = Table.getInstance().getPlayer1().getHand().get(7);
+        Card c9 = Table.getInstance().getPlayer1().getHand().get(8);
+        Card c10 = Table.getInstance().getPlayer1().getHand().get(9);
+        Card c11 = Table.getInstance().getPlayer1().getHand().get(10);
+        Card c12 = Table.getInstance().getPlayer1().getHand().get(11);
+        Card c13 = Table.getInstance().getPlayer1().getHand().get(12);
+
+        if (!c1.toString().equals("Joker of Joker")) {
+            b1.setOnClickListener(onCardClick);
+        }
+        if (!c2.toString().equals("Joker of Joker")) {
+            b2.setOnClickListener(onCardClick);
+        }
+        if (!c3.toString().equals("Joker of Joker")) {
+            b3.setOnClickListener(onCardClick);
+        }
+        if (!c4.toString().equals("Joker of Joker")) {
+            b4.setOnClickListener(onCardClick);
+        }
+        if (!c5.toString().equals("Joker of Joker")) {
+            b5.setOnClickListener(onCardClick);
+        }
+        if (!c6.toString().equals("Joker of Joker")) {
+            b6.setOnClickListener(onCardClick);
+        }
+        if (!c7.toString().equals("Joker of Joker")) {
+            b7.setOnClickListener(onCardClick);
+        }
+        if (!c8.toString().equals("Joker of Joker")) {
+            b8.setOnClickListener(onCardClick);
+        }
+        if (!c9.toString().equals("Joker of Joker")) {
+            b9.setOnClickListener(onCardClick);
+        }
+        if (!c10.toString().equals("Joker of Joker")) {
+            b10.setOnClickListener(onCardClick);
+        }
+        if (!c11.toString().equals("Joker of Joker")) {
+            b11.setOnClickListener(onCardClick);
+        }
+        if (!c12.toString().equals("Joker of Joker")) {
+            b12.setOnClickListener(onCardClick);
+        }
+        if (!c13.toString().equals("Joker of Joker")) {
+            b13.setOnClickListener(onCardClick);
+        }
     }
 
     ImageView.OnClickListener onCardClick = new ImageView.OnClickListener() {
