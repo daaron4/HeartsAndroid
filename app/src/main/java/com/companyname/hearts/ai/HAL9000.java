@@ -227,6 +227,7 @@ public class HAL9000 {
                             }
                         }
                     } else if (previousSuit == Suit.Spades) {
+
                         if (numOfHeartsComp1 != 0 && numOfHeartsComp1 >= numOfClubsComp1 && numOfHeartsComp1 >= numOfDiamondsComp1) {
                             String lowestHeart = arrayOfHeartsComp1.get(0).toString();
                             for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
