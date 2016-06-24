@@ -135,8 +135,6 @@ public class MainActivity extends AppCompatActivity {
         computer2Name.setText(playerNames[2]);
         computer3Name.setText(playerNames[3]);
         Table.getInstance().initializeTable(playerNames[0], playerNames[1], playerNames[2], playerNames[3]);
-        // ToDo: use this for testing new games:
-        //Table.getInstance().getPlayer3().setPoints(1000);
     }
 
     private void initializeSavedGame() {
@@ -482,9 +480,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setPositiveButton(getString(R.string.play_again), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                // ToDo: fix
                 Overlord.getInstance().prepareForNextGame();
-                removeCenterIcon();
                 setUpGame();
                 displayImages();
                 createListeners();
@@ -494,7 +490,6 @@ public class MainActivity extends AppCompatActivity {
         builder.setNegativeButton(getString(R.string.quit), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // ToDo: test
                 Toast.makeText(MainActivity.this, getString(R.string.bye), Toast.LENGTH_LONG).show();
                 finish();
             }
