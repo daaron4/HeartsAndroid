@@ -130,8 +130,7 @@ public class HAL9000 {
 
         if (Overlord.getInstance().getRoundsPlayed() > 1 && (Overlord.getInstance().amITheLeadingPlayer(Table.getInstance().getPlayer2()))) {
             //this line determines that this computer player is leading the next round
-            //ToDo instead of amITheLeadingPLayer turns into amIThePreviousWinner
-            if (Overlord.getInstance().getRoundsPlayed() >= 3 && (Overlord.getInstance().amITheLeadingPlayer(Table.getInstance().getPlayer2()))) {
+            if (Overlord.getInstance().getRoundsPlayed() >= 3 && (Overlord.getInstance().amIThePreviousWinner(Table.getInstance().getPlayer2()))) {
                 //if the round is greater than 3 we take a look at weather or not we should play this suit.
                 Suit previousSuit = arrayOfOldCards.get(arrayOfOldCards.size() - 4).getSuit();
                 if (Overlord.getInstance().getHeartsBroken()) {
@@ -321,7 +320,6 @@ public class HAL9000 {
                             }
                         }
                     }
-
                 //THIS IS THE CASE THAT HEARTS HAVE NOT BEEN BROKEN!!!
                 } else {
                     if (previousSuit == Suit.Diamonds) {

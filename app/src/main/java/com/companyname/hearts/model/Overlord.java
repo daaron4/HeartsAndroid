@@ -24,6 +24,7 @@ public class Overlord implements Serializable {
     private int handsPlayed;
     private Player leadingPlayer;
     private String scoreTracker = "";
+    private Player previousWinner = null;
 
     private static Overlord instance = null;
 
@@ -70,6 +71,14 @@ public class Overlord implements Serializable {
         }
     }
 
+    public boolean amIThePreviousWinner(Player player) {
+        if (player == previousWinner) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
     public static void putInstance(Overlord newInstance) {
         instance = newInstance;
@@ -120,6 +129,7 @@ public class Overlord implements Serializable {
     }
 
     public void determineTrickWinner() {
+        previousWinner = leadingPlayer;
         System.out.println("Board is: " + Arrays.toString(Table.getInstance().getBoard().toArray()));
         Card winner = Table.getInstance().getBoard().get(0);
         Suit lead = winner.getSuit();
