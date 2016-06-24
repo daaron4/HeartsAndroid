@@ -218,6 +218,7 @@ public class Overlord implements Serializable {
         heartsBroken = false;
         roundsPlayed = 1;
         handsPlayed ++;
+        previousWinner = null;
         getPassingDirection();
     }
 
@@ -227,6 +228,7 @@ public class Overlord implements Serializable {
         passing = true;
         roundsPlayed = 1;
         handsPlayed = 0;
+        previousWinner = null;
         Table.getInstance().getPlayer1().setPoints(0);
         Table.getInstance().getPlayer2().setPoints(0);
         Table.getInstance().getPlayer3().setPoints(0);
