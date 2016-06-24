@@ -207,7 +207,7 @@ public class Terminator {
                         return computerSelection;
                     }
                 }
-            }
+            }//Todo THIS DOESN'T HAVE ANYTHING IN IT!
             //doesnt have to follow suit
             else {
 
