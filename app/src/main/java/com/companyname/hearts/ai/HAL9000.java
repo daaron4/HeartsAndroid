@@ -275,6 +275,7 @@ public class HAL9000 {
                         }
                     } else if (previousSuit == Suit.Hearts) {
                         if (numOfSpadesComp1 >= numOfClubsComp1 && numOfSpadesComp1 >= numOfDiamondsComp1) {
+                            // ToDo: encountered bug here when HAL had one card left and was leading player
                             String lowestSpade = arrayOfSpadesComp1.get(0).toString();
                             for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
                                 computerSelection = Table.getInstance().getPlayer2().getHand().get(i);

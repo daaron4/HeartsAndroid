@@ -20,9 +20,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 /*
-    This activity is the starting activity that lets the user set
-    their name, as well as the names of the three computers. The
-    user can also decide if they wish to load their previous save or not.
+    This activity is the starting activity that lets the user set their name.
+    The user can also decide if they wish to load their previous save or not.
  */
 
 public class NameActivity extends AppCompatActivity {
@@ -92,10 +91,10 @@ public class NameActivity extends AppCompatActivity {
 
     // Method that starts a new game:
     private void startTheGameAlready() {
-        String playerDefault = "Player 1";
-        String computer1Default = "Computer 1";
-        String computer2Default = "Computer 2";
-        String computer3Default = "Computer 3";
+        String playerDefault = "Player";
+        String computer1Default = "Hal 9000";
+        String computer2Default = "Terminator";
+        String computer3Default = "ZomboCom";
 
         if (!userNameInput.getText().toString().equals("")) {
             playerDefault = userNameInput.getText().toString();
