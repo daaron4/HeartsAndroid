@@ -1,10 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#277714"
     tools:context=".activities.MainActivity">
+
+    <ImageView
+        android:id="@+id/moving_card1"
+        android:layout_width="60dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:src="@drawable/back"
+        />
+    <ImageView
+        android:id="@+id/moving_card2"
+        android:layout_width="60dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:src="@drawable/back"
+        />
+    <ImageView
+        android:id="@+id/moving_card3"
+        android:layout_width="60dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:src="@drawable/back"
+        />
+    <ImageView
+        android:id="@+id/moving_card4"
+        android:layout_width="60dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:src="@drawable/back"
+        />
+    <ImageView
+        android:id="@+id/static_card"
+        android:layout_width="60dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:src="@drawable/back"
+        />
+
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+
+
 
     <Button
         android:id="@+id/pass_cards_button"
@@ -37,6 +82,7 @@
         android:layout_height="250dp"
         android:layout_gravity="center"
         android:layout_marginBottom="10dp">
+
 
         <TextView
             android:id="@+id/player_name"
@@ -126,6 +172,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_centerInParent="true"/>
+
 
         <ImageView
             android:id="@+id/player_card"
@@ -664,4 +711,5 @@
         android:src="@drawable/back" />
 
 
+</FrameLayout>
 </FrameLayout>

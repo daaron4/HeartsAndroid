@@ -42,12 +42,13 @@ public class MainActivity extends AppCompatActivity {
     private TextView computer2Name;
     private TextView computer3Name;
     private Button passButton;
-    private ImageView b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13;
+    private ImageView b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, animCard1, animCard2, animCard3, animCard4, staticCard;
     private ImageView playerCard, computer1Card, computer2Card, computer3Card;
     private ImageView suitPlayed;
     private boolean wtfBool = true;
     private MediaPlayer terminator, zombo, hal;
     private Animation passLeftAnimation, passRightAnimation, passAcrossAnimation, middle1, middle2, middle3, middle4, middle5, middle6, middle7, middle8, middle9, middle10, middle11, middle12, middle13;
+    private int counter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +63,13 @@ public class MainActivity extends AppCompatActivity {
             initializeViews();
             createListeners();
             setUpGame();
-            displayImages();
+            hideCards();
+            staticCard.bringToFront();
+            shuffleAnimationRight(animCard1);
+            shuffleAnimationLeft(animCard2);
+            shuffleAnimationUp(animCard3);
+            shuffleAnimationDown(animCard4);
+//            displayImages();
             beginRound();
         }
     }
@@ -338,6 +345,13 @@ public class MainActivity extends AppCompatActivity {
         b11 = (ImageView) findViewById(R.id.card_11);
         b12 = (ImageView) findViewById(R.id.card_12);
         b13 = (ImageView) findViewById(R.id.card_13);
+
+        animCard1 = (ImageView) findViewById(R.id.moving_card1);
+        animCard2 = (ImageView) findViewById(R.id.moving_card2);
+        animCard3 = (ImageView) findViewById(R.id.moving_card3);
+        animCard4 = (ImageView) findViewById(R.id.moving_card4);
+        staticCard = (ImageView) findViewById(R.id.static_card);
+
 
         SharedPreferences pref = this.getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE);
         String sharedPrefString = pref.getString("playernames", "");
@@ -1808,7 +1822,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         TranslateAnimation anim = new TranslateAnimation( 0, xDest - originalPos[0] , 0, yDest - originalPos[1] );
-        anim.setDuration(1000);
+        anim.setDuration(200);
         view.startAnimation(anim);
 
         final int finalXDest = xDest;
@@ -1824,7 +1838,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (Overlord.getInstance().getLeadingPLayerAsInt()==1) {
                     TranslateAnimation anim2 = new TranslateAnimation(finalXDest - originalPos[0], 0, yDest - originalPos[1], 1000);
-                    anim2.setDuration(1000);
+                    anim2.setDuration(200);
                     anim2.setFillAfter(false);
                     view.startAnimation(anim2);
                     anim2.setAnimationListener(new Animation.AnimationListener() {
@@ -1860,7 +1874,7 @@ public class MainActivity extends AppCompatActivity {
                 } if (Overlord.getInstance().getLeadingPLayerAsInt()==2) {
 
                     TranslateAnimation anim2 = new TranslateAnimation(finalXDest - originalPos[0], -1000, yDest - originalPos[1], 0);
-                    anim2.setDuration(1000);
+                    anim2.setDuration(200);
                     anim2.setFillAfter(false);
                     view.startAnimation(anim2);
                     anim2.setAnimationListener(new Animation.AnimationListener() {
@@ -1896,7 +1910,7 @@ public class MainActivity extends AppCompatActivity {
                 } if (Overlord.getInstance().getLeadingPLayerAsInt()==3) {
 
                     TranslateAnimation anim2 = new TranslateAnimation(finalXDest - originalPos[0], 0, yDest - originalPos[1], -1000);
-                    anim2.setDuration(1000);
+                    anim2.setDuration(200);
                     anim2.setFillAfter(false);
                     view.startAnimation(anim2);
                     anim2.setAnimationListener(new Animation.AnimationListener() {
@@ -1932,7 +1946,7 @@ public class MainActivity extends AppCompatActivity {
                 } if (Overlord.getInstance().getLeadingPLayerAsInt()==4) {
 
                     TranslateAnimation anim2 = new TranslateAnimation(finalXDest - originalPos[0], 1000, yDest - originalPos[1], 0);
-                    anim2.setDuration(1000);
+                    anim2.setDuration(200);
                     anim2.setFillAfter(false);
                     view.startAnimation(anim2);
                     anim2.setAnimationListener(new Animation.AnimationListener() {
@@ -1973,6 +1987,216 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void shuffleAnimationRight(final View view){
+
+            DisplayMetrics dm = new DisplayMetrics();
+            this.getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+            final int originalPos[] = new int[2];
+            view.getLocationOnScreen(originalPos);
+
+            TranslateAnimation shuffleAnimation = new TranslateAnimation(0, 1000, 0, 0);
+            shuffleAnimation.setDuration(200);
+            shuffleAnimation.setFillAfter(false);
+            shuffleAnimation.setRepeatCount(13);
+            shuffleAnimation.setRepeatMode(Animation.ABSOLUTE);
+            view.startAnimation(shuffleAnimation);
+
+        shuffleAnimation.setAnimationListener(new Animation.AnimationListener() {
+
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+                animCard1.setVisibility(View.GONE);
+                staticCard.setVisibility(View.GONE);
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+    }
+    private void hideCards(){
+        b1.setVisibility(View.INVISIBLE);
+        b2.setVisibility(View.INVISIBLE);
+        b3.setVisibility(View.INVISIBLE);
+        b4.setVisibility(View.INVISIBLE);
+        b5.setVisibility(View.INVISIBLE);
+        b6.setVisibility(View.INVISIBLE);
+        b7.setVisibility(View.INVISIBLE);
+        b9.setVisibility(View.INVISIBLE);
+        b10.setVisibility(View.INVISIBLE);
+        b11.setVisibility(View.INVISIBLE);
+        b12.setVisibility(View.INVISIBLE);
+        b13.setVisibility(View.INVISIBLE);
+
+
+    }
+    private void shuffleAnimationLeft(final View view){
+
+        DisplayMetrics dm = new DisplayMetrics();
+        this.getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+        final int originalPos[] = new int[2];
+        view.getLocationOnScreen(originalPos);
+
+        TranslateAnimation shuffleAnimation = new TranslateAnimation(0, -1000, 0, 0);
+        shuffleAnimation.setDuration(200);
+        shuffleAnimation.setFillAfter(false);
+        shuffleAnimation.setRepeatCount(13);
+        shuffleAnimation.setRepeatMode(Animation.ABSOLUTE);
+        view.startAnimation(shuffleAnimation);
+
+        shuffleAnimation.setAnimationListener(new Animation.AnimationListener() {
+
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+                animCard2.setVisibility(View.GONE);
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+    }
+    private void shuffleAnimationUp(final View view){
+
+        DisplayMetrics dm = new DisplayMetrics();
+        this.getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+        final int originalPos[] = new int[2];
+        view.getLocationOnScreen(originalPos);
+
+        TranslateAnimation shuffleAnimation = new TranslateAnimation(0, 0, 0, -1000);
+        shuffleAnimation.setDuration(200);
+        shuffleAnimation.setFillAfter(false);
+        shuffleAnimation.setRepeatCount(13);
+        shuffleAnimation.setRepeatMode(Animation.ABSOLUTE);
+        view.startAnimation(shuffleAnimation);
+
+        shuffleAnimation.setAnimationListener(new Animation.AnimationListener() {
+
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+                animCard3.setVisibility(View.GONE);
+                displayImages();
+
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+    }
+    private void shuffleAnimationDown(final View view){
+
+        DisplayMetrics dm = new DisplayMetrics();
+        this.getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+        final int originalPos[] = new int[2];
+        view.getLocationOnScreen(originalPos);
+
+        TranslateAnimation shuffleAnimation = new TranslateAnimation(0, 0, 0, 1000);
+        shuffleAnimation.setDuration(200);
+        shuffleAnimation.setFillAfter(false);
+        shuffleAnimation.setRepeatCount(13);
+        shuffleAnimation.setRepeatMode(Animation.ABSOLUTE);
+        view.startAnimation(shuffleAnimation);
+
+        shuffleAnimation.setAnimationListener(new Animation.AnimationListener() {
+
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+                animCard4.setVisibility(View.GONE);
+                counter = 0;
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+                switch (counter) {
+                    case 0:
+                        b1.setVisibility(View.VISIBLE);
+                        break;
+                    case 1:
+                        b2.setVisibility(View.VISIBLE);
+                        break;
+                    case 2:
+                        b3.setVisibility(View.VISIBLE);
+                        break;
+                    case 3:
+                        b4.setVisibility(View.VISIBLE);
+                        break;
+                    case 4:
+                        b5.setVisibility(View.VISIBLE);
+                        break;
+                    case 5:
+                        b6.setVisibility(View.VISIBLE);
+                        break;
+                    case 6:
+                        b7.setVisibility(View.VISIBLE);
+
+                        break;
+                    case 7:
+                        b8.setVisibility(View.VISIBLE);
+                        break;
+                    case 8:
+                        b9.setVisibility(View.VISIBLE);
+                        break;
+                    case 9:
+                        b10.setVisibility(View.VISIBLE);
+                        break;
+                    case 10:
+                        b11.setVisibility(View.VISIBLE);
+                        break;
+                    case 11:
+                        b12.setVisibility(View.VISIBLE);
+                        break;
+                    case 12:
+                        b13.setVisibility(View.VISIBLE);
+                        break;
+                }
+                counter++;
+
+
+            }
+        });
+
     }
 
     ImageView.OnClickListener onCardClick = new ImageView.OnClickListener() {
