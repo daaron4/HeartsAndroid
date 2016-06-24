@@ -9,10 +9,12 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -73,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        hal = MediaPlayer.create(this, R.raw.hal_no_do_that);
+        hal.start();
         Toast.makeText(MainActivity.this, getString(R.string.no_escape), Toast.LENGTH_LONG).show();
     }
 
@@ -436,8 +440,10 @@ public class MainActivity extends AppCompatActivity {
                     removeCenterIcon();
                     displayScorePopUp();
                 } else {
-                    removeCenterIcon();
-                    beginRound();
+                    moveViewToScreenCenter(computer1Card);
+                    moveViewToScreenCenter(computer3Card);
+                    moveViewToScreenCenter(computer2Card);
+                    moveViewToScreenCenter(playerCard);
                 }
             }
         });
@@ -449,7 +455,6 @@ public class MainActivity extends AppCompatActivity {
         Overlord.getInstance().calculatePoints();
         Overlord.getInstance().updatePlaying();
         Overlord.getInstance().reset();
-        Overlord.getInstance().updateScoreTracker();
 
         if (!Overlord.getInstance().getPlaying()) {
             playAgainPopUp();
@@ -462,11 +467,13 @@ public class MainActivity extends AppCompatActivity {
             builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    removeCenterIcon();
+                    moveViewToScreenCenter(computer1Card);
+                    moveViewToScreenCenter(computer3Card);
+                    moveViewToScreenCenter(computer2Card);
+                    moveViewToScreenCenter(playerCard);
                     setUpGame();
                     displayImages();
                     createListeners();
-                    beginRound();
                 }
             });
             builder.setIcon(R.mipmap.ic_launcher);
@@ -500,6 +507,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setPositiveButton(getString(R.string.play_again), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                // ToDo: fix
                 Overlord.getInstance().prepareForNextGame();
                 removeCenterIcon();
                 setUpGame();
@@ -511,6 +519,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setNegativeButton(getString(R.string.quit), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                // ToDo: test
                 Toast.makeText(MainActivity.this, getString(R.string.bye), Toast.LENGTH_LONG).show();
                 finish();
             }
@@ -538,55 +547,71 @@ public class MainActivity extends AppCompatActivity {
             if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer2()) {
                 computerSelection = HAL9000.computer1MakesMove();
                 Table.getInstance().getBoard().add(computerSelection);
+
                 computer1Card.setImageResource(computerSelection.getResId());
+                computer1Card.setVisibility(View.VISIBLE);
+
                 setSuitImage();
 
                 computerSelection = Terminator.computer2MakesMove();
                 Table.getInstance().getBoard().add(computerSelection);
+
                 computer2Card.setImageResource(computerSelection.getResId());
+                computer2Card.setVisibility(View.VISIBLE);
 
                 computerSelection = Zombocom.computer3MakesMove();
                 Table.getInstance().getBoard().add(computerSelection);
+
                 computer3Card.setImageResource(computerSelection.getResId());
+                computer3Card.setVisibility(View.VISIBLE);
 
             } else if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer3()) {
                 computerSelection = Terminator.computer2MakesMove();
                 Table.getInstance().getBoard().add(computerSelection);
+
                 computer2Card.setImageResource(computerSelection.getResId());
+                computer2Card.setVisibility(View.VISIBLE);
                 setSuitImage();
 
                 computerSelection = Zombocom.computer3MakesMove();
                 Table.getInstance().getBoard().add(computerSelection);
+
                 computer3Card.setImageResource(computerSelection.getResId());
+                computer3Card.setVisibility(View.VISIBLE);
 
             } else if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer4()) {
                 computerSelection = Zombocom.computer3MakesMove();
                 Table.getInstance().getBoard().add(computerSelection);
+
                 computer3Card.setImageResource(computerSelection.getResId());
+                computer3Card.setVisibility(View.VISIBLE);
+
                 setSuitImage();
             }
         } else {
             passButton.setText(Overlord.getInstance().getPassingDirection());
             passButton.setVisibility(View.VISIBLE);
         }
-
+        activateListeners();
     }
 
     private void setSuitImage() {
-        Suit suit = Table.getInstance().getBoard().get(0).getSuit();
-        switch (suit) {
-            case Hearts:
-                suitPlayed.setImageResource(R.drawable.heart);
-                break;
-            case Spades:
-                suitPlayed.setImageResource(R.drawable.spade);
-                break;
-            case Diamonds:
-                suitPlayed.setImageResource(R.drawable.diamond);
-                break;
-            case Clubs:
-                suitPlayed.setImageResource(R.drawable.club);
-                break;
+        if (!Table.getInstance().getBoard().isEmpty()) {
+            Suit suit = Table.getInstance().getBoard().get(0).getSuit();
+            switch (suit) {
+                case Hearts:
+                    suitPlayed.setImageResource(R.drawable.heart);
+                    break;
+                case Spades:
+                    suitPlayed.setImageResource(R.drawable.spade);
+                    break;
+                case Diamonds:
+                    suitPlayed.setImageResource(R.drawable.diamond);
+                    break;
+                case Clubs:
+                    suitPlayed.setImageResource(R.drawable.club);
+                    break;
+            }
         }
     }
 
@@ -824,6 +849,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void passMiddle(int i) {
+        disableListeners();
         switch (i) {
             case 0:
                 b1.startAnimation(middle1);
@@ -866,7 +892,6 @@ public class MainActivity extends AppCompatActivity {
                 b13.startAnimation(middle13);
                 break;
         }
-        disableListeners();
     }
 
     private void passCardSelector(int i) {
@@ -1051,6 +1076,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
+        final ArrayList<Card> computerCardsToPlayer1 = computerCardsToPlayer;
         passLeftAnimation.setAnimationListener(new Animation.AnimationListener() {
 
             @Override
@@ -1063,13 +1089,15 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                cardsReceivedPopUp(computerCardsToPlayer);
+                cardsReceivedPopUp(computerCardsToPlayer1);
             }
 
         });
     }
 
-    private void passRightWait(final ArrayList<Card> computerCardsToPlayer) {
+    private void passRightWait( ArrayList<Card> computerCardsToPlayer) {
+        final ArrayList<Card> computerCardsToPlayer1 = computerCardsToPlayer;
+
         passRightAnimation.setAnimationListener(new Animation.AnimationListener() {
 
             @Override
@@ -1082,7 +1110,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                cardsReceivedPopUp(computerCardsToPlayer);
+                cardsReceivedPopUp(computerCardsToPlayer1);
             }
 
         });
@@ -1124,12 +1152,9 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    if(wtfBool) {
+                    if (wtfBool) {
                         displayTrickWinnerPopUp();
-                        resetPlayedCards();
                         removeCardFromView(i);
-                        Table.getInstance().getBoard().clear();
-                        activateListeners();
                         wtfBool = false;
                     }
                 }
@@ -1148,12 +1173,9 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    if(wtfBool) {
+                    if (wtfBool) {
                         displayTrickWinnerPopUp();
-                        resetPlayedCards();
                         removeCardFromView(i);
-                        Table.getInstance().getBoard().clear();
-                        activateListeners();
                         wtfBool = false;
                     }
                 }
@@ -1173,12 +1195,9 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    if(wtfBool) {
+                    if (wtfBool) {
                         displayTrickWinnerPopUp();
-                        resetPlayedCards();
                         removeCardFromView(i);
-                        Table.getInstance().getBoard().clear();
-                        activateListeners();
                         wtfBool = false;
                     }
                 }
@@ -1198,12 +1217,9 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    if(wtfBool) {
+                    if (wtfBool) {
                         displayTrickWinnerPopUp();
-                        resetPlayedCards();
                         removeCardFromView(i);
-                        Table.getInstance().getBoard().clear();
-                        activateListeners();
                         wtfBool = false;
                     }
                 }
@@ -1223,12 +1239,9 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    if(wtfBool) {
+                    if (wtfBool) {
                         displayTrickWinnerPopUp();
-                        resetPlayedCards();
                         removeCardFromView(i);
-                        Table.getInstance().getBoard().clear();
-                        activateListeners();
                         wtfBool = false;
                     }
 
@@ -1249,12 +1262,9 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    if(wtfBool) {
+                    if (wtfBool) {
                         displayTrickWinnerPopUp();
-                        resetPlayedCards();
                         removeCardFromView(i);
-                        Table.getInstance().getBoard().clear();
-                        activateListeners();
                         wtfBool = false;
                     }
                 }
@@ -1274,12 +1284,9 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    if(wtfBool) {
+                    if (wtfBool) {
                         displayTrickWinnerPopUp();
-                        resetPlayedCards();
                         removeCardFromView(i);
-                        Table.getInstance().getBoard().clear();
-                        activateListeners();
                         wtfBool = false;
                     }
                 }
@@ -1299,12 +1306,9 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    if(wtfBool) {
+                    if (wtfBool) {
                         displayTrickWinnerPopUp();
-                        resetPlayedCards();
                         removeCardFromView(i);
-                        Table.getInstance().getBoard().clear();
-                        activateListeners();
                         wtfBool = false;
                     }
                 }
@@ -1324,12 +1328,9 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    if(wtfBool) {
+                    if (wtfBool) {
                         displayTrickWinnerPopUp();
-                        resetPlayedCards();
                         removeCardFromView(i);
-                        Table.getInstance().getBoard().clear();
-                        activateListeners();
                         wtfBool = false;
                     }
                 }
@@ -1349,12 +1350,9 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    if(wtfBool) {
+                    if (wtfBool) {
                         displayTrickWinnerPopUp();
-                        resetPlayedCards();
                         removeCardFromView(i);
-                        Table.getInstance().getBoard().clear();
-                        activateListeners();
                         wtfBool = false;
                     }
                 }
@@ -1374,12 +1372,9 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    if(wtfBool) {
+                    if (wtfBool) {
                         displayTrickWinnerPopUp();
-                        resetPlayedCards();
                         removeCardFromView(i);
-                        Table.getInstance().getBoard().clear();
-                        activateListeners();
                         wtfBool = false;
                     }
 
@@ -1400,12 +1395,9 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    if(wtfBool) {
+                    if (wtfBool) {
                         displayTrickWinnerPopUp();
-                        resetPlayedCards();
                         removeCardFromView(i);
-                        Table.getInstance().getBoard().clear();
-                        activateListeners();
                         wtfBool = false;
                     }
 
@@ -1426,12 +1418,9 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    if(wtfBool) {
+                    if (wtfBool) {
                         displayTrickWinnerPopUp();
-                        resetPlayedCards();
                         removeCardFromView(i);
-                        Table.getInstance().getBoard().clear();
-                        activateListeners();
                         wtfBool = false;
                     }
 
@@ -1456,10 +1445,7 @@ public class MainActivity extends AppCompatActivity {
                     Overlord.getInstance().determineTrickWinner();
                     passMiddle(i);
                     middleWait(i);
-//                    resetPlayedCards();
-//                    displayTrickWinnerPopUp();
-//                    removeCardFromView(i);
-//                    Table.getInstance().getBoard().clear();
+
                     Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
                 } else {
                     cantPlayThatPopUp();
@@ -1481,10 +1467,7 @@ public class MainActivity extends AppCompatActivity {
                     Overlord.getInstance().determineTrickWinner();
                     passMiddle(i);
                     middleWait(i);
-//                    resetPlayedCards();
-//                    displayTrickWinnerPopUp();
-//                    removeCardFromView(i);
-//                    Table.getInstance().getBoard().clear();
+
                     Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
                 } else {
                     cantPlayThatPopUp();
@@ -1508,10 +1491,7 @@ public class MainActivity extends AppCompatActivity {
                     Overlord.getInstance().determineTrickWinner();
                     passMiddle(i);
                     middleWait(i);
-//                    resetPlayedCards();
-//                    displayTrickWinnerPopUp();
-//                    removeCardFromView(i);
-//                    Table.getInstance().getBoard().clear();
+
                     Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
                 } else {
                     cantPlayThatPopUp();
@@ -1539,10 +1519,7 @@ public class MainActivity extends AppCompatActivity {
                     Overlord.getInstance().determineTrickWinner();
                     passMiddle(i);
                     middleWait(i);
-//                    resetPlayedCards();
-//                    displayTrickWinnerPopUp();
-//                    removeCardFromView(i);
-//                    Table.getInstance().getBoard().clear();
+
                     Overlord.getInstance().setRoundsPlayed(Overlord.getInstance().getRoundsPlayed() + 1);
                 } else {
                     cantPlayThatPopUp();
@@ -1665,13 +1642,12 @@ public class MainActivity extends AppCompatActivity {
                     System.out.println("Ending P3 hand: " + Arrays.toString(Table.getInstance().getPlayer3().getHand().toArray()));
                     break;
                 case NO_PASSING:
-                    Toast.makeText(MainActivity.this, "No Passing!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, getString(R.string.no_passing), Toast.LENGTH_SHORT).show();
                     break;
             }
 
             Overlord.getInstance().setPassing(false);
             passButton.setVisibility(View.INVISIBLE);
-//            cardsReceivedPopUp(computerCardsToPlayer);
         }
 
     }
@@ -1712,31 +1688,12 @@ public class MainActivity extends AppCompatActivity {
         Overlord.loadOverlord(getApplicationContext());
     }
 
-    private void waitABit() {
-        // ToDo: mess with this
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void clickInfoAlert(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle(getString(R.string.hearts_reference));
         LayoutInflater alertLayout = this.getLayoutInflater();
         View alertView = alertLayout.inflate(R.layout.hearts_info, null);
         builder.setView(alertView);
-//        builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//                removeCenterIcon();
-//                setUpGame();
-//                displayImages();
-//                createListeners();
-//                beginRound();
-//            }
-//        });
         builder.setIcon(R.mipmap.ic_launcher);
         builder.setCancelable(true);
         builder.show();
@@ -1836,6 +1793,154 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void moveViewToScreenCenter(final View view ) {
+        DisplayMetrics dm = new DisplayMetrics();
+        this.getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+        final int originalPos[] = new int[2];
+        view.getLocationOnScreen(originalPos);
+
+        int xDest = dm.widthPixels/2;
+        xDest -= (view.getMeasuredWidth()/2);
+        final int yDest = dm.heightPixels/2 - (view.getMeasuredHeight()/2);
+
+
+        TranslateAnimation anim = new TranslateAnimation( 0, xDest - originalPos[0] , 0, yDest - originalPos[1] );
+        anim.setDuration(1000);
+        view.startAnimation(anim);
+
+        final int finalXDest = xDest;
+        anim.setAnimationListener(new Animation.AnimationListener() {
+
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+                if (Overlord.getInstance().getLeadingPLayerAsInt()==1) {
+                    TranslateAnimation anim2 = new TranslateAnimation(finalXDest - originalPos[0], 0, yDest - originalPos[1], 1000);
+                    anim2.setDuration(1000);
+                    anim2.setFillAfter(false);
+                    view.startAnimation(anim2);
+                    anim2.setAnimationListener(new Animation.AnimationListener() {
+
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            if (view == playerCard) {
+                                resetPlayedCards();
+                                Table.getInstance().getBoard().clear();
+                                removeCenterIcon();
+                                beginRound();
+                            }
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
+                } if (Overlord.getInstance().getLeadingPLayerAsInt()==2) {
+
+                    TranslateAnimation anim2 = new TranslateAnimation(finalXDest - originalPos[0], -1000, yDest - originalPos[1], 0);
+                    anim2.setDuration(1000);
+                    anim2.setFillAfter(false);
+                    view.startAnimation(anim2);
+                    anim2.setAnimationListener(new Animation.AnimationListener() {
+
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            if (view == playerCard) {
+                                resetPlayedCards();
+                                Table.getInstance().getBoard().clear();
+                                removeCenterIcon();
+                                beginRound();
+                            }
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
+                } if (Overlord.getInstance().getLeadingPLayerAsInt()==3) {
+
+                    TranslateAnimation anim2 = new TranslateAnimation(finalXDest - originalPos[0], 0, yDest - originalPos[1], -1000);
+                    anim2.setDuration(1000);
+                    anim2.setFillAfter(false);
+                    view.startAnimation(anim2);
+                    anim2.setAnimationListener(new Animation.AnimationListener() {
+
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            if (view == playerCard) {
+                                resetPlayedCards();
+                                Table.getInstance().getBoard().clear();
+                                removeCenterIcon();
+                                beginRound();
+                            }
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
+                } if (Overlord.getInstance().getLeadingPLayerAsInt()==4) {
+
+                    TranslateAnimation anim2 = new TranslateAnimation(finalXDest - originalPos[0], 1000, yDest - originalPos[1], 0);
+                    anim2.setDuration(1000);
+                    anim2.setFillAfter(false);
+                    view.startAnimation(anim2);
+                    anim2.setAnimationListener(new Animation.AnimationListener() {
+
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            if (view == playerCard) {
+                                resetPlayedCards();
+                                Table.getInstance().getBoard().clear();
+                                removeCenterIcon();
+                                beginRound();
+                            }
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
+                }
+
+            }
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+    }
+
     ImageView.OnClickListener onCardClick = new ImageView.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -1885,6 +1990,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
-
 }
 
