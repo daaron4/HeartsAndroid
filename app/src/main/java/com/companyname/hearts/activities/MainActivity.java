@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
             shuffleAnimationLeft(animCard2);
             shuffleAnimationUp(animCard3);
             shuffleAnimationDown(animCard4);
-//            displayImages();
             beginRound();
         }
     }
@@ -1809,19 +1808,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void moveViewToScreenCenter(final View view ) {
+    private void moveViewToScreenCenter(final View view) {
         DisplayMetrics dm = new DisplayMetrics();
         this.getWindowManager().getDefaultDisplay().getMetrics(dm);
 
         final int originalPos[] = new int[2];
         view.getLocationOnScreen(originalPos);
 
-        int xDest = dm.widthPixels/2;
-        xDest -= (view.getMeasuredWidth()/2);
-        final int yDest = dm.heightPixels/2 - (view.getMeasuredHeight()/2);
+        int xDest = dm.widthPixels / 2;
+        xDest -= (view.getMeasuredWidth() / 2);
+        final int yDest = dm.heightPixels / 2 - (view.getMeasuredHeight() / 2);
 
 
-        TranslateAnimation anim = new TranslateAnimation( 0, xDest - originalPos[0] , 0, yDest - originalPos[1] );
+        TranslateAnimation anim = new TranslateAnimation(0, xDest - originalPos[0], 0, yDest - originalPos[1]);
         anim.setDuration(200);
         view.startAnimation(anim);
 
@@ -1836,7 +1835,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
 
-                if (Overlord.getInstance().getLeadingPLayerAsInt()==1) {
+                if (Overlord.getInstance().getLeadingPLayerAsInt() == 1) {
                     TranslateAnimation anim2 = new TranslateAnimation(finalXDest - originalPos[0], 0, yDest - originalPos[1], 1000);
                     anim2.setDuration(200);
                     anim2.setFillAfter(false);
@@ -1856,8 +1855,7 @@ public class MainActivity extends AppCompatActivity {
                                     resetPlayedCards();
                                     Table.getInstance().getBoard().clear();
                                     displayScorePopUp();
-                                }
-                                else {
+                                } else {
                                     resetPlayedCards();
                                     Table.getInstance().getBoard().clear();
                                     removeCenterIcon();
@@ -1871,7 +1869,8 @@ public class MainActivity extends AppCompatActivity {
 
                         }
                     });
-                } if (Overlord.getInstance().getLeadingPLayerAsInt()==2) {
+                }
+                if (Overlord.getInstance().getLeadingPLayerAsInt() == 2) {
 
                     TranslateAnimation anim2 = new TranslateAnimation(finalXDest - originalPos[0], -1000, yDest - originalPos[1], 0);
                     anim2.setDuration(200);
@@ -1892,8 +1891,7 @@ public class MainActivity extends AppCompatActivity {
                                     resetPlayedCards();
                                     Table.getInstance().getBoard().clear();
                                     displayScorePopUp();
-                                }
-                                else {
+                                } else {
                                     resetPlayedCards();
                                     Table.getInstance().getBoard().clear();
                                     removeCenterIcon();
@@ -1907,7 +1905,8 @@ public class MainActivity extends AppCompatActivity {
 
                         }
                     });
-                } if (Overlord.getInstance().getLeadingPLayerAsInt()==3) {
+                }
+                if (Overlord.getInstance().getLeadingPLayerAsInt() == 3) {
 
                     TranslateAnimation anim2 = new TranslateAnimation(finalXDest - originalPos[0], 0, yDest - originalPos[1], -1000);
                     anim2.setDuration(200);
@@ -1928,8 +1927,7 @@ public class MainActivity extends AppCompatActivity {
                                     resetPlayedCards();
                                     Table.getInstance().getBoard().clear();
                                     displayScorePopUp();
-                                }
-                                else {
+                                } else {
                                     resetPlayedCards();
                                     Table.getInstance().getBoard().clear();
                                     removeCenterIcon();
@@ -1943,7 +1941,8 @@ public class MainActivity extends AppCompatActivity {
 
                         }
                     });
-                } if (Overlord.getInstance().getLeadingPLayerAsInt()==4) {
+                }
+                if (Overlord.getInstance().getLeadingPLayerAsInt() == 4) {
 
                     TranslateAnimation anim2 = new TranslateAnimation(finalXDest - originalPos[0], 1000, yDest - originalPos[1], 0);
                     anim2.setDuration(200);
@@ -1964,8 +1963,7 @@ public class MainActivity extends AppCompatActivity {
                                     resetPlayedCards();
                                     Table.getInstance().getBoard().clear();
                                     displayScorePopUp();
-                                }
-                                else {
+                                } else {
                                     resetPlayedCards();
                                     Table.getInstance().getBoard().clear();
                                     removeCenterIcon();
@@ -1982,6 +1980,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             }
+
             @Override
             public void onAnimationRepeat(Animation animation) {
 
@@ -1989,44 +1988,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void shuffleAnimationRight(final View view){
-
-            DisplayMetrics dm = new DisplayMetrics();
-            this.getWindowManager().getDefaultDisplay().getMetrics(dm);
-
-            final int originalPos[] = new int[2];
-            view.getLocationOnScreen(originalPos);
-
-            TranslateAnimation shuffleAnimation = new TranslateAnimation(0, 1000, 0, 0);
-            shuffleAnimation.setDuration(200);
-            shuffleAnimation.setFillAfter(false);
-            shuffleAnimation.setRepeatCount(13);
-            shuffleAnimation.setRepeatMode(Animation.ABSOLUTE);
-            view.startAnimation(shuffleAnimation);
-
-        shuffleAnimation.setAnimationListener(new Animation.AnimationListener() {
-
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-
-                animCard1.setVisibility(View.GONE);
-                staticCard.setVisibility(View.GONE);
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-
-    }
-    private void hideCards(){
+    private void hideCards() {
         b1.setVisibility(View.INVISIBLE);
         b2.setVisibility(View.INVISIBLE);
         b3.setVisibility(View.INVISIBLE);
@@ -2039,11 +2001,44 @@ public class MainActivity extends AppCompatActivity {
         b11.setVisibility(View.INVISIBLE);
         b12.setVisibility(View.INVISIBLE);
         b13.setVisibility(View.INVISIBLE);
+    }
 
+    private void shuffleAnimationRight(final View view) {
+        DisplayMetrics dm = new DisplayMetrics();
+        this.getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+        final int originalPos[] = new int[2];
+        view.getLocationOnScreen(originalPos);
+
+        TranslateAnimation shuffleAnimation = new TranslateAnimation(0, 1000, 0, 0);
+        shuffleAnimation.setDuration(200);
+        shuffleAnimation.setFillAfter(false);
+        shuffleAnimation.setRepeatCount(13);
+        shuffleAnimation.setRepeatMode(Animation.ABSOLUTE);
+        view.startAnimation(shuffleAnimation);
+
+        shuffleAnimation.setAnimationListener(new Animation.AnimationListener() {
+
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                animCard1.setVisibility(View.GONE);
+                staticCard.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
 
     }
-    private void shuffleAnimationLeft(final View view){
 
+    private void shuffleAnimationLeft(final View view) {
         DisplayMetrics dm = new DisplayMetrics();
         this.getWindowManager().getDefaultDisplay().getMetrics(dm);
 
@@ -2066,9 +2061,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-
                 animCard2.setVisibility(View.GONE);
-
             }
 
             @Override
@@ -2078,8 +2071,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-    private void shuffleAnimationUp(final View view){
 
+    private void shuffleAnimationUp(final View view) {
         DisplayMetrics dm = new DisplayMetrics();
         this.getWindowManager().getDefaultDisplay().getMetrics(dm);
 
@@ -2102,11 +2095,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-
                 animCard3.setVisibility(View.GONE);
                 displayImages();
-
-
             }
 
             @Override
@@ -2116,8 +2106,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-    private void shuffleAnimationDown(final View view){
 
+    private void shuffleAnimationDown(final View view) {
         DisplayMetrics dm = new DisplayMetrics();
         this.getWindowManager().getDefaultDisplay().getMetrics(dm);
 
@@ -2140,10 +2130,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-
                 animCard4.setVisibility(View.GONE);
                 counter = 0;
-
             }
 
             @Override
@@ -2170,7 +2158,6 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 6:
                         b7.setVisibility(View.VISIBLE);
-
                         break;
                     case 7:
                         b8.setVisibility(View.VISIBLE);

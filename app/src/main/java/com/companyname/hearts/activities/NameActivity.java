@@ -126,9 +126,6 @@ public class NameActivity extends AppCompatActivity {
 
         ActivityOptionsCompat morpher = ActivityOptionsCompat.makeSceneTransitionAnimation(this, morphHal, morphTerm, morphZombo);
 
-
-
-
         Intent shuffleIntent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(shuffleIntent, morpher.toBundle());
 
