@@ -154,6 +154,7 @@ public class HAL9000 {
                                     System.out.println("Computer 1 played: " + Table.getInstance().getPlayer2().getHand().get(i).toString());
                                     computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
                                     Table.getInstance().getPlayer2().getHand().remove(i);
+                                    Overlord.getInstance().canPlayCard(computerSelection, Table.getInstance().getPlayer2());
                                     return computerSelection;
                                 }
                             }
@@ -200,6 +201,7 @@ public class HAL9000 {
                                     System.out.println("Computer 1 played: " + Table.getInstance().getPlayer2().getHand().get(i).toString());
                                     computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
                                     Table.getInstance().getPlayer2().getHand().remove(i);
+                                    Overlord.getInstance().canPlayCard(computerSelection, Table.getInstance().getPlayer2());
                                     return computerSelection;
                                 }
                             }
@@ -236,6 +238,7 @@ public class HAL9000 {
                                     System.out.println("Computer 1 played: " + Table.getInstance().getPlayer2().getHand().get(i).toString());
                                     computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
                                     Table.getInstance().getPlayer2().getHand().remove(i);
+                                    Overlord.getInstance().canPlayCard(computerSelection, Table.getInstance().getPlayer2());
                                     return computerSelection;
                                 }
                             }
@@ -315,6 +318,7 @@ public class HAL9000 {
                                     System.out.println("Computer 1 played: " + Table.getInstance().getPlayer2().getHand().get(i).toString());
                                     computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
                                     Table.getInstance().getPlayer2().getHand().remove(i);
+                                    Overlord.getInstance().canPlayCard(computerSelection, Table.getInstance().getPlayer2());
                                     return computerSelection;
                                 }
                             }
@@ -364,6 +368,7 @@ public class HAL9000 {
                                     System.out.println("Computer 1 played: " + Table.getInstance().getPlayer2().getHand().get(i).toString());
                                     computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
                                     Table.getInstance().getPlayer2().getHand().remove(i);
+                                    Overlord.getInstance().canPlayCard(computerSelection, Table.getInstance().getPlayer2());
                                     return computerSelection;
                                 }
                             }
@@ -411,6 +416,7 @@ public class HAL9000 {
                                 System.out.println("Computer 1 played: " + Table.getInstance().getPlayer2().getHand().get(i).toString());
                                 computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
                                 Table.getInstance().getPlayer2().getHand().remove(i);
+                                Overlord.getInstance().canPlayCard(computerSelection, Table.getInstance().getPlayer2());
                                 return computerSelection;
                             }
                         }
@@ -464,6 +470,7 @@ public class HAL9000 {
                             System.out.println("Computer 1 played: " + Table.getInstance().getPlayer2().getHand().get(i).toString());
                             computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
                             Table.getInstance().getPlayer2().getHand().remove(i);
+                            Overlord.getInstance().canPlayCard(computerSelection, Table.getInstance().getPlayer2());
                             return computerSelection;
                         }
                     }
@@ -554,6 +561,7 @@ public class HAL9000 {
                                 System.out.println("Computer 1 played: " + Table.getInstance().getPlayer2().getHand().get(i).toString());
                                 computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
                                 Table.getInstance().getPlayer2().getHand().remove(i);
+                                Overlord.getInstance().canPlayCard(computerSelection, Table.getInstance().getPlayer2());
                                 return computerSelection;
                             }
                         }
