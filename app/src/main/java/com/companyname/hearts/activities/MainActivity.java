@@ -59,6 +59,11 @@ public class MainActivity extends AppCompatActivity {
         if (continueOldGame) {
             initializeSavedGame();
             setViewSavedGame();
+            animCard1.setVisibility(View.GONE);
+            animCard2.setVisibility(View.GONE);
+            animCard3.setVisibility(View.GONE);
+            animCard4.setVisibility(View.GONE);
+            staticCard.setVisibility(View.GONE);
         } else {
             initializeViews();
             createListeners();
@@ -126,6 +131,12 @@ public class MainActivity extends AppCompatActivity {
         b11 = (ImageView) findViewById(R.id.card_11);
         b12 = (ImageView) findViewById(R.id.card_12);
         b13 = (ImageView) findViewById(R.id.card_13);
+
+        animCard1 = (ImageView) findViewById(R.id.moving_card1);
+        animCard2 = (ImageView) findViewById(R.id.moving_card2);
+        animCard3 = (ImageView) findViewById(R.id.moving_card3);
+        animCard4 = (ImageView) findViewById(R.id.moving_card4);
+        staticCard = (ImageView) findViewById(R.id.static_card);
 
         playerCard = (ImageView) findViewById(R.id.player_card);
         computer1Card = (ImageView) findViewById(R.id.computer1_card);
@@ -350,7 +361,6 @@ public class MainActivity extends AppCompatActivity {
         animCard3 = (ImageView) findViewById(R.id.moving_card3);
         animCard4 = (ImageView) findViewById(R.id.moving_card4);
         staticCard = (ImageView) findViewById(R.id.static_card);
-
 
         SharedPreferences pref = this.getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE);
         String sharedPrefString = pref.getString("playernames", "");
@@ -1821,7 +1831,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         TranslateAnimation anim = new TranslateAnimation(0, xDest - originalPos[0], 0, yDest - originalPos[1]);
-        anim.setDuration(200);
+        anim.setDuration(1000);
         view.startAnimation(anim);
 
         final int finalXDest = xDest;
@@ -1837,7 +1847,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (Overlord.getInstance().getLeadingPLayerAsInt() == 1) {
                     TranslateAnimation anim2 = new TranslateAnimation(finalXDest - originalPos[0], 0, yDest - originalPos[1], 1000);
-                    anim2.setDuration(200);
+                    anim2.setDuration(1000);
                     anim2.setFillAfter(false);
                     view.startAnimation(anim2);
                     anim2.setAnimationListener(new Animation.AnimationListener() {
@@ -1873,7 +1883,7 @@ public class MainActivity extends AppCompatActivity {
                 if (Overlord.getInstance().getLeadingPLayerAsInt() == 2) {
 
                     TranslateAnimation anim2 = new TranslateAnimation(finalXDest - originalPos[0], -1000, yDest - originalPos[1], 0);
-                    anim2.setDuration(200);
+                    anim2.setDuration(1000);
                     anim2.setFillAfter(false);
                     view.startAnimation(anim2);
                     anim2.setAnimationListener(new Animation.AnimationListener() {
@@ -1909,7 +1919,7 @@ public class MainActivity extends AppCompatActivity {
                 if (Overlord.getInstance().getLeadingPLayerAsInt() == 3) {
 
                     TranslateAnimation anim2 = new TranslateAnimation(finalXDest - originalPos[0], 0, yDest - originalPos[1], -1000);
-                    anim2.setDuration(200);
+                    anim2.setDuration(1000);
                     anim2.setFillAfter(false);
                     view.startAnimation(anim2);
                     anim2.setAnimationListener(new Animation.AnimationListener() {
@@ -1945,7 +1955,7 @@ public class MainActivity extends AppCompatActivity {
                 if (Overlord.getInstance().getLeadingPLayerAsInt() == 4) {
 
                     TranslateAnimation anim2 = new TranslateAnimation(finalXDest - originalPos[0], 1000, yDest - originalPos[1], 0);
-                    anim2.setDuration(200);
+                    anim2.setDuration(1000);
                     anim2.setFillAfter(false);
                     view.startAnimation(anim2);
                     anim2.setAnimationListener(new Animation.AnimationListener() {
@@ -2125,7 +2135,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationStart(Animation animation) {
-
+                final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.deal);
+                mp.start();
             }
 
             @Override
