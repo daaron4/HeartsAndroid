@@ -70,7 +70,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        saveGame();
+        // Saves the game:
+        Table.saveTable(getApplicationContext());
+        Overlord.saveOverlord(getApplicationContext());
     }
 
     @Override
@@ -78,63 +80,6 @@ public class MainActivity extends AppCompatActivity {
         hal = MediaPlayer.create(this, R.raw.hal_no_do_that);
         hal.start();
         Toast.makeText(MainActivity.this, getString(R.string.no_escape), Toast.LENGTH_LONG).show();
-    }
-
-    private void initializeViews() {
-        playerName = (TextView) findViewById(R.id.player_name);
-        computer1Name = (TextView) findViewById(R.id.computer1_name);
-        computer2Name = (TextView) findViewById(R.id.computer2_name);
-        computer3Name = (TextView) findViewById(R.id.computer3_name);
-        passButton = (Button) findViewById(R.id.pass_cards_button);
-
-        passLeftAnimation = AnimationUtils.loadAnimation(this, R.anim.passleft);
-        passRightAnimation = AnimationUtils.loadAnimation(this, R.anim.passright);
-        passAcrossAnimation = AnimationUtils.loadAnimation(this, R.anim.passacross);
-
-        middle1 = AnimationUtils.loadAnimation(this, R.anim.middle1);
-        middle2 = AnimationUtils.loadAnimation(this, R.anim.middle2);
-        middle3 = AnimationUtils.loadAnimation(this, R.anim.middle3);
-        middle4 = AnimationUtils.loadAnimation(this, R.anim.middle4);
-        middle5 = AnimationUtils.loadAnimation(this, R.anim.middle5);
-        middle6 = AnimationUtils.loadAnimation(this, R.anim.middle6);
-        middle7 = AnimationUtils.loadAnimation(this, R.anim.middle7);
-        middle8 = AnimationUtils.loadAnimation(this, R.anim.middle8);
-        middle9 = AnimationUtils.loadAnimation(this, R.anim.middle9);
-        middle10 = AnimationUtils.loadAnimation(this, R.anim.middle10);
-        middle11 = AnimationUtils.loadAnimation(this, R.anim.middle11);
-        middle12 = AnimationUtils.loadAnimation(this, R.anim.middle12);
-        middle13 = AnimationUtils.loadAnimation(this, R.anim.middle13);
-
-        b1 = (ImageView) findViewById(R.id.card_1);
-        b2 = (ImageView) findViewById(R.id.card_2);
-        b3 = (ImageView) findViewById(R.id.card_3);
-        b4 = (ImageView) findViewById(R.id.card_4);
-        b5 = (ImageView) findViewById(R.id.card_5);
-        b6 = (ImageView) findViewById(R.id.card_6);
-        b7 = (ImageView) findViewById(R.id.card_7);
-        b8 = (ImageView) findViewById(R.id.card_8);
-        b9 = (ImageView) findViewById(R.id.card_9);
-        b10 = (ImageView) findViewById(R.id.card_10);
-        b11 = (ImageView) findViewById(R.id.card_11);
-        b12 = (ImageView) findViewById(R.id.card_12);
-        b13 = (ImageView) findViewById(R.id.card_13);
-
-        SharedPreferences pref = this.getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE);
-        String sharedPrefString = pref.getString("playernames", "");
-        String[] playerNames = sharedPrefString.split(",");
-
-        playerCard = (ImageView) findViewById(R.id.player_card);
-        computer1Card = (ImageView) findViewById(R.id.computer1_card);
-        computer2Card = (ImageView) findViewById(R.id.computer2_card);
-        computer3Card = (ImageView) findViewById(R.id.computer3_card);
-
-        suitPlayed = (ImageView) findViewById(R.id.played_suit);
-
-        playerName.setText(playerNames[0]);
-        computer1Name.setText(playerNames[1]);
-        computer2Name.setText(playerNames[2]);
-        computer3Name.setText(playerNames[3]);
-        Table.getInstance().initializeTable(playerNames[0], playerNames[1], playerNames[2], playerNames[3]);
     }
 
     private void initializeSavedGame() {
@@ -183,71 +128,14 @@ public class MainActivity extends AppCompatActivity {
 
         suitPlayed = (ImageView) findViewById(R.id.played_suit);
 
-        loadGame();
+        // Loads up the instances of Table and Overlord
+        Table.loadTable(getApplicationContext());
+        Overlord.loadOverlord(getApplicationContext());
 
         playerName.setText(Table.getInstance().getPlayer1().getName());
         computer1Name.setText(Table.getInstance().getPlayer2().getName());
         computer2Name.setText(Table.getInstance().getPlayer3().getName());
         computer3Name.setText(Table.getInstance().getPlayer4().getName());
-    }
-
-    private void createListeners() {
-        b1.setOnClickListener(onCardClick);
-        b2.setOnClickListener(onCardClick);
-        b3.setOnClickListener(onCardClick);
-        b4.setOnClickListener(onCardClick);
-        b5.setOnClickListener(onCardClick);
-        b6.setOnClickListener(onCardClick);
-        b7.setOnClickListener(onCardClick);
-        b8.setOnClickListener(onCardClick);
-        b9.setOnClickListener(onCardClick);
-        b10.setOnClickListener(onCardClick);
-        b11.setOnClickListener(onCardClick);
-        b12.setOnClickListener(onCardClick);
-        b13.setOnClickListener(onCardClick);
-    }
-
-    private void setUpGame() {
-        Dealer.getInstance().shuffle();
-        Dealer.getInstance().deal(Table.getInstance().getPlayer1(), Table.getInstance().getPlayer2(),
-                Table.getInstance().getPlayer3(), Table.getInstance().getPlayer4());
-        Overlord.getInstance().setPlayerWithTheTwoOfClubs();
-        Table.getInstance().getPlayer1().organizeHand();
-        Table.getInstance().getPlayer2().organizeHand();
-        Table.getInstance().getPlayer3().organizeHand();
-        Table.getInstance().getPlayer4().organizeHand();
-    }
-
-    private void displayImages() {
-        Card c1 = Table.getInstance().getPlayer1().getHand().get(0);
-        Card c2 = Table.getInstance().getPlayer1().getHand().get(1);
-        Card c3 = Table.getInstance().getPlayer1().getHand().get(2);
-        Card c4 = Table.getInstance().getPlayer1().getHand().get(3);
-        Card c5 = Table.getInstance().getPlayer1().getHand().get(4);
-        Card c6 = Table.getInstance().getPlayer1().getHand().get(5);
-        Card c7 = Table.getInstance().getPlayer1().getHand().get(6);
-        Card c8 = Table.getInstance().getPlayer1().getHand().get(7);
-        Card c9 = Table.getInstance().getPlayer1().getHand().get(8);
-        Card c10 = Table.getInstance().getPlayer1().getHand().get(9);
-        Card c11 = Table.getInstance().getPlayer1().getHand().get(10);
-        Card c12 = Table.getInstance().getPlayer1().getHand().get(11);
-        Card c13 = Table.getInstance().getPlayer1().getHand().get(12);
-
-        b1.setImageResource(c1.getResId());
-        b2.setImageResource(c2.getResId());
-        b3.setImageResource(c3.getResId());
-        b4.setImageResource(c4.getResId());
-        b5.setImageResource(c5.getResId());
-        b6.setImageResource(c6.getResId());
-        b7.setImageResource(c7.getResId());
-        b8.setImageResource(c8.getResId());
-        b9.setImageResource(c9.getResId());
-        b10.setImageResource(c10.getResId());
-        b11.setImageResource(c11.getResId());
-        b12.setImageResource(c12.getResId());
-        b13.setImageResource(c13.getResId());
-
-        remakeVisible();
     }
 
     private void setViewSavedGame() {
@@ -412,6 +300,176 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void initializeViews() {
+        playerName = (TextView) findViewById(R.id.player_name);
+        computer1Name = (TextView) findViewById(R.id.computer1_name);
+        computer2Name = (TextView) findViewById(R.id.computer2_name);
+        computer3Name = (TextView) findViewById(R.id.computer3_name);
+        passButton = (Button) findViewById(R.id.pass_cards_button);
+
+        passLeftAnimation = AnimationUtils.loadAnimation(this, R.anim.passleft);
+        passRightAnimation = AnimationUtils.loadAnimation(this, R.anim.passright);
+        passAcrossAnimation = AnimationUtils.loadAnimation(this, R.anim.passacross);
+
+        middle1 = AnimationUtils.loadAnimation(this, R.anim.middle1);
+        middle2 = AnimationUtils.loadAnimation(this, R.anim.middle2);
+        middle3 = AnimationUtils.loadAnimation(this, R.anim.middle3);
+        middle4 = AnimationUtils.loadAnimation(this, R.anim.middle4);
+        middle5 = AnimationUtils.loadAnimation(this, R.anim.middle5);
+        middle6 = AnimationUtils.loadAnimation(this, R.anim.middle6);
+        middle7 = AnimationUtils.loadAnimation(this, R.anim.middle7);
+        middle8 = AnimationUtils.loadAnimation(this, R.anim.middle8);
+        middle9 = AnimationUtils.loadAnimation(this, R.anim.middle9);
+        middle10 = AnimationUtils.loadAnimation(this, R.anim.middle10);
+        middle11 = AnimationUtils.loadAnimation(this, R.anim.middle11);
+        middle12 = AnimationUtils.loadAnimation(this, R.anim.middle12);
+        middle13 = AnimationUtils.loadAnimation(this, R.anim.middle13);
+
+        b1 = (ImageView) findViewById(R.id.card_1);
+        b2 = (ImageView) findViewById(R.id.card_2);
+        b3 = (ImageView) findViewById(R.id.card_3);
+        b4 = (ImageView) findViewById(R.id.card_4);
+        b5 = (ImageView) findViewById(R.id.card_5);
+        b6 = (ImageView) findViewById(R.id.card_6);
+        b7 = (ImageView) findViewById(R.id.card_7);
+        b8 = (ImageView) findViewById(R.id.card_8);
+        b9 = (ImageView) findViewById(R.id.card_9);
+        b10 = (ImageView) findViewById(R.id.card_10);
+        b11 = (ImageView) findViewById(R.id.card_11);
+        b12 = (ImageView) findViewById(R.id.card_12);
+        b13 = (ImageView) findViewById(R.id.card_13);
+
+        SharedPreferences pref = this.getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE);
+        String sharedPrefString = pref.getString("playernames", "");
+        String[] playerNames = sharedPrefString.split(",");
+
+        playerCard = (ImageView) findViewById(R.id.player_card);
+        computer1Card = (ImageView) findViewById(R.id.computer1_card);
+        computer2Card = (ImageView) findViewById(R.id.computer2_card);
+        computer3Card = (ImageView) findViewById(R.id.computer3_card);
+
+        suitPlayed = (ImageView) findViewById(R.id.played_suit);
+
+        playerName.setText(playerNames[0]);
+        computer1Name.setText(playerNames[1]);
+        computer2Name.setText(playerNames[2]);
+        computer3Name.setText(playerNames[3]);
+        Table.getInstance().initializeTable(playerNames[0], playerNames[1], playerNames[2], playerNames[3]);
+    }
+
+    private void createListeners() {
+        b1.setOnClickListener(onCardClick);
+        b2.setOnClickListener(onCardClick);
+        b3.setOnClickListener(onCardClick);
+        b4.setOnClickListener(onCardClick);
+        b5.setOnClickListener(onCardClick);
+        b6.setOnClickListener(onCardClick);
+        b7.setOnClickListener(onCardClick);
+        b8.setOnClickListener(onCardClick);
+        b9.setOnClickListener(onCardClick);
+        b10.setOnClickListener(onCardClick);
+        b11.setOnClickListener(onCardClick);
+        b12.setOnClickListener(onCardClick);
+        b13.setOnClickListener(onCardClick);
+    }
+
+    private void setUpGame() {
+        Dealer.getInstance().shuffle();
+        Dealer.getInstance().deal(Table.getInstance().getPlayer1(), Table.getInstance().getPlayer2(),
+                Table.getInstance().getPlayer3(), Table.getInstance().getPlayer4());
+        Overlord.getInstance().setPlayerWithTheTwoOfClubs();
+        Table.getInstance().getPlayer1().organizeHand();
+        Table.getInstance().getPlayer2().organizeHand();
+        Table.getInstance().getPlayer3().organizeHand();
+        Table.getInstance().getPlayer4().organizeHand();
+    }
+
+    private void displayImages() {
+        Card c1 = Table.getInstance().getPlayer1().getHand().get(0);
+        Card c2 = Table.getInstance().getPlayer1().getHand().get(1);
+        Card c3 = Table.getInstance().getPlayer1().getHand().get(2);
+        Card c4 = Table.getInstance().getPlayer1().getHand().get(3);
+        Card c5 = Table.getInstance().getPlayer1().getHand().get(4);
+        Card c6 = Table.getInstance().getPlayer1().getHand().get(5);
+        Card c7 = Table.getInstance().getPlayer1().getHand().get(6);
+        Card c8 = Table.getInstance().getPlayer1().getHand().get(7);
+        Card c9 = Table.getInstance().getPlayer1().getHand().get(8);
+        Card c10 = Table.getInstance().getPlayer1().getHand().get(9);
+        Card c11 = Table.getInstance().getPlayer1().getHand().get(10);
+        Card c12 = Table.getInstance().getPlayer1().getHand().get(11);
+        Card c13 = Table.getInstance().getPlayer1().getHand().get(12);
+
+        b1.setImageResource(c1.getResId());
+        b2.setImageResource(c2.getResId());
+        b3.setImageResource(c3.getResId());
+        b4.setImageResource(c4.getResId());
+        b5.setImageResource(c5.getResId());
+        b6.setImageResource(c6.getResId());
+        b7.setImageResource(c7.getResId());
+        b8.setImageResource(c8.getResId());
+        b9.setImageResource(c9.getResId());
+        b10.setImageResource(c10.getResId());
+        b11.setImageResource(c11.getResId());
+        b12.setImageResource(c12.getResId());
+        b13.setImageResource(c13.getResId());
+
+        remakeVisible();
+    }
+
+    private void beginRound() {
+        if (!Overlord.getInstance().getPassing()) {
+            Card computerSelection;
+            if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer2()) {
+                computerSelection = HAL9000.computer1MakesMove();
+                Table.getInstance().getBoard().add(computerSelection);
+
+                computer1Card.setImageResource(computerSelection.getResId());
+                computer1Card.setVisibility(View.VISIBLE);
+
+                setSuitImage();
+
+                computerSelection = Terminator.computer2MakesMove();
+                Table.getInstance().getBoard().add(computerSelection);
+
+                computer2Card.setImageResource(computerSelection.getResId());
+                computer2Card.setVisibility(View.VISIBLE);
+
+                computerSelection = Zombocom.computer3MakesMove();
+                Table.getInstance().getBoard().add(computerSelection);
+
+                computer3Card.setImageResource(computerSelection.getResId());
+                computer3Card.setVisibility(View.VISIBLE);
+
+            } else if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer3()) {
+                computerSelection = Terminator.computer2MakesMove();
+                Table.getInstance().getBoard().add(computerSelection);
+
+                computer2Card.setImageResource(computerSelection.getResId());
+                computer2Card.setVisibility(View.VISIBLE);
+                setSuitImage();
+
+                computerSelection = Zombocom.computer3MakesMove();
+                Table.getInstance().getBoard().add(computerSelection);
+
+                computer3Card.setImageResource(computerSelection.getResId());
+                computer3Card.setVisibility(View.VISIBLE);
+
+            } else if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer4()) {
+                computerSelection = Zombocom.computer3MakesMove();
+                Table.getInstance().getBoard().add(computerSelection);
+
+                computer3Card.setImageResource(computerSelection.getResId());
+                computer3Card.setVisibility(View.VISIBLE);
+
+                setSuitImage();
+            }
+        } else {
+            passButton.setText(Overlord.getInstance().getPassingDirection());
+            passButton.setVisibility(View.VISIBLE);
+        }
+        activateListeners();
+    }
+
     private void cantPlayThatPopUp() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle(getString(R.string.app_name));
@@ -509,60 +567,6 @@ public class MainActivity extends AppCompatActivity {
                 Table.getInstance().getPlayer4().getPoints() + "\n";
         alertNames.setText(nameHolder);
         alertScores.setText(scoreHolder);
-    }
-
-    private void beginRound() {
-        if (!Overlord.getInstance().getPassing()) {
-            Card computerSelection;
-            if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer2()) {
-                computerSelection = HAL9000.computer1MakesMove();
-                Table.getInstance().getBoard().add(computerSelection);
-
-                computer1Card.setImageResource(computerSelection.getResId());
-                computer1Card.setVisibility(View.VISIBLE);
-
-                setSuitImage();
-
-                computerSelection = Terminator.computer2MakesMove();
-                Table.getInstance().getBoard().add(computerSelection);
-
-                computer2Card.setImageResource(computerSelection.getResId());
-                computer2Card.setVisibility(View.VISIBLE);
-
-                computerSelection = Zombocom.computer3MakesMove();
-                Table.getInstance().getBoard().add(computerSelection);
-
-                computer3Card.setImageResource(computerSelection.getResId());
-                computer3Card.setVisibility(View.VISIBLE);
-
-            } else if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer3()) {
-                computerSelection = Terminator.computer2MakesMove();
-                Table.getInstance().getBoard().add(computerSelection);
-
-                computer2Card.setImageResource(computerSelection.getResId());
-                computer2Card.setVisibility(View.VISIBLE);
-                setSuitImage();
-
-                computerSelection = Zombocom.computer3MakesMove();
-                Table.getInstance().getBoard().add(computerSelection);
-
-                computer3Card.setImageResource(computerSelection.getResId());
-                computer3Card.setVisibility(View.VISIBLE);
-
-            } else if (Overlord.getInstance().getLeadingPlayer() == Table.getInstance().getPlayer4()) {
-                computerSelection = Zombocom.computer3MakesMove();
-                Table.getInstance().getBoard().add(computerSelection);
-
-                computer3Card.setImageResource(computerSelection.getResId());
-                computer3Card.setVisibility(View.VISIBLE);
-
-                setSuitImage();
-            }
-        } else {
-            passButton.setText(Overlord.getInstance().getPassingDirection());
-            passButton.setVisibility(View.VISIBLE);
-        }
-        activateListeners();
     }
 
     private void setSuitImage() {
@@ -1045,7 +1049,7 @@ public class MainActivity extends AppCompatActivity {
         b13.setVisibility(View.VISIBLE);
     }
 
-    private void passLeftWait(final ArrayList<Card> computerCardsToPlayer) {
+    private void passLeftWait(ArrayList<Card> computerCardsToPlayer) {
         final ArrayList<Card> computerCardsToPlayer1 = computerCardsToPlayer;
         passLeftAnimation.setAnimationListener(new Animation.AnimationListener() {
 
@@ -1065,7 +1069,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void passRightWait( ArrayList<Card> computerCardsToPlayer) {
+    private void passRightWait(ArrayList<Card> computerCardsToPlayer) {
         final ArrayList<Card> computerCardsToPlayer1 = computerCardsToPlayer;
 
         passRightAnimation.setAnimationListener(new Animation.AnimationListener() {
@@ -1684,16 +1688,6 @@ public class MainActivity extends AppCompatActivity {
         });
         builder.setCancelable(false);
         builder.show();
-    }
-
-    private void saveGame() {
-        Table.saveTable(getApplicationContext());
-        Overlord.saveOverlord(getApplicationContext());
-    }
-
-    private void loadGame() {
-        Table.loadTable(getApplicationContext());
-        Overlord.loadOverlord(getApplicationContext());
     }
 
     public void clickInfoAlert(View view) {

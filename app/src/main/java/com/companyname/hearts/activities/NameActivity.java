@@ -20,9 +20,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 /*
-    This activity is the starting activity that lets the user set
-    their name, as well as the names of the three computers. The
-    user can also decide if they wish to load their previous save or not.
+    This activity is the starting activity that lets the user set their name.
+    The user can also decide if they wish to load their previous save or not.
  */
 
 public class NameActivity extends AppCompatActivity {
