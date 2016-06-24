@@ -208,6 +208,8 @@ public class Terminator {
                     }
                 }
             }
+            //ToDo: THIS DOESN'T HAVE ANYTHING IN IT!
+
             //doesnt have to follow suit
             else {
 

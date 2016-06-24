@@ -12,6 +12,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class Shuffle extends PApplet {
+   public static int shuffleCount =0;
 
     int start1 = 920;
     int start2 = 420;
