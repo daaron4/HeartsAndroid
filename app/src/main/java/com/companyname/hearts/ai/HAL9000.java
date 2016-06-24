@@ -146,7 +146,7 @@ public class HAL9000 {
                                     return computerSelection;
                                 }
                             }
-                        } else if (numOfHeartsComp1 > numOfSpadesComp1 && numOfHeartsComp1 >= numOfClubsComp1) {
+                        } else if (numOfHeartsComp1 !=0 && numOfHeartsComp1 > numOfSpadesComp1 && numOfHeartsComp1 >= numOfClubsComp1) {
                             String lowestHeart = arrayOfHeartsComp1.get(0).toString();
                             for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
                                 computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
@@ -181,7 +181,7 @@ public class HAL9000 {
                             }
                         }
                     } else if (previousSuit == Suit.Clubs) {
-                        if (numOfSpadesComp1 >= numOfClubsComp1 && numOfSpadesComp1 >= numOfHeartsComp1) {
+                        if (numOfSpadesComp1 !=0 && numOfSpadesComp1 >= numOfClubsComp1 && numOfSpadesComp1 >= numOfHeartsComp1) {
                             String lowestSpade = arrayOfSpadesComp1.get(0).toString();
                             for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
                                 computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
@@ -227,8 +227,8 @@ public class HAL9000 {
                             }
                         }
                     } else if (previousSuit == Suit.Spades) {
-                        if (numOfHeartsComp1 >= numOfClubsComp1 && numOfHeartsComp1 >= numOfDiamondsComp1) {
-                            // ToDo: encountered bug here when HAL had one card left and was leading player
+
+                        if (numOfHeartsComp1 != 0 && numOfHeartsComp1 >= numOfClubsComp1 && numOfHeartsComp1 >= numOfDiamondsComp1) {
                             String lowestHeart = arrayOfHeartsComp1.get(0).toString();
                             for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
                                 computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
@@ -274,8 +274,7 @@ public class HAL9000 {
                             }
                         }
                     } else if (previousSuit == Suit.Hearts) {
-                        if (numOfSpadesComp1 >= numOfClubsComp1 && numOfSpadesComp1 >= numOfDiamondsComp1) {
-                            // ToDo: encountered bug here when HAL had one card left and was leading player
+                        if (numOfSpadesComp1 !=0 && numOfSpadesComp1 >= numOfClubsComp1 && numOfSpadesComp1 >= numOfDiamondsComp1) {
                             String lowestSpade = arrayOfSpadesComp1.get(0).toString();
                             for (int i = 0; i < Table.getInstance().getPlayer2().getHand().size(); i++) {
                                 computerSelection = Table.getInstance().getPlayer2().getHand().get(i);
