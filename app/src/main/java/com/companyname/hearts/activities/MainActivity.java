@@ -427,30 +427,6 @@ public class MainActivity extends AppCompatActivity {
         builder.show();
     }
 
-    private void displayTrickWinnerPopUp() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle(getString(R.string.app_name));
-        builder.setMessage(Overlord.getInstance().getLeadingPlayer().getName() + " " + getString(R.string.trick_winner) + "\n" +
-                getString(R.string.board_contains) + " " + Arrays.toString(Table.getInstance().getBoard().toArray()));
-        builder.setIcon(R.mipmap.ic_launcher);
-        builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if (Overlord.getInstance().getRoundsPlayed() == 14) {
-                    removeCenterIcon();
-                    displayScorePopUp();
-                } else {
-                    moveViewToScreenCenter(computer1Card);
-                    moveViewToScreenCenter(computer3Card);
-                    moveViewToScreenCenter(computer2Card);
-                    moveViewToScreenCenter(playerCard);
-                }
-            }
-        });
-        builder.setCancelable(false);
-        builder.show();
-    }
-
     private void displayScorePopUp() {
         Overlord.getInstance().calculatePoints();
         Overlord.getInstance().updatePlaying();
