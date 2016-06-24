@@ -35,12 +35,10 @@ public class ShuffleAnimationActivity extends Activity {
         setContentView(frame, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
         if (savedInstanceState == null) {
-            frame.setBackgroundColor(Color.RED);
             fragment = new Shuffle();
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.add(frame.getId(), fragment, MAIN_FRAGMENT_TAG).commit();
         } else {
-            frame.setBackgroundColor(Color.RED);
             fragment = (PApplet) getFragmentManager().findFragmentByTag(MAIN_FRAGMENT_TAG);
         }
     }

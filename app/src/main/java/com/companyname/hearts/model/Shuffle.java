@@ -35,10 +35,10 @@ public class Shuffle extends PApplet {
     }
 
     public void doThing(){
-        int dx1 = 280;
-        int dy1 = 280;
-        int dx2 = 280;
-        int dy2 = 280;
+        int dx1 = 285;
+        int dy1 = 285;
+        int dx2 = 285;
+        int dy2 = 285;
 
         image(img, 920, 420, 160, 200);
 
@@ -83,7 +83,7 @@ public class Shuffle extends PApplet {
 
         }
     }
-    public void settings() {  size(2000,1000);  smooth(); }
+    public void settings() {  size(2000,1000); }
     static public void main(String[] passedArgs) {
         String[] appletArgs = new String[] { "Shuffle" };
         if (passedArgs != null) {

@@ -136,8 +136,17 @@ public class NameActivity extends AppCompatActivity {
         editor.putString("playernames", sb.toString());
         editor.commit();
 
-            Intent shuffleIntent = new Intent(getApplicationContext(), MainActivity.class);
+        try {
+
+            Intent shuffleIntent = new Intent(getApplicationContext(), ShuffleAnimationActivity.class);
             startActivity(shuffleIntent);
 
+        } catch(Error e){
+
+            Toast.makeText(NameActivity.this, "Try Again", Toast.LENGTH_SHORT).show();
+
+            }
+        }
+
     }
-}
+
