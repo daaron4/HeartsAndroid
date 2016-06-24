@@ -43,6 +43,7 @@ public class Overlord implements Serializable {
         return instance;
     }
 
+    // Method returns true if the Player given to it is the leading player, false if not
     public boolean amITheLeadingPlayer(Player player) {
         if (player == leadingPlayer) {
             return true;
@@ -52,6 +53,7 @@ public class Overlord implements Serializable {
         }
     }
 
+    // Method returns the leading Player as an integer, 1 to 4
     public int getLeadingPLayerAsInt() {
         if (leadingPlayer.getName().equals(Table.getInstance().getPlayer1().getName())) {
             return 1;
@@ -67,7 +69,7 @@ public class Overlord implements Serializable {
         }
     }
 
-
+    // Method returns true if the Player given to it won the previous trick, false if not
     public boolean amIThePreviousWinner(Player player) {
         if (player == previousWinner) {
             return true;
@@ -108,6 +110,8 @@ public class Overlord implements Serializable {
         }
     }
 
+    // Method sets the leadingPlayer to be equal to the Player who has the two of clubs.
+    // This should only be done at the start of a hand.
     public void setPlayerWithTheTwoOfClubs() {
         for (int i = 0; i < 13; i++) {
             if (Table.getInstance().getPlayer1().getHand().get(i).getRank().getValue() == 2
@@ -125,9 +129,13 @@ public class Overlord implements Serializable {
         }
     }
 
+    // Method determines the winner of the current cards on the board. The leadingPlayer is updated
+    // to become the winner of the trick when this method is finished. Obviously this method should
+    // only be called when there are four cards on the board, but it will work regardless of that fact
     public void determineTrickWinner() {
+        // Keeps the previousWinner one hand behind as desired:
         previousWinner = leadingPlayer;
-        System.out.println("Board is: " + Arrays.toString(Table.getInstance().getBoard().toArray()));
+
         Card winner = Table.getInstance().getBoard().get(0);
         Suit lead = winner.getSuit();
         int leadValue = winner.getRank().getValue();
@@ -142,7 +150,7 @@ public class Overlord implements Serializable {
             }
         }
 
-        // Leading player wins hand:
+        // Leading player wins trick:
         if (getLeadingPlayer().getName().equals(Table.getInstance().getPlayer1().getName())) {
             if (winnerPosition == 0) {
 
@@ -157,6 +165,7 @@ public class Overlord implements Serializable {
                 setLeadingPlayer(Table.getInstance().getPlayer4());
             }
         }
+        // HAL9000 wins trick:
         else if (getLeadingPlayer().getName().equals(Table.getInstance().getPlayer2().getName())) {
             if (winnerPosition == 0) {
 
@@ -171,6 +180,7 @@ public class Overlord implements Serializable {
                 setLeadingPlayer(Table.getInstance().getPlayer1());
             }
         }
+        // Terminator wins trick:
         else if (getLeadingPlayer().getName().equals(Table.getInstance().getPlayer3().getName())) {
             if (winnerPosition == 0) {
 
@@ -185,6 +195,7 @@ public class Overlord implements Serializable {
                 setLeadingPlayer(Table.getInstance().getPlayer2());
             }
         }
+        // Zombo wins trick:
         else {
             if (winnerPosition == 0) {
 
@@ -206,6 +217,9 @@ public class Overlord implements Serializable {
 
     }
 
+    // This method removes any remaining cards from all Players oldCards and hands. It should be
+    // called at the end of 13 rounds. It also resets heartsBroken, roundsPlayed, the previousWinner,
+    // and updates pass direction.
     public void reset() {
         Table.getInstance().getPlayer1().getHand().clear();
         Table.getInstance().getPlayer2().getHand().clear();
@@ -222,6 +236,7 @@ public class Overlord implements Serializable {
         getPassingDirection();
     }
 
+    // Method that resets scores and other variables needed for an entirely new game of Hearts.
     public void prepareForNextGame() {
         playing = true;
         heartsBroken = false;
@@ -235,6 +250,7 @@ public class Overlord implements Serializable {
         Table.getInstance().getPlayer4().setPoints(0);
     }
 
+    // Method that determines if the game is over or not
     public void updatePlaying() {
         if (Table.getInstance().getPlayer1().getPoints() >= 100 || Table.getInstance().getPlayer2().getPoints() >= 100
                 || Table.getInstance().getPlayer3().getPoints() >= 100 || Table.getInstance().getPlayer4().getPoints() >= 100) {
@@ -242,6 +258,7 @@ public class Overlord implements Serializable {
         }
     }
 
+    // Method that calculates and updates the points for all the Players
     public void calculatePoints() {
         int player1Points = 0;
         int player2Points = 0;
@@ -326,6 +343,7 @@ public class Overlord implements Serializable {
         }
     }
 
+    // Method that will return the Player who won the game.
     public Player getWinningPlayer() {
         Player winningPlayer;
         int oneMin = Math.min(Table.getInstance().getPlayer1().getPoints(), Table.getInstance().getPlayer2().getPoints());
@@ -346,6 +364,7 @@ public class Overlord implements Serializable {
         return winningPlayer;
     }
 
+    // Returns a String version representing the current direction of passing
     public String getPassingDirection() {
         // Pass Cards Direction:
         if (handsPlayed % 4 == 0) {
@@ -364,6 +383,7 @@ public class Overlord implements Serializable {
         return "No passing";
     }
 
+    // Returns an Enum that represents the current direction of passing
     public Direction passingDirection() {
         // Pass Cards Direction:
         if (handsPlayed % 4 == 0) {
@@ -382,6 +402,7 @@ public class Overlord implements Serializable {
         return Direction.NO_PASSING;
     }
 
+    // Method that determines if the Card and the Player given to it is allowed to be played or not
     public boolean canPlayCard(Card userCard, Player whosPlaying) {
         if (getRoundsPlayed() == 1) {
             if (getLeadingPlayer() == whosPlaying) {
@@ -506,6 +527,8 @@ public class Overlord implements Serializable {
         }
 
     }
+
+    // GETTERS, SETTERS:
 
     public boolean getPlaying() {
         return playing;
